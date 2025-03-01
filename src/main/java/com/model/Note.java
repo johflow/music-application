@@ -1,4 +1,4 @@
-package com.music;
+package com.model;
 
 public class Note {
 	private int pitch;

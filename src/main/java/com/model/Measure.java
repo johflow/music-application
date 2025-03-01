@@ -1,4 +1,4 @@
-package com.music;
+package com.model;
 import java.util.ArrayList;
 
 public class Measure {
