@@ -9,7 +9,7 @@ public class UserList {
     private ArrayList<User> users;
 
     private UserList() {
-        users = DataLoader.getUser();
+        users = DataLoader.getUsers();
         if (users == null) {
             users = new ArrayList<>();
         }
@@ -30,25 +30,19 @@ public class UserList {
         }
         return null;
     }
-    
+
+    public ArrayList<User> getUsers() {
+        return new ArrayList<>(users);
+    }
+
     public void addUser(User user) {
         if (user != null && getUser(user.getUsername()) == null) {
             users.add(user);
             save(); // Save after adding a user
         }
     }
-    
-    public void removeUser(User user) {
-        if (users.remove(user)) {
-            save(); // Save after removing a user
-        }
-    }
 
     public void save() {
-        DataWriter.save(users);
-    }
-
-    public ArrayList<User> getAllUsers() {
-        return new ArrayList<>(users);
+        DataWriter.saveUsers;
     }
 }

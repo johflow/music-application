@@ -1,6 +1,5 @@
 package com.model;
 
-import com.model.Song;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -25,17 +24,8 @@ public class User {
     this.themeColor = "default";
   }
 
-  public User(UUID id, String email, String username, String password) {
-    this.id = id;
-    this.email = email;
-    this.username = username;
-    this.password = password;
-    this.favoriteSongs = new ArrayList<>();
-    this.followedUsers = new ArrayList<>();
-    this.themeColor = "default";
-  }
 
-  public UUID getId() {
+public UUID getId() {
     return id;
 }
 
@@ -55,23 +45,40 @@ public String getThemeColor() {
     return themeColor;
 }
 
+public ArrayList<Song> getFavoriteSongs() {
+    return new ArrayList<>(favoriteSongs);
+}
+
+public ArrayList<User> getFollowedUsers() {
+    return new ArrayList<>(followedUsers);
+}
+
+// Methods to modify favorite songs
 public void addFavoriteSong(Song song) {
-    favoriteSongs.add(song);
+    if (song != null && !favoriteSongs.contains(song)) {
+        favoriteSongs.add(song);
+    }
 }
 
 public void removeFavoriteSong(Song song) {
     favoriteSongs.remove(song);
 }
 
+// Methods to follow/unfollow users
 public void followUser(User user) {
-    followedUsers.add(user);
+    if (user != null && !followedUsers.contains(user)) {
+        followedUsers.add(user);
+    }
 }
 
 public void unfollowUser(User user) {
     followedUsers.remove(user);
 }
 
-public void changeTheme(String themeColor) {
-    this.themeColor = themeColor;
+// Change theme color
+public void changeTheme(String color) {
+    if (color != null && !color.isEmpty()) {
+        this.themeColor = color;
+    }
 }
 }
