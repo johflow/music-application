@@ -3,7 +3,6 @@ module com.frontend.gui {
     requires javafx.fxml;
     requires jfugue;
     requires java.sql;
-    requires json_simple;
     requires json.simple;
 
     opens com.frontend.gui to javafx.fxml;

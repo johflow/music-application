@@ -10,7 +10,7 @@ public class Measure {
 	private KeySignature keySignature;
 	private int timeSignatureNumerator;
 	private int timeSignatureDenominator;
-	private ArrayList<Chord> notes;
+	private ArrayList<Chord> chords;
 	private int measureNumber;
 	private double tempo;
 
@@ -48,13 +48,15 @@ public class Measure {
 	 */
 	public Measure selectMeasure() {
 		//TODO
+		return new Measure(null, 0, 0, 0);
 	}
 
 	/**
 	 * template
 	 */
-	public ArrayList<Note> getNotes() {
+	public ArrayList<Chord> getChords() {
 		//TODO
+		return chords;
 	}
 
 	/**

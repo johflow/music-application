@@ -1,5 +1,7 @@
 package com.service;
 
+import com.model.User;
+import com.model.UserList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import org.json.simple.JSONObject;
 
 import com.model.DataConstants;
 import com.model.Song;
+import com.model.User;
+import com.model.UserList;
 
 /**
  * Class that writes data to JSON.
@@ -20,10 +24,10 @@ public class DataWriter extends DataConstants {
    * 
    * @return True or false depending on success of write.
    */
-  public boolean saveUsers() {
-    // these two lines will need to be changed to accomodate for user class once completed
-		Users users = Users.getInstance();
-    ArrayList<User> userList = users.getUsers();
+  public static boolean saveUsers() {
+    // initialize
+    UserList users = UserList.getInstance();
+    ArrayList<User> userList = users.getAllUsers();
 
     // creates a new JSON array and fills it
     JSONArray jsonUsers = new JSONArray();
@@ -56,15 +60,15 @@ public class DataWriter extends DataConstants {
   /**
    * For each data variable, it gets added to a JSONObject to be written in users.json
    * 
-   * @param user
-   * @return
+   * @param user user that is saving their data
+   * @return     a JSONObject of user details
    */
   public static JSONObject getUserJSON(User user) {
     JSONObject userDetails = new JSONObject();
-    userDetails.put(USER_ID, user.getID());
-    userDetails.put(USER_EMAIL, user.getEMail());
-    userDetails.put(USER_NAME, user.getName());
-    userDetails.put(USER_PASSWORD, user.getPassword()); // i feel like this is unsafe
+    userDetails.put(USER_ID, user.getId());
+    userDetails.put(USER_EMAIL, user.getEmail());
+    userDetails.put(USER_NAME, user.getUsername());
+    userDetails.put(USER_PASSWORD, user.getPassword());
     userDetails.put(USER_FAVORITE_SONGS, user.getFavoriteSongs());
     userDetails.put(USER_FOLLOWED_USERS, user.getFollowedUsers());
     userDetails.put(USER_THEME_COLOR, user.getThemeColor());
@@ -80,12 +84,8 @@ public class DataWriter extends DataConstants {
    */
   public static JSONObject getSongsJSON(Song song) {
     JSONObject songDetails = new JSONObject();
-    songDetails.put();
+    songDetails.put(null, null); // added null needs to be fixed
     //TODO
     return songDetails;
   }
-
-  public static void main(String[] args){
-		DataWriter.saveUsers();
-	}
 }
