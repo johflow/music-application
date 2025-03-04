@@ -1,9 +1,10 @@
 module com.frontend.gui {
     requires javafx.controls;
     requires javafx.fxml;
-    requires simple.json;
     requires jfugue;
-
+    requires java.sql;
+    requires json_simple;
+    requires json.simple;
 
     opens com.frontend.gui to javafx.fxml;
     exports com.frontend.gui;

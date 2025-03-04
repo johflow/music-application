@@ -1,5 +1,6 @@
 package com.model;
 
+import com.model.Song;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ public class User {
   private ArrayList<Song> favoriteSongs;
   private ArrayList<User> followedUsers;
   private String themeColor;
+
 
   public User(String email, String username, String password) {
     this.id = UUID.randomUUID();

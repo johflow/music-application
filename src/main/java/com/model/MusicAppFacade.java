@@ -13,7 +13,7 @@ public class MusicAppFacade {
      * template
      */
     private MusicAppFacade() {
-        this.user = new User();
+        this.user = new User(null, null, null);
     }
 
     /**
@@ -21,6 +21,7 @@ public class MusicAppFacade {
      */
     public MusicAppFacade getInstance() {
         //TODO
+        return new MusicAppFacade();
     }
 
     /**
@@ -31,11 +32,12 @@ public class MusicAppFacade {
      * @param instrument
      * @param tempo
      * @param key
-     * @param timeSignature
+     * @param timeSignatureDenominator
+     * @param timeSignatureNumerator
      * @param numberOfMeasures
      * @param pickup
      */
-    public void createSong(String title, String composer, Instrument instrument, int tempo, KeySignature key, TimeSignature timeSignature, int numberOfMeasures, TimeSignature pickup) {
+    public void createSong(String title, String composer, Instrument instrument, int tempo, KeySignature key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
         //TODO
     }
 
@@ -70,6 +72,7 @@ public class MusicAppFacade {
      */
     public User login(String username, String password) {
         //TODO
+        return new User(null, null, null);
     }
 
     /**
@@ -79,6 +82,7 @@ public class MusicAppFacade {
      */
     public Song getSongByKeyword(String word) {
         //TODO
+        return new Song(null, null);
     }
 
     /**
