@@ -25,19 +25,22 @@ public class DataWriter extends DataConstants {
    * @return True or false depending on success of write.
    */
   public static boolean saveUsers() {
-    // initialize
     UserList users = UserList.getInstance();
-    ArrayList<User> userList = users.getAllUsers();
+    ArrayList<User> userList = DataLoader.getUsers(); //TODO: change this to users whenever we are ready for the data
 
-    // creates a new JSON array and fills it
+    // Create the root JSON object with "users" key
+    JSONObject root = new JSONObject();
     JSONArray jsonUsers = new JSONArray();
-    for (int i = 0; i < userList.size(); i++) {
-			jsonUsers.add(getUserJSON(userList.get(i)));
-		}
     
-    // writes JSON file to its location
+    for (int i = 0; i < userList.size(); i++) {
+      jsonUsers.add(getUserJSON(userList.get(i)));
+    }
+    
+    // Add the users array to the root object
+    root.put("users", jsonUsers);
+    
     try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) {
-      file.write(jsonUsers.toJSONString());
+      file.write(root.toJSONString());
       file.flush();
       return true;
 
@@ -65,12 +68,12 @@ public class DataWriter extends DataConstants {
    */
   public static JSONObject getUserJSON(User user) {
     JSONObject userDetails = new JSONObject();
-    userDetails.put(USER_ID, user.getId());
+    userDetails.put(USER_ID, user.getId().toString());
     userDetails.put(USER_EMAIL, user.getEmail());
     userDetails.put(USER_NAME, user.getUsername());
     userDetails.put(USER_PASSWORD, user.getPassword());
-    userDetails.put(USER_FAVORITE_SONGS, user.getFavoriteSongs());
-    userDetails.put(USER_FOLLOWED_USERS, user.getFollowedUsers());
+    userDetails.put(USER_FAVORITE_SONGS, user.getFavoriteSongs()); //TODO: this doesnt put anything in favorite songs json data row
+    userDetails.put(USER_FOLLOWED_USERS, user.getFollowedUsers()); //TODO: same as above
     userDetails.put(USER_THEME_COLOR, user.getThemeColor());
 
     return userDetails;
@@ -87,5 +90,9 @@ public class DataWriter extends DataConstants {
     songDetails.put(null, null); // added null needs to be fixed
     //TODO
     return songDetails;
+  }
+
+  public static void main(String[] args) {
+    DataWriter.saveUsers();
   }
 }
