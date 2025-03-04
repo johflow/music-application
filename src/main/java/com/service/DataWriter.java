@@ -24,7 +24,7 @@ public class DataWriter extends DataConstants {
    * 
    * @return True or false depending on success of write.
    */
-  public boolean saveUsers() {
+  public static boolean saveUsers() {
     // initialize
     UserList users = UserList.getInstance();
     ArrayList<User> userList = users.getAllUsers();
