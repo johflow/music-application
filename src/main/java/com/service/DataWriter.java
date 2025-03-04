@@ -1,5 +1,7 @@
 package com.service;
 
+import com.model.User;
+import com.model.UserList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,7 +84,7 @@ public class DataWriter extends DataConstants {
    */
   public static JSONObject getSongsJSON(Song song) {
     JSONObject songDetails = new JSONObject();
-    songDetails.put();
+    songDetails.put(null, null); // added null needs to be fixed
     //TODO
     return songDetails;
   }

@@ -1,4 +1,3 @@
-package com.model;
 
 import java.util.ArrayList;
 import com.service.DataLoader;
@@ -21,6 +20,10 @@ public class UserList {
         }
         return userList;
     }
+
+    public ArrayList<User> getUserList() {
+        return users;
+      }
 
     public User getUser(String username) {
         for (User user : users) {
