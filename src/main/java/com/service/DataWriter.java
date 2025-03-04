@@ -21,6 +21,7 @@ import com.model.UserList;
 public class DataWriter extends DataConstants {
   /**
    * Writes user data to JSON.
+   * //TODO: make the order of the json match the original JSON
    * 
    * @return True or false depending on success of write.
    */
@@ -43,7 +44,6 @@ public class DataWriter extends DataConstants {
       file.write(root.toJSONString());
       file.flush();
       return true;
-
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -74,7 +74,7 @@ public class DataWriter extends DataConstants {
     userDetails.put(USER_PASSWORD, user.getPassword());
     userDetails.put(USER_FAVORITE_SONGS, user.getFavoriteSongs()); //TODO: this doesnt put anything in favorite songs json data row
     userDetails.put(USER_FOLLOWED_USERS, user.getFollowedUsers()); //TODO: same as above
-    userDetails.put(USER_THEME_COLOR, user.getThemeColor());
+    userDetails.put(USER_THEME_COLOR, user.getThemeColor()); //TODO: puts default instead of hexcode in JSON
 
     return userDetails;
   }
@@ -87,7 +87,7 @@ public class DataWriter extends DataConstants {
    */
   public static JSONObject getSongsJSON(Song song) {
     JSONObject songDetails = new JSONObject();
-    songDetails.put(null, null); // added null needs to be fixed
+    songDetails.put(null, null); // added null to compile but still needs to be filled
     //TODO
     return songDetails;
   }
