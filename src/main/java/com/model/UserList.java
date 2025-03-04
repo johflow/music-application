@@ -1,32 +1,51 @@
-package com.model;
 
-import com.model.User;
 import java.util.ArrayList;
+import com.service.DataLoader;
+import com.service.DataWriter;
 
 public class UserList {
+    private static UserList userList;
+    private ArrayList<User> users;
 
-  private ArrayList<User> users;
-  private static UserList userList;
+    private UserList() {
+        users = DataLoader.getUsers();
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+    }
 
-  private UserList() {
-    //TODO
-  }
+    public static UserList getInstance() {
+        if (userList == null) {
+            userList = new UserList();
+        }
+        return userList;
+    }
 
-  public static UserList getInstance() {
-    //TODO
-    return userList;
-  }
+    public ArrayList<User> getUserList() {
+        return users;
+      }
 
-  public ArrayList<User> getUserList() {
-    return users;
-  }
+    public User getUser(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
 
-  public User getUser(String username) {
-    //TODO
-    return new User(null, null, null);
-  }
+    public ArrayList<User> getUsers() {
+        return new ArrayList<>(users);
+    }
 
-  public void save() {
-    //TODO
-  }
+    public void addUser(User user) {
+        if (user != null && getUser(user.getUsername()) == null) {
+            users.add(user);
+            save(); // Save after adding a user
+        }
+    }
+
+    public void save() {
+        DataWriter.saveUsers;
+    }
 }

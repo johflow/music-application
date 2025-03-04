@@ -1,11 +1,10 @@
 package com.model;
 
-import com.model.Song;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class User {
-  
+
   private UUID id;
   private String email;
   private String username;
@@ -14,90 +13,72 @@ public class User {
   private ArrayList<User> followedUsers;
   private String themeColor;
 
+
   public User(String email, String username, String password) {
+    this.id = UUID.randomUUID();
     this.email = email;
     this.username = username;
     this.password = password;
+    this.favoriteSongs = new ArrayList<>();
+    this.followedUsers = new ArrayList<>();
+    this.themeColor = "default";
   }
 
-  public void addFavoriteSong(Song song) {
-    favoriteSongs.add(song);
-  }
 
-  public void removeFavoriteSong(Song song) {
-    favoriteSongs.remove(song);
-  }
-
-  public void followUser(User user) {
-    followedUsers.add(user);
-  }
-
-  public void unfollowUser(User user) {
-    followedUsers.remove(user);
-  }
-
-  public void changeTheme(String themeColor) {
-    this.themeColor = themeColor;
-  }
-
-  @Override
-  public String toString() {
-    return this.username + this.email + this.password;
-  }
-
-  public UUID getId() {
+public UUID getId() {
     return id;
-  }
+}
 
-  public void setId(UUID id) {
-    this.id = id;
-  }
-
-  public String getEmail() {
+public String getEmail() {
     return email;
-  }
+}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getUsername() {
+public String getUsername() {
     return username;
-  }
+}
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getPassword() {
+public String getPassword() {
     return password;
-  }
+}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public ArrayList<Song> getFavoriteSongs() {
-    return favoriteSongs;
-  }
-
-  public void setFavoriteSongs(ArrayList<Song> favoriteSongs) {
-    this.favoriteSongs = favoriteSongs;
-  }
-
-  public ArrayList<User> getFollowedUsers() {
-    return followedUsers;
-  }
-
-  public void setFollowedUsers(ArrayList<User> followedUsers) {
-    this.followedUsers = followedUsers;
-  }
-
-  public String getThemeColor() {
+public String getThemeColor() {
     return themeColor;
-  }
+}
 
-  public void setThemeColor(String themeColor) {
-    this.themeColor = themeColor;
-  }
+public ArrayList<Song> getFavoriteSongs() {
+    return new ArrayList<>(favoriteSongs);
+}
+
+public ArrayList<User> getFollowedUsers() {
+    return new ArrayList<>(followedUsers);
+}
+
+// Methods to modify favorite songs
+public void addFavoriteSong(Song song) {
+    if (song != null && !favoriteSongs.contains(song)) {
+        favoriteSongs.add(song);
+    }
+}
+
+public void removeFavoriteSong(Song song) {
+    favoriteSongs.remove(song);
+}
+
+// Methods to follow/unfollow users
+public void followUser(User user) {
+    if (user != null && !followedUsers.contains(user)) {
+        followedUsers.add(user);
+    }
+}
+
+public void unfollowUser(User user) {
+    followedUsers.remove(user);
+}
+
+// Change theme color
+public void changeTheme(String color) {
+    if (color != null && !color.isEmpty()) {
+        this.themeColor = color;
+    }
+}
 }
