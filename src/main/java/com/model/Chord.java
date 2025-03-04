@@ -14,6 +14,7 @@ public class Chord {
 
     public Chord select() {
         //TODO
+        return new Chord();
     }
 
     public void delete() {

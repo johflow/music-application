@@ -39,4 +39,65 @@ public class User {
   public void changeTheme(String themeColor) {
     this.themeColor = themeColor;
   }
+
+  @Override
+  public String toString() {
+    return this.username + this.email + this.password;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public ArrayList<Song> getFavoriteSongs() {
+    return favoriteSongs;
+  }
+
+  public void setFavoriteSongs(ArrayList<Song> favoriteSongs) {
+    this.favoriteSongs = favoriteSongs;
+  }
+
+  public ArrayList<User> getFollowedUsers() {
+    return followedUsers;
+  }
+
+  public void setFollowedUsers(ArrayList<User> followedUsers) {
+    this.followedUsers = followedUsers;
+  }
+
+  public String getThemeColor() {
+    return themeColor;
+  }
+
+  public void setThemeColor(String themeColor) {
+    this.themeColor = themeColor;
+  }
 }
