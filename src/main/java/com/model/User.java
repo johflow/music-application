@@ -23,7 +23,15 @@ public class User {
     this.followedUsers = new ArrayList<>();
     this.themeColor = "default";
   }
-
+  public User(UUID id, String email, String username, String password) {
+    this.id = id;
+    this.email = email;
+    this.username = username;
+    this.password = password;
+    this.favoriteSongs = new ArrayList<>();
+    this.followedUsers = new ArrayList<>();
+    this.themeColor = "default";
+  }
 
 public UUID getId() {
     return id;

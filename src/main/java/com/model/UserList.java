@@ -43,7 +43,7 @@ public class UserList {
     }
 
     public void save() {
-        DataWriter.saveUsers;
+        DataWriter.saveUsers();
     }
 
     public ArrayList<User> getAllUsers() {
