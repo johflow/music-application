@@ -45,4 +45,8 @@ public class UserList {
     public void save() {
         DataWriter.saveUsers;
     }
+
+    public ArrayList<User> getAllUsers() {
+        return new ArrayList<>(users);
+    }
 }
