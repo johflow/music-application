@@ -51,16 +51,7 @@ public class SongList {
     }
 
     public void sortSheetMusic(String criteria) {
-        songs.sort((s1, s2) -> {
-            switch (criteria.toLowerCase()) {
-                case "title":
-                    return s1.getTitle().compareTo(s2.getTitle());
-                case "composer":
-                    return s1.getComposer().compareTo(s2.getComposer());
-                default:
-                    return 0;
-            }
-        });
+
     }
 
     public void save() {
