@@ -12,7 +12,6 @@ import com.model.DataConstants;
 import com.model.Song;
 import com.model.User;
 import com.model.UserList;
-
 /**
  * Class that writes data to JSON.
  * 
@@ -21,7 +20,6 @@ import com.model.UserList;
 public class DataWriter extends DataConstants {
   /**
    * Writes user data to JSON.
-   * //TODO: make the order of the json match the original JSON
    * 
    * @return True or false depending on success of write.
    */
@@ -68,13 +66,23 @@ public class DataWriter extends DataConstants {
    */
   public static JSONObject getUserJSON(User user) {
     JSONObject userDetails = new JSONObject();
-    userDetails.put(USER_ID, user.getId().toString());
+    JSONArray favoriteSongs = new JSONArray();
+    JSONArray followedUsers = new JSONArray();
+    
+    for (Song favoriteSong : user.getFavoriteSongs()) {
+      favoriteSongs.add(favoriteSong.getSongId().toString());
+    }    
+    for (User followedUser : user.getFollowedUsers()) {
+      followedUsers.add(followedUser.getUserId().toString());
+    }
+    
+    userDetails.put(USER_ID, user.getUserId().toString());
     userDetails.put(USER_EMAIL, user.getEmail());
     userDetails.put(USER_NAME, user.getUsername());
     userDetails.put(USER_PASSWORD, user.getPassword());
-    userDetails.put(USER_FAVORITE_SONGS, user.getFavoriteSongs()); //TODO: this doesnt put anything in favorite songs json data row
-    userDetails.put(USER_FOLLOWED_USERS, user.getFollowedUsers()); //TODO: same as above
-    userDetails.put(USER_THEME_COLOR, user.getThemeColor()); //TODO: puts default instead of hexcode in JSON
+    userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
+    userDetails.put(USER_FOLLOWED_USERS, followedUsers);
+    userDetails.put(USER_THEME_COLOR, user.getThemeColor()); // still need to implement theme color system
 
     return userDetails;
   }

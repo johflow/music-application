@@ -19,7 +19,7 @@ public class Song {
     }
 
     public Song(UUID id, String title, String composer) {
-        this.id =id);
+        this.id = id;
         this.title = title;
         this.composer = composer;
         this.sheetMusics = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Song {
     }
 
     // Getters and setters
-    public UUID getId() {
+    public UUID getSongId() {
         return id;
     }
 
