@@ -36,7 +36,7 @@ public class MusicPlayer {
 
   public static void main(String[] args) {
     MusicPlayer player = new MusicPlayer();
-    //player.playSong();
+    player.playSong();
     ArrayList<User> users = DataLoader.getUsers();
     System.out.println(users);
   }
