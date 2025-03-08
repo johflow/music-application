@@ -16,7 +16,6 @@ public class MusicPlayer {
   }
 
   private void playLine() {
-    Music.playNote(60, 1);
     Music.playNote("Bb");
     Music.playNote("G");
     Music.playNote("C");

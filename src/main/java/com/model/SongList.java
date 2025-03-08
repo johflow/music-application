@@ -26,18 +26,18 @@ public class SongList {
         songs.add(newSong);
     }
 
-    public void removeSong(UUID songID) {
+    /*public void removeSong(UUID songID) {
       songs.removeIf(song -> song.getId().equals(songID));
-  }
+      }*/
 
-    public Song getSong(UUID songID) {
+    /*public Song getSong(UUID songID) {
       for (Song song : songs) {
         if (song.getId().equals(songID)) {
           return song;
         }
       }
       return null;
-    }
+    }*/
 
     public ArrayList<Song> searchSongs(String searchQuery) {
         ArrayList<Song> results = new ArrayList<>();
@@ -54,9 +54,9 @@ public class SongList {
 
     }
 
-    public void save() {
+    /*public void save() {
       DataWriter.saveSong();
-    }
+    }*/
 
     public ArrayList<Song>getSongs() {
       return songs;

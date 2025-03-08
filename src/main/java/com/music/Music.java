@@ -7,10 +7,4 @@ public class Music {
     Player player = new Player();
     player.play(note);
   }
-
-  public static void playNote(int pitch, double duration) {
-    Player player = new Player();
-    String note = pitch + "*" + duration;
-    player.play(note);
-  }
 }
