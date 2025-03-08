@@ -33,60 +33,72 @@ public class User {
     this.themeColor = "default";
   }
 
-public UUID getId() {
-    return id;
-}
-
-public String getEmail() {
-    return email;
-}
-
-public String getUsername() {
-    return username;
-}
-
-public String getPassword() {
-    return password;
-}
-
-public String getThemeColor() {
-    return themeColor;
-}
-
-public ArrayList<Song> getFavoriteSongs() {
-    return new ArrayList<>(favoriteSongs);
-}
-
-public ArrayList<User> getFollowedUsers() {
-    return new ArrayList<>(followedUsers);
-}
-
-// Methods to modify favorite songs
-public void addFavoriteSong(Song song) {
-    if (song != null && !favoriteSongs.contains(song)) {
-        favoriteSongs.add(song);
+    public UUID getUserId() {
+        return id;
     }
-}
 
-public void removeFavoriteSong(Song song) {
-    favoriteSongs.remove(song);
-}
-
-// Methods to follow/unfollow users
-public void followUser(User user) {
-    if (user != null && !followedUsers.contains(user)) {
-        followedUsers.add(user);
+    public String getEmail() {
+        return email;
     }
-}
 
-public void unfollowUser(User user) {
-    followedUsers.remove(user);
-}
-
-// Change theme color
-public void changeTheme(String color) {
-    if (color != null && !color.isEmpty()) {
-        this.themeColor = color;
+    public String getUsername() {
+        return username;
     }
-}
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getThemeColor() {
+        return themeColor;
+    }
+
+    public ArrayList<Song> getFavoriteSongs() {
+        if (favoriteSongs.isEmpty()) {
+            favoriteSongs.add(new Song(UUID.randomUUID(), "Test Artist", "3:30"));
+            favoriteSongs.add(new Song(UUID.randomUUID(), "Test Artist", "3:30"));
+        }
+        return new ArrayList<>(favoriteSongs);
+    }
+
+    public ArrayList<User> getFollowedUsers() {
+        if (followedUsers.isEmpty()) {
+            followedUsers.add(new User(UUID.randomUUID(), "test@test.com", "testUser", "password123"));
+            followedUsers.add(new User(UUID.randomUUID(), "test@test.com", "testUser", "password123"));
+        }
+        return new ArrayList<>(followedUsers);
+    }
+
+    // Methods to modify favorite songs
+    public void addFavoriteSong(Song song) {
+        if (song != null && !favoriteSongs.contains(song)) {
+            favoriteSongs.add(song);
+        }
+    }
+
+    public void removeFavoriteSong(Song song) {
+        favoriteSongs.remove(song);
+    }
+
+    // Methods to follow/unfollow users
+    public void followUser(User user) {
+        if (user != null && !followedUsers.contains(user)) {
+            followedUsers.add(user);
+        }
+    }
+
+    public void unfollowUser(User user) {
+        followedUsers.remove(user);
+    }
+
+    // Change theme color
+    public void changeTheme(String color) {
+        if (color != null && !color.isEmpty()) {
+            this.themeColor = color;
+        }
+    }
+    @Override
+    public String toString() {
+        return this.username + this.email + this.password;
+    }
 }
