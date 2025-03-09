@@ -1,44 +1,49 @@
 {
 	"users": [
 		{
-			"id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+			"followedUsers": [
+				"6d265dfd-1e8f-4105-9708-1bd3db1ba30b",
+				"159cb3da-a31d-4170-9065-535c3ee62360"
+			],
+			"password": "password123",
+			"themeColor": "default",
+			"id": "7fd7c3a0-dde3-4caa-9cc7-f2c030206bee",
 			"email": "john.doe@example.com",
 			"username": "johndoe",
-			"password": "password123",
 			"favoriteSongs": [
-				"7c5d2fbb-2ecb-43bf-9a66-b7c236d4f3d3",
-				"e3e70682-6779-4cd5-b5d4-bddcbda1057c"
-			],
-			"followedUsers": [
-				"c9bf9e57-1685-4c89-bafb-ff5af830be8a",
-				"d290f1ee-6c54-4b01-90e6-d701748f0851"
-			],
-			"themeColor": "#FF5733"
+				"fc85ecc3-ee58-43a3-a3b5-c23ddaf138f6",
+				"dfb651e8-da93-4dbb-8564-362a7651786f"
+			]
 		},
 		{
-			"id": "c9bf9e57-1685-4c89-bafb-ff5af830be8a",
+			"followedUsers": [
+				"f68875d7-3168-4679-8381-ee765208b47c",
+				"8ee6e3fb-75da-45f6-8c08-30a4d2ba86eb"
+			],
+			"password": "qwerty789",
+			"themeColor": "default",
+			"id": "8d94c649-5022-4339-80bb-b3d14d77f8bc",
 			"email": "jane.smith@example.com",
 			"username": "janesmith",
-			"password": "qwerty789",
 			"favoriteSongs": [
-				"a1b2c3d4-e5f6-7a89-b0c1-d2e3f4a5b6c7"
-			],
-			"followedUsers": [
-				"f47ac10b-58cc-4372-a567-0e02b2c3d479"
-			],
-			"themeColor": "#33FFCE"
+				"c150fde9-92d3-4d2d-8c0a-9070577ce3a7",
+				"4c1c3406-4b20-4fa9-8a39-68bea4347248"
+			]
 		},
 		{
-			"id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+			"followedUsers": [
+				"e5863252-0b38-4fa8-b6f1-67d8595d0624",
+				"df2dd0d0-3d54-4cff-a081-1b3a7bc02d5b"
+			],
+			"password": "secret456",
+			"themeColor": "default",
+			"id": "75e3e12a-09b0-4d63-b82f-588688c58a0e",
 			"email": "bob@example.com",
 			"username": "bobby",
-			"password": "secret456",
 			"favoriteSongs": [
-				"d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90",
-				"f1e2d3c4-b5a6-7890-1234-56789abcdef0"
-			],
-			"followedUsers": [],
-			"themeColor": "#123456"
+				"6891da15-870a-47c2-87f2-92d203fac6cb",
+				"162db5da-e558-44a5-b7d8-f0cf49f673d4"
+			]
 		}
 	]
 }
