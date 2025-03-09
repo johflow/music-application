@@ -58,7 +58,7 @@ public class User {
     }
 
     public ArrayList<User> getFollowedUsers() {
-        return new ArrayList<>(followedUsers);
+        return followedUsers;
     }
 
     // Methods to modify favorite songs
@@ -74,7 +74,7 @@ public class User {
 
     // Methods to follow/unfollow users
     public void followUser(User user) {
-        if (user != null && !followedUsers.contains(user)) {
+        if (user != null) {
             followedUsers.add(user);
         }
     }
@@ -91,6 +91,6 @@ public class User {
     }
     @Override
     public String toString() {
-        return this.username + this.email + this.password;
+        return this.username + " " + this.email + " " +  " " + this.password;
     }
 }

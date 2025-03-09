@@ -16,8 +16,8 @@ public class MusicPlayer {
   }
 
   private void playLine() {
-    Music.playNote("G");
-    Music.playNote("Bb");
+    Music.playNote("60*1.5");
+    Music.playNote("");
     Music.playNote("D");
     Music.playNote("G");
     Music.playNote("Bb");
@@ -36,7 +36,7 @@ public class MusicPlayer {
 
   public static void main(String[] args) {
     MusicPlayer player = new MusicPlayer();
-    //player.playSong();
+    player.playSong();
     ArrayList<User> users = DataLoader.getUsers();
     System.out.println(users);
   }
