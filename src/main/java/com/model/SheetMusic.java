@@ -2,6 +2,9 @@ package com.model;
 
 import java.util.ArrayList;
 
+/**
+ * Represents sheet music for a song
+ */
 public class SheetMusic {
     private String title;
     private ArrayList<Measure> measures;

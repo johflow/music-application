@@ -2,6 +2,7 @@ package com.service;
 
 import com.model.DataConstants;
 import com.model.Song;
+import com.model.ThemeColor;
 import com.model.User;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,8 +15,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-
-public class DataLoader extends DataConstants {
+/**
+ * Assembles data from persistent storage into objects
+ */
+public class DataAssembler extends DataConstants {
 
   public ArrayList<Song> getSongs() {
     //TODO

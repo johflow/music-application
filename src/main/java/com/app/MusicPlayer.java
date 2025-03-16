@@ -1,9 +1,10 @@
 package com.app;
 
-import com.model.User;
-import com.music.*;
-import com.service.DataLoader;
 import java.util.ArrayList;
+
+import com.model.User;
+import com.music.Music;
+import com.service.DataAssembler;
 
 public class MusicPlayer {
 
@@ -37,7 +38,7 @@ public class MusicPlayer {
   public static void main(String[] args) {
     MusicPlayer player = new MusicPlayer();
     player.playSong();
-    ArrayList<User> users = DataLoader.getUsers();
+    ArrayList<User> users = DataAssembler.getUsers();
     System.out.println(users);
   }
 }

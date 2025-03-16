@@ -1,5 +1,8 @@
 package com.model;
 
+/**
+ * Represents musical key signatures
+ */
 public enum KeySignature {
 
   ZERO_ACCIDENTALS("C Major", "A Minor", 0),

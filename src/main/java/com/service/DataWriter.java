@@ -1,10 +1,9 @@
 package com.service;
 
-import com.model.User;
-import com.model.UserList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -18,6 +17,27 @@ import com.model.UserList;
  * @author
  */
 public class DataWriter extends DataConstants {
+  private static DataWriter instance;
+  
+  /**
+   * Constructor for DataWriter
+   */
+  public DataWriter() {
+    // Initialize any resources needed for data writing
+  }
+  
+  /**
+   * Gets the singleton instance of DataWriter
+   * 
+   * @return The singleton instance
+   */
+  public static DataWriter getInstance() {
+    if (instance == null) {
+      instance = new DataWriter();
+    }
+    return instance;
+  }
+  
   /**
    * Writes user data to JSON.
    * 
@@ -25,7 +45,7 @@ public class DataWriter extends DataConstants {
    */
   public static boolean saveUsers() {
     UserList users = UserList.getInstance();
-    ArrayList<User> userList = DataLoader.getUsers(); //TODO: change this to users whenever we are ready for the data
+    ArrayList<User> userList = DataAssembler.getUsers(); //TODO: change this to users whenever we are ready for the data
 
     // Create the root JSON object with "users" key
     JSONObject root = new JSONObject();
@@ -70,19 +90,19 @@ public class DataWriter extends DataConstants {
     JSONArray followedUsers = new JSONArray();
     
     for (Song favoriteSong : user.getFavoriteSongs()) {
-      favoriteSongs.add(favoriteSong.getSongId().toString());
+      favoriteSongs.add(favoriteSong.getId().toString());
     }    
     for (User followedUser : user.getFollowedUsers()) {
-      followedUsers.add(followedUser.getUserId().toString());
+      followedUsers.add(followedUser.getId().toString());
     }
     
-    userDetails.put(USER_ID, user.getUserId().toString());
+    userDetails.put(USER_ID, user.getId().toString());
     userDetails.put(USER_EMAIL, user.getEmail());
     userDetails.put(USER_NAME, user.getUsername());
     userDetails.put(USER_PASSWORD, user.getPassword());
     userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
     userDetails.put(USER_FOLLOWED_USERS, followedUsers);
-    userDetails.put(USER_THEME_COLOR, user.getThemeColor()); // still need to implement theme color system
+    userDetails.put(USER_THEME_COLOR, user.getThemeColor().name());
 
     return userDetails;
   }
