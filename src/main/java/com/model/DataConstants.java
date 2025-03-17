@@ -1,5 +1,8 @@
 package com.model;
 
+/**
+ * Constants used for data persistence
+ */
 public abstract class DataConstants {
   public static final String USER_FILE_LOCATION = "src/main/java/com/data/users.json";
   public static final String USER_OBJECT_KEY = "users";

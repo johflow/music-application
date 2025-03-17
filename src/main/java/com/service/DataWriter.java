@@ -1,33 +1,51 @@
 package com.service;
 
-import com.model.User;
-import com.model.UserList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.model.DataConstants;
 import com.model.Song;
-import org.json.simple.parser.ParseException;
-
+import com.model.User;
+import com.model.UserList;
 /**
  * Class that writes data to JSON.
  * 
  * @author
  */
 public class DataWriter extends DataConstants {
+  private static DataWriter instance;
+  
+  /**
+   * Constructor for DataWriter
+   */
+  public DataWriter() {
+    // Initialize any resources needed for data writing
+  }
+  
+  /**
+   * Gets the singleton instance of DataWriter
+   * 
+   * @return The singleton instance
+   */
+  public static DataWriter getInstance() {
+    if (instance == null) {
+      instance = new DataWriter();
+    }
+    return instance;
+  }
+  
   /**
    * Writes user data to JSON.
    * 
    * @return True or false depending on success of write.
    */
-  public static boolean saveUsers() throws IOException, ParseException {
+  public static boolean saveUsers() {
     UserList users = UserList.getInstance();
-    DataAssembler assembler = new DataAssembler();
-    List<User> userList = assembler.getAssembledUsers(DataConstants.USER_FILE_LOCATION, DataConstants.SONG_FILE_LOCATION); //TODO: change this to users whenever we are ready for the data
+    ArrayList<User> userList = DataAssembler.getUsers(); //TODO: change this to users whenever we are ready for the data
 
     // Create the root JSON object with "users" key
     JSONObject root = new JSONObject();
@@ -80,11 +98,11 @@ public class DataWriter extends DataConstants {
     
     userDetails.put(USER_ID, user.getId().toString());
     userDetails.put(USER_EMAIL, user.getEmail());
-    userDetails.put(USER_USERNAME, user.getUsername());
+    userDetails.put(USER_NAME, user.getUsername());
     userDetails.put(USER_PASSWORD, user.getPassword());
-    userDetails.put(USER_FAVORITED_SONGS, favoriteSongs);
+    userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
     userDetails.put(USER_FOLLOWED_USERS, followedUsers);
-    userDetails.put(USER_THEME_COLOR, user.getThemeColor()); // still need to implement theme color system
+    userDetails.put(USER_THEME_COLOR, user.getThemeColor().name());
 
     return userDetails;
   }
@@ -102,7 +120,7 @@ public class DataWriter extends DataConstants {
     return songDetails;
   }
 
-  public static void main(String[] args) throws IOException, ParseException {
+  public static void main(String[] args) {
     DataWriter.saveUsers();
   }
 }

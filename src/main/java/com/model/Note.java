@@ -2,40 +2,58 @@ package com.model;
 
 import org.jfugue.player.Player;
 
+/**
+ * Represents a musical note
+ */
 public class Note implements MusicElement {
 	private double pitch;
 	private double duration;
 	private char durationChar;
 	private int midiNumber;
 	private String noteName;
-	private int dotted;
-	private boolean tied;
 	private String lyric;
 	private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
-	public Note(double pitch, double duration, String lyric) {
+	/**
+	 * Constructor for Note
+	 * 
+	 * @param pitch    The pitch of the note (MIDI value)
+	 * @param duration The duration of the note
+	 * @param position The position of the note in the measure
+	 * @param isRest   Whether the note is a rest
+	 */
+	public Note(int pitch, int duration, int position, boolean isRest) {
 		this.pitch = pitch;
 		this.duration = duration;
+		this.position = position;
+		this.isRest = isRest;
+		this.isSelected = false;
+		findMissingAttributes();
+	}
+
+	public Note(double pitch, double duration, String lyric) {
+		this.pitch = (int)pitch;
+		this.duration = (int)duration;
 		this.lyric = lyric;
 		findMissingAttributes();
 	}
 
 	public Note(int midiNumber, double duration, String lyric) {
 		this.midiNumber = midiNumber;
-		this.duration = duration;
+		this.duration = (int)duration;
 		this.lyric = lyric;
 		findMissingAttributes();
 	}
 
 	public Note(String noteName, double duration, String lyric) {
 		this.noteName = noteName;
-		this.duration = duration;
+		this.duration = (int)duration;
 		this.lyric = lyric;
 		findMissingAttributes();
 	}
 
 	public Note(double pitch, char durationChar, String lyric) {
-		this.pitch = pitch;
+		this.pitch = (int)pitch;
 		this.durationChar = durationChar;
 		this.lyric = lyric;
 		findMissingAttributes();
@@ -55,14 +73,12 @@ public class Note implements MusicElement {
 		findMissingAttributes();
 	}
 
-	public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
+	public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, String lyric) {
 		this.pitch = pitch;
 		this.midiNumber = midiNumber;
 		this.noteName = noteName;
 		this.duration = duration;
 		this.durationChar = durationChar;
-		this.dotted = dotted;
-		this.tied = tied;
 		this.lyric = lyric;
 	}
 

@@ -3,6 +3,9 @@ package com.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents sheet music for a song
+ */
 public class SheetMusic {
 
   private List<Staff> staves;
