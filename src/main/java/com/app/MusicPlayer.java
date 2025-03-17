@@ -1,43 +1,41 @@
 package com.app;
 
+import com.data.FileReaderUtil;
+import com.data.SongJsonParser;
+import com.data.UserJsonParser;
+import com.model.DataConstants;
+import com.model.ParsedUser;
 import com.model.User;
-import com.music.*;
-import com.service.DataLoader;
-import java.util.ArrayList;
+import com.service.DataAssembler;
+import java.io.IOException;
+import java.util.List;
+import org.jfugue.player.Player;
+import org.jfugue.pattern.Pattern;
+import org.json.simple.parser.ParseException;
 
 public class MusicPlayer {
 
-  public void playSong() {
-    try {
-      playLine();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
+  public static void main(String[] args) throws IOException, ParseException {
+    Player player = new Player();
 
-  private void playLine() {
-    Music.playNote("60*1.5");
-    Music.playNote("");
-    Music.playNote("D");
-    Music.playNote("G");
-    Music.playNote("Bb");
-    Music.playNote("D");
-    Music.playNote("G");
-    Music.playNote("D");
-    Music.playNote("Bb");
-    Music.playNote("G");
-    Music.playNote("C");
-    Music.playNote("Db");
-    Music.playNote("F");
-    Music.playNote("D");
-    Music.playNote("C");
-    Music.playNote("F");
-  }
+    DataAssembler assembler = new DataAssembler();
+    System.out.println(assembler.getAssembledUsers(DataConstants.USER_FILE_LOCATION, DataConstants.SONG_FILE_LOCATION));
+    System.out.println(assembler.getAssembledSongs(DataConstants.SONG_FILE_LOCATION, DataConstants.USER_FILE_LOCATION));
 
-  public static void main(String[] args) {
-    MusicPlayer player = new MusicPlayer();
-    player.playSong();
-    ArrayList<User> users = DataLoader.getUsers();
-    System.out.println(users);
+    // Right-hand melody (Voice 0)
+    Pattern pattern = new Pattern("A5 A5 E6 E6 A6 A6 E6 E6");
+    Pattern rightHand = new Pattern("V0 I[Piano] Rq").add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern).add(pattern);
+
+    // Left-hand chords (Voice 1)
+    Pattern leftHand = new Pattern("V1 I[Piano] Rq Rwww Rh G4h F3+C4+A4 E5 A4 G4 A4w G3h. G4 A4 E5 A4 G4 A3+C4+E4+A4 E5 A4 G4 A4h. E4 G4h. D4 G3+E4 G4 A4 B4 F3+A4 E5 A4 G4 A4w G3h. G4 A4 E5 B4 C5 C4+E4+B4 C5 B4 A4 E4h. E3 F2h. D4 G3+E4 G4 A4 B4 F3+A4 E5 A4 G4 A4h C4h G3h.+B3h. G4 A4 E5 A4 G4 C4+E4+A4 E5 A4 G4 A4h. E4 G4h. D4 G3+E4 G A B F3+C4+A4 E5 A4 G4 A4h D4 C4 G3h.+B4h. G4 A4 E5 B4 C5 C4+E4+B4 C5 D5 E5 A4h E4h F5h C5h");
+
+    // Merge both patterns into a single pattern and play
+    Pattern fullSong = new Pattern().add(rightHand).add(leftHand);
+    Pattern tuplet = new Pattern("V0 R R R R C*14:1 C*5:4 C*5:4 C*5:4 C*5:4 R R R R Cw");
+    Pattern beat = new Pattern("V1 C C C C C C C C R R R R Cw");
+    Pattern comparison = new Pattern().add(tuplet).add(beat);
+    player.play("C5q*3:2 D5q*3:2 E5q*3:2- E5q");
+    //player.play(fullSong);
+
   }
 }

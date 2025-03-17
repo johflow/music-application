@@ -1,21 +1,23 @@
 package com.model;
 
+import com.service.DataAssembler;
+import java.io.IOException;
 import java.util.ArrayList;
-import com.service.DataLoader;
 import com.service.DataWriter;
+import org.json.simple.parser.ParseException;
 
 public class UserList {
     private static UserList userList;
     private ArrayList<User> users;
 
-    private UserList() {
-        users = DataLoader.getUsers();
-        if (users == null) {
-            users = new ArrayList<>();
-        }
+    private UserList() throws IOException, ParseException {
+//        users = DataAssembler
+//        if (users == null) {
+//            users = new ArrayList<>();
+//        }
     }
 
-    public static UserList getInstance() {
+    public static UserList getInstance() throws IOException, ParseException {
         if (userList == null) {
             userList = new UserList();
         }
@@ -39,14 +41,14 @@ public class UserList {
         return new ArrayList<>(users);
     }
 
-    public void addUser(User user) {
+    public void addUser(User user) throws IOException, ParseException {
         if (user != null && getUser(user.getUsername()) == null) {
             users.add(user);
             save(); // Save after adding a user
         }
     }
 
-    public void save() {
+    public void save() throws IOException, ParseException {
         DataWriter.saveUsers();
     }
 

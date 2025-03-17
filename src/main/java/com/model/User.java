@@ -91,6 +91,6 @@ public class User {
     }
     @Override
     public String toString() {
-        return this.username + " " + this.email + " " +  " " + this.password;
+        return this.username + " " + this.email + " " +  " " + this.password + " " + getFavoriteSongs();
     }
 }

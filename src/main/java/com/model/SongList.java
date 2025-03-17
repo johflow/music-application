@@ -19,7 +19,7 @@ public class SongList {
         return instance;
     }
 
-    public void addSong(String title, String composer, Instrument instrument, int tempo, KeySignature key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
+    public void addSong(String title, String composer, Instrument instrument, int tempo, int key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
         Song newSong = new Song(title, composer);
         newSong.setPickUp(pickup);
         newSong.addSheetMusic(instrument);

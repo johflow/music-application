@@ -8,6 +8,8 @@ public class Note implements MusicElement {
 	private char durationChar;
 	private int midiNumber;
 	private String noteName;
+	private int dotted;
+	private boolean tied;
 	private String lyric;
 	private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
@@ -53,12 +55,14 @@ public class Note implements MusicElement {
 		findMissingAttributes();
 	}
 
-	public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, String lyric) {
+	public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
 		this.pitch = pitch;
 		this.midiNumber = midiNumber;
 		this.noteName = noteName;
 		this.duration = duration;
 		this.durationChar = durationChar;
+		this.dotted = dotted;
+		this.tied = tied;
 		this.lyric = lyric;
 	}
 

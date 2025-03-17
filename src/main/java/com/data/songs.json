@@ -1,225 +1,72 @@
 {
   "songs": [
     {
-      "id": "7c5d2fbb-2ecb-43bf-9a66-b7c236d4f3d3",
-      "title": "Creep",
-      "composer": "Radiohead",
-      "instrument": "Guitar",
+      "id": "fc85ecc3-ee58-43a3-a3b5-c23ddaf138f6",
+      "title": "Test Song",
+      "composer": "Composer Name",
+      "publisher": "123e4567-e89b-12d3-a456-426614174000",
+      "pickUp": 0,
       "sheetMusic": [
         {
-          "measures": [
+          "instrument": {
+            "instrumentName": "Piano",
+            "clefTypes": ["Treble", "Bass"]
+          },
+          "staves": [
             {
-              "measureNumber": 1,
-              "tempo": 92,
-              "keySignature": "G Major",
-              "timeSignatureNumerator": 4,
-              "timeSignatureDenominator": 4,
-              "chords": [
+              "clefType": "Treble",
+              "measures": [
                 {
-                  "notes": [
-                    { "pitch": 55, "duration": 1.0 },
-                    { "pitch": 59, "duration": 1.0 },
-                    { "pitch": 62, "duration": 1.0 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 2,
-              "tempo": 92,
-              "keySignature": "G Major",
-              "timeSignatureNumerator": 4,
-              "timeSignatureDenominator": 4,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 59, "duration": 1.0 },
-                    { "pitch": 63, "duration": 1.0 },
-                    { "pitch": 66, "duration": 1.0 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 3,
-              "tempo": 92,
-              "keySignature": "G Major",
-              "timeSignatureNumerator": 4,
-              "timeSignatureDenominator": 4,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 60, "duration": 1.0 },
-                    { "pitch": 64, "duration": 1.0 },
-                    { "pitch": 67, "duration": 1.0 }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "e3e70682-6779-4cd5-b5d4-bddcbda1057c",
-      "title": "Happy Birthday",
-      "composer": "Traditional",
-      "instrument": "Piano",
-      "sheetMusic": [
-        {
-          "measures": [
-            {
-              "measureNumber": 1,
-              "tempo": 80,
-              "keySignature": "C Major",
-              "timeSignatureNumerator": 6,
-              "timeSignatureDenominator": 8,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 69, "duration": 0.5 },
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 72, "duration": 0.5 },
-                    { "pitch": 71, "duration": 0.5 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 2,
-              "tempo": 80,
-              "keySignature": "C Major",
-              "timeSignatureNumerator": 6,
-              "timeSignatureDenominator": 8,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 69, "duration": 0.5 },
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 74, "duration": 0.5 },
-                    { "pitch": 72, "duration": 0.5 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 3,
-              "tempo": 80,
-              "keySignature": "C Major",
-              "timeSignatureNumerator": 6,
-              "timeSignatureDenominator": 8,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 67, "duration": 0.5 },
-                    { "pitch": 76, "duration": 0.5 },
-                    { "pitch": 72, "duration": 0.5 },
-                    { "pitch": 71, "duration": 0.5 },
-                    { "pitch": 69, "duration": 0.5 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 4,
-              "tempo": 80,
-              "keySignature": "C Major",
-              "timeSignatureNumerator": 6,
-              "timeSignatureDenominator": 8,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 77, "duration": 0.5 },
-                    { "pitch": 77, "duration": 0.5 },
-                    { "pitch": 76, "duration": 0.5 },
-                    { "pitch": 72, "duration": 0.5 },
-                    { "pitch": 74, "duration": 0.5 },
-                    { "pitch": 72, "duration": 0.5 }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "a1b2c3d4-e5f6-7a89-b0c1-d2e3f4a5b6c7",
-      "title": "Knockin' on Heaven's Door",
-      "composer": "Bob Dylan",
-      "instrument": "Guitar",
-      "sheetMusic": [
-        {
-          "measures": [
-            {
-              "measureNumber": 1,
-              "tempo": 75,
-              "keySignature": "G Major",
-              "timeSignatureNumerator": 4,
-              "timeSignatureDenominator": 4,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 67, "duration": 1.0 },
-                    { "pitch": 69, "duration": 1.0 },
-                    { "pitch": 71, "duration": 1.0 },
-                    { "pitch": 72, "duration": 1.0 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 2,
-              "tempo": 75,
-              "keySignature": "G Major",
-              "timeSignatureNumerator": 4,
-              "timeSignatureDenominator": 4,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 74, "duration": 1.0 },
-                    { "pitch": 72, "duration": 1.0 },
-                    { "pitch": 71, "duration": 1.0 },
-                    { "pitch": 69, "duration": 1.0 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 3,
-              "tempo": 75,
-              "keySignature": "G Major",
-              "timeSignatureNumerator": 4,
-              "timeSignatureDenominator": 4,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 69, "duration": 1.0 },
-                    { "pitch": 67, "duration": 1.0 },
-                    { "pitch": 67, "duration": 1.0 },
-                    { "pitch": 67, "duration": 1.0 }
-                  ]
-                }
-              ]
-            },
-            {
-              "measureNumber": 4,
-              "tempo": 75,
-              "keySignature": "G Major",
-              "timeSignatureNumerator": 4,
-              "timeSignatureDenominator": 4,
-              "chords": [
-                {
-                  "notes": [
-                    { "pitch": 69, "duration": 1.0 },
-                    { "pitch": 67, "duration": 1.0 },
-                    { "pitch": 67, "duration": 1.0 },
-                    { "pitch": 67, "duration": 1.0 }
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "noteName": "A",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "dotted": 0,
+                      "tied": false,
+                      "lyric": "la"
+                    },
+                    {
+                      "type": "rest",
+                      "duration": 0.5,
+                      "durationChar": "e",
+                      "dotted": 0,
+                      "tied": false,
+                      "lyric": ""
+                    },
+                    {
+                      "type": "chord",
+                      "lyric": "chord lyric",
+                      "notes": [
+                        {
+                          "pitch": 392.0,
+                          "midiNumber": 67,
+                          "noteName": "G",
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": 0,
+                          "tied": false,
+                          "lyric": ""
+                        },
+                        {
+                          "pitch": 523.25,
+                          "midiNumber": 72,
+                          "noteName": "C",
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": 0,
+                          "tied": false,
+                          "lyric": ""
+                        }
+                      ]
+                    }
                   ]
                 }
               ]

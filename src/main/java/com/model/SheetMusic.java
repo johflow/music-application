@@ -1,24 +1,25 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SheetMusic {
-    private String title;
-    private ArrayList<Measure> measures;
-    private Instrument instrument;
-    private int pickUp;
 
-    public SheetMusic(String titel, Instrument instrument, int pickUp) {
-        //TODO
-    }
+  private List<Staff> staves;
+  private Instrument instrument;
 
-    public void transpose(String key) {
-        //TODO
-    }
+  public SheetMusic(Instrument instrument, List<Staff> staves) {
+    this.staves = staves;
+    this.instrument = instrument;
+  }
 
-    public void display() {
-        //TODO
-    }
+  public void transpose(String key) {
+    //TODO
+  }
+
+  public void display() {
+    //TODO
+  }
 
 
 }

@@ -37,7 +37,7 @@ public class MusicAppFacade {
      * @param numberOfMeasures
      * @param pickup
      */
-    public void createSong(String title, String composer, Instrument instrument, int tempo, KeySignature key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
+    public void createSong(String title, String composer, Instrument instrument, int tempo, int key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
         //TODO
     }
 

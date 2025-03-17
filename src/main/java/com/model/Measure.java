@@ -1,5 +1,6 @@
 package com.model;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * template
@@ -7,23 +8,24 @@ import java.util.ArrayList;
  * @author 
  */
 public class Measure {
-	private KeySignature keySignature;
+	private int keySignature;
 	private int timeSignatureNumerator;
 	private int timeSignatureDenominator;
-	private ArrayList<Chord> chords;
+	private List<MusicElement> elements;
 	private int measureNumber;
 	private double tempo;
 
-	/**
-	 * template
-	 * 
-	 * @param keySignature
-	 * @param timeSignatureNumerator
-	 * @param timeSignatureDenominator
-	 * @param tempo
-	 */
-	public Measure(KeySignature keySignature, int timeSignatureNumerator, int timeSignatureDenominator, double tempo) {
-		//TODO
+
+
+	public Measure(){}
+
+	public Measure(int keySignature, int timeSignatureNumerator, int timeSignatureDenominator,
+			double tempo, List<MusicElement> elements) {
+		this.keySignature = keySignature;
+		this.timeSignatureNumerator = timeSignatureNumerator;
+		this.timeSignatureDenominator = timeSignatureDenominator;
+		this.elements = elements;
+		this.tempo = tempo;
 	}
 
 	/**
@@ -48,15 +50,15 @@ public class Measure {
 	 */
 	public Measure selectMeasure() {
 		//TODO
-		return new Measure(null, 0, 0, 0);
+		return new Measure();
 	}
 
 	/**
 	 * template
 	 */
-	public ArrayList<Chord> getChords() {
+	public List<MusicElement> getElements() {
 		//TODO
-		return chords;
+		return elements;
 	}
 
 	/**
