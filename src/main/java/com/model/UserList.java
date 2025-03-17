@@ -1,7 +1,7 @@
 package com.model;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import com.service.DataAssembler;
 import com.service.DataWriter;
 
@@ -9,32 +9,21 @@ import com.service.DataWriter;
  * Manages a collection of users in the music application
  */
 public class UserList {
-    private static UserList userList;
-    private ArrayList<User> users;
+    private List<User> users;
 
     /**
      * Constructor for UserList
      */
     private UserList() {
-        users = DataAssembler.getUsers();
-        if (users == null) {
-            users = new ArrayList<>();
-        }
-    }
-
-    public static UserList getInstance() {
-        if (userList == null) {
-            userList = new UserList();
-        }
-        return userList;
+        users = new ArrayList<>();
     }
 
     /**
      * Gets the list of users
      * 
-     * @return ArrayList of users
+     * @return List of users
      */
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -43,8 +32,8 @@ public class UserList {
      * 
      * @param users The new list of users
      */
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
+    public void setUsers(List<User> users) {
+        this.users = new ArrayList<>(users);
     }
 
     /**
@@ -138,7 +127,7 @@ public class UserList {
      * @return True if the save was successful, false otherwise
      */
     public boolean save() {
-        DataWriter.saveUsers();
+        DataWriter.saveUsers(this.users);
         return true;
     }
 
