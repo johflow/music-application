@@ -2,15 +2,22 @@ package com.service;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.model.DataConstants;
+import com.model.MusicElement;
+import com.model.Rest;
 import com.model.Song;
 import com.model.User;
-import com.model.UserList;
+import com.model.Note;
+import com.model.Chord;
+import com.model.Tuplet;
+import com.model.SheetMusic;
+import com.model.Staff;
+import com.model.Measure;
 /**
  * Class that writes data to JSON.
  * 
@@ -106,9 +113,8 @@ public class DataWriter extends DataConstants {
    * @param song The song to convert to JSON
    * @return A JSONObject representing the song
    */
-  public static JSONObject getSongsJSON(Song song) {
+  public static JSONObject getSongJSON(Song song) {
     JSONObject songDetails = new JSONObject();
-    JSONArray sheetMusicJSON = new JSONArray();
     
     // Basic song details
     songDetails.put(SONG_ID, song.getId().toString());
@@ -116,52 +122,168 @@ public class DataWriter extends DataConstants {
     songDetails.put(SONG_COMPOSER, song.getComposer());
     songDetails.put(SONG_PUBLISHER, song.getPublisher());
     songDetails.put(SONG_PICK_UP, song.getPickUp());
+
+    // Create sheet music array
+    JSONArray sheetMusicJSON = new JSONArray();
     songDetails.put(SONG_SHEET_MUSIC, sheetMusicJSON);
-
-    // add instrument to sheet music
-    JSONObject instrumentJSON = new JSONObject();
-    instrumentJSON.put(SONG_INSTRUMENT_NAME, song.getInstrumentName());
     
-    // Add clef to sheet music
-    JSONArray clefTypeJSON = new JSONArray();
-    for (String clefType : song.getClefTypes()) {
-        clefTypeJSON.add(clefType);
+    // Process each sheet music entry
+    for (SheetMusic sheet : song.getSheetMusics()) {
+        JSONObject sheetMusicEntry = new JSONObject();
+        sheetMusicJSON.add(sheetMusicEntry);
+        
+        // Add instrument
+        JSONObject instrumentJSON = new JSONObject();
+        instrumentJSON.put(SONG_INSTRUMENT_NAME, sheet.getInstrument().getInstrumentName());
+        
+        // Add clef types
+        JSONArray clefTypeJSON = new JSONArray();
+        for (String clefType : sheet.getInstrument().getClefTypes()) {
+            clefTypeJSON.add(clefType);
+        }
+        instrumentJSON.put(SONG_INSTRUMENT_CLEF_TYPES, clefTypeJSON);
+        
+        // Add instrument to sheet music entry
+        sheetMusicEntry.put(SONG_INSTRUMENT, instrumentJSON);
+        
+        // Process staves
+        JSONArray stavesArray = new JSONArray();
+        sheetMusicEntry.put(SONG_STAVES, stavesArray);
+        
+        for (Staff staff : sheet.getStaves()) {
+            // Add staff details
+            JSONObject staveJSON = new JSONObject();
+            staveJSON.put(SONG_STAFF_CLEF_TYPE, staff.getClefType());
+            stavesArray.add(staveJSON);
+            
+            // Process measures
+            JSONArray measuresArray = new JSONArray();
+            staveJSON.put(SONG_MEASURES, measuresArray);
+            
+            for (Measure measure : staff.getMeasures()) {
+                JSONObject measureJSON = new JSONObject();
+                measureJSON.put(SONG_MEASURES_KEY_SIGNATURE, measure.getKeySignature());
+                measureJSON.put(SONG_MEASURES_TIME_SIGNATURE_NUMERATOR, measure.getTimeSignatureNumerator());
+                measureJSON.put(SONG_MEASURES_TIME_SIGNATURE_DENOMINATOR, measure.getTimeSignatureDenominator());
+                measureJSON.put(SONG_MEASURES_TEMPO, measure.getTempo());
+                
+                // Process music elements
+                JSONArray musicElementsArray = new JSONArray();
+                measureJSON.put(SONG_MUSIC_ELEMENTS, musicElementsArray);
+                
+                for (MusicElement element : measure.getMusicElements()) {
+                    // Process each music element
+                    String type = element.getType();
+                    JSONObject elementJSON = null;
+                    switch (type) {
+                        case SONG_MUSIC_ELEMENT_REST:
+                            elementJSON = getRestJSON(element);
+                            break;
+                        case SONG_MUSIC_ELEMENT_TUPLET:
+                            elementJSON = getTupletJSON(element);
+                            break;
+                        case SONG_MUSIC_ELEMENT_CHORD:
+                            elementJSON = getChordJSON(element);
+                            break;
+                        case SONG_MUSIC_ELEMENT_NOTE:
+                            elementJSON = getNoteJSON(element);
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Invalid music element type: " + type);
+                    }
+                    musicElementsArray.add(elementJSON);
+                }
+                
+                measuresArray.add(measureJSON);
+            }
+        }
     }
-    instrumentJSON.put(SONG_INSTRUMENT_CLEF_TYPES, clefTypeJSON);
     
-    // Create staves section
-    JSONArray stavesArray = new JSONArray();
-    JSONObject staveJSON = new JSONObject();
-    staveJSON.put(SONG_STAFF_CLEF_TYPE, song.getStaffClefType());
-    
-    // Create measures section
-    JSONArray measuresArray = new JSONArray();
-    JSONObject measureJSON = new JSONObject();
-    measureJSON.put(SONG_MEASURES_KEY_SIGNATURE, song.getKeySignature());
-    measureJSON.put(SONG_MEASURES_TIME_SIGNATURE_NUMERATOR, song.getTimeSignatureNumerator());
-    measureJSON.put(SONG_MEASURES_TIME_SIGNATURE_DENOMINATOR, song.getTimeSignatureDenominator());
-    measureJSON.put(SONG_MEASURES_TEMPO, song.getTempo());
-    
-    // Add music elements
-    JSONArray musicElementsArray = new JSONArray();
-    //TODO:here goes the music elements which i will wait until later to do
-    measureJSON.put(SONG_MUSIC_ELEMENTS, musicElementsArray);
-    
-    // Builds hierarchy
-    measuresArray.add(measureJSON);
-    staveJSON.put(SONG_MEASURES, measuresArray);
-    stavesArray.add(staveJSON);
-    
-    // Add instrument and staves to sheet music
-    JSONObject sheetMusicEntry = new JSONObject();
-    sheetMusicEntry.put(SONG_INSTRUMENT, instrumentJSON);
-    sheetMusicEntry.put(SONG_STAVES, stavesArray);
-    sheetMusicJSON.add(sheetMusicEntry);
-
     return songDetails;
   }
 
-  public static void main(String[] args) {
-    DataWriter.saveUsers(DataAssembler.getAssembledUsers());
+  private static JSONObject getNoteJSON(MusicElement element) {
+    Note note = (Note) element; // you can cast stuff this is so cool i just learned about this stuff
+    JSONObject noteJSON = new JSONObject();
+    noteJSON.put(SONG_MUSIC_ELEMENT_TYPE, note.getType());
+    noteJSON.put(SONG_MUSIC_ELEMENT_PITCH, note.getPitch());
+    noteJSON.put(SONG_MUSIC_ELEMENT_MIDI_NUMBER, note.getMidiNumber());
+    noteJSON.put(SONG_MUSIC_ELEMENT_NOTE_NAME, note.getNoteName());
+    noteJSON.put(SONG_MUSIC_ELEMENT_DURATION, note.getDuration());
+    noteJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, note.getDurationChar());
+    noteJSON.put(SONG_MUSIC_ELEMENT_DOTTED, note.getDotted());
+    noteJSON.put(SONG_MUSIC_ELEMENT_TIED, note.hasTie());
+    noteJSON.put(SONG_MUSIC_ELEMENT_LYRIC, note.getLyric());
+    return noteJSON;
+  }
+
+
+  private static JSONObject getRestJSON(MusicElement element) {
+    Rest rest = (Rest) element;
+    JSONObject restJSON = new JSONObject();
+    restJSON.put(SONG_MUSIC_ELEMENT_TYPE, rest.getType());
+    restJSON.put(SONG_MUSIC_ELEMENT_DURATION, rest.getDuration());
+    restJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, rest.getDurationChar());
+    restJSON.put(SONG_MUSIC_ELEMENT_DOTTED, rest.getDotted());
+    restJSON.put(SONG_MUSIC_ELEMENT_TIED, rest.hasTie());
+    restJSON.put(SONG_MUSIC_ELEMENT_LYRIC, rest.getLyric());
+    return restJSON;
+  }
+
+  private static JSONObject getChordJSON(MusicElement element) {
+    Chord chord = (Chord) element;
+    JSONObject chordJSON = new JSONObject();
+    chordJSON.put(SONG_MUSIC_ELEMENT_TYPE, chord.getType());
+    chordJSON.put(SONG_MUSIC_ELEMENT_LYRIC, chord.getLyric());
+
+    JSONArray notesJSON = new JSONArray();
+    for (Note note : chord.getNotes()) {
+      JSONObject noteJSON = new JSONObject();
+      noteJSON.put(SONG_MUSIC_ELEMENT_PITCH, note.getPitch());
+      noteJSON.put(SONG_MUSIC_ELEMENT_MIDI_NUMBER, note.getMidiNumber());
+      noteJSON.put(SONG_MUSIC_ELEMENT_NOTE_NAME, note.getNoteName());
+      noteJSON.put(SONG_MUSIC_ELEMENT_DURATION, note.getDuration());
+      noteJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, note.getDurationChar());
+      noteJSON.put(SONG_MUSIC_ELEMENT_DOTTED, note.getDotted());
+      noteJSON.put(SONG_MUSIC_ELEMENT_TIED, note.hasTie());
+      noteJSON.put(SONG_MUSIC_ELEMENT_LYRIC, note.getLyric());
+      notesJSON.add(noteJSON);
+    }
+    chordJSON.put(SONG_MUSIC_ELEMENT_CHORD_NOTES, notesJSON);
+    return chordJSON;
+  }
+
+  private static JSONObject getTupletJSON(MusicElement element) {
+    Tuplet tuplet = (Tuplet) element;
+    JSONObject tupletJSON = new JSONObject();
+    tupletJSON.put(SONG_MUSIC_ELEMENT_TYPE, tuplet.getType());
+    tupletJSON.put(SONG_MUSIC_ELEMENT_SUBDIVISIONS, tuplet.getSubdivisions());
+    tupletJSON.put(SONG_MUSIC_ELEMENT_IMPLIED_DIVISION, tuplet.getImpliedDivision());
+    tupletJSON.put(SONG_MUSIC_ELEMENT_DURATION, tuplet.getDuration());
+
+    JSONArray elementsJSON = new JSONArray();
+    for (MusicElement tupletElement : tuplet.getElements()) {
+      JSONObject tupletElementJSON = null;
+
+      switch (tupletElement.getType()) {
+        case SONG_MUSIC_ELEMENT_NOTE:
+          tupletElementJSON = getNoteJSON(tupletElement);
+          break;
+        case SONG_MUSIC_ELEMENT_REST:
+          tupletElementJSON = getRestJSON(tupletElement);
+          break;
+        case SONG_MUSIC_ELEMENT_CHORD:
+          tupletElementJSON = getChordJSON(tupletElement);
+          break;
+        case SONG_MUSIC_ELEMENT_TUPLET:
+          tupletElementJSON = getTupletJSON(tupletElement);
+          break;
+        default:
+          throw new IllegalArgumentException("Invalid music element type: " + tupletElement.getType());
+      }
+      elementsJSON.add(tupletElementJSON);
+    }
+    tupletJSON.put(SONG_MUSIC_ELEMENTS, elementsJSON);
+    return tupletJSON;
   }
 }

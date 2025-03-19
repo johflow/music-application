@@ -39,80 +39,11 @@ public class Song {
         this.pickUp = 0; // Default pickup
     }
 
-    /**
-     * Gets the song's ID
-     *
-     * @return The song's UUID
-     */
-    public UUID getId() {
-        return id;
-    }
-
-    /**
-     * Gets the song's title
-     *
-     * @return The song's title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Sets the song's title
-     *
-     * @param title The new title
-     */
-    public void setTitle(String title) {
+    public Song(UUID id, String title, String composer, int pickUp, List<SheetMusic> sheetMusic) {
+        this.id = id;
         this.title = title;
-    }
-
-    /**
-     * Gets the song's composer
-     *
-     * @return The song's composer
-     */
-    public String getComposer() {
-        return composer;
-    }
-
-    /**
-     * Sets the song's composer
-     *
-     * @param composer The new composer
-     */
-    public void setComposer(String composer) {
         this.composer = composer;
-    }
-
-  public Song(UUID id, String title, String composer, int pickUp, List<SheetMusic> sheetMusic) {
-    this.id = id;
-    this.title = title;
-    this.composer = composer;
-    this.sheetMusic = sheetMusic;
-    this.pickUp = pickUp;
-  }
-
-
-
-    public List<SheetMusic> getSheetMusics() {
-        return sheetMusic;
-    }
-
-    /**
-     * Gets the song's pickup value
-     *
-     * @return The song's pickup value
-     */
-    public int getPickUp() {
-        return pickUp;
-    }
-
-    /**
-     * Sets the song's pickup value
-     *
-     * @param pickUp The new pickup value
-     */
-    public void setPickUp(int pickUp) {
+        this.sheetMusic = sheetMusic;
         this.pickUp = pickUp;
     }
 
@@ -123,24 +54,6 @@ public class Song {
      */
     public void addSheetMusic(SheetMusic sheet) {
         sheetMusic.add(sheet);
-    }
-
-    /**
-     * Gets the song's publisher
-     *
-     * @return The song's publisher
-     */
-    public User getPublisher() {
-        return publisher;
-    }
-
-    /**
-     * Sets the song's publisher
-     *
-     * @param publisher The new publisher
-     */
-    public void setPublisher(User publisher) {
-        this.publisher = publisher;
     }
 
     /**
@@ -178,9 +91,93 @@ public class Song {
      * @return True if the save was successful, false otherwise
      */
     public boolean save() {
-        // This would typically interact with a persistence layer
-        // For now, we'll just return true
+        //TODO
         return true;
+    }
+
+    /**
+     * Gets the song's ID
+     *
+     * @return The song's UUID
+     */
+    public UUID getId() {
+        return id;
+    }
+
+    /**
+     * Gets the song's title
+     *
+     * @return The song's title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Gets the song's composer
+     *
+     * @return The song's composer
+     */
+    public String getComposer() {
+        return composer;
+    }
+
+    /**
+     * Gets the song's publisher
+     *
+     * @return The song's publisher
+     */
+    public User getPublisher() {
+        return publisher;
+    }
+
+    public List<SheetMusic> getSheetMusics() {
+        return sheetMusic;
+    }
+
+    /**
+     * Gets the song's pickup value
+     *
+     * @return The song's pickup value
+     */
+    public int getPickUp() {
+        return pickUp;
+    }
+
+    /**
+     * Sets the song's title
+     *
+     * @param title The new title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * Sets the song's composer
+     *
+     * @param composer The new composer
+     */
+    public void setComposer(String composer) {
+        this.composer = composer;
+    }
+
+    /**
+     * Sets the song's pickup value
+     *
+     * @param pickUp The new pickup value
+     */
+    public void setPickUp(int pickUp) {
+        this.pickUp = pickUp;
+    }
+
+    /**
+     * Sets the song's publisher
+     *
+     * @param publisher The new publisher
+     */
+    public void setPublisher(User publisher) {
+        this.publisher = publisher;
     }
 }
 

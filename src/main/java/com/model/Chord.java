@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chord implements MusicElement {
+    private String type;
     private String lyric;
     private List<Note> notes;
 
@@ -32,6 +33,35 @@ public class Chord implements MusicElement {
         //TODO
     }
 
+    public String toJFugueString() {
+        //TODO
+        return "";
+    }
 
+    /**
+     * Gets the type of the chord
+     * 
+     * @return The type of the chord
+     */
+    public String getType() {
+        return type;
+    }
 
+    /**
+     * Gets the lyric of the chord
+     * 
+     * @return The lyric of the chord
+     */
+    public String getLyric() {
+        return lyric;
+    }
+
+    /**
+     * Gets the notes of the chord
+     * 
+     * @return The notes of the chord
+     */
+    public List<Note> getNotes() {
+        return notes;
+    }
 }

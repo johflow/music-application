@@ -14,7 +14,7 @@ public class Staff extends DataConstants {
 
   public String toJFugueString() {
     StringBuilder JFugueString = new StringBuilder();
-    for (int i = 0; i < measures.size; ++i) {
+    for (int i = 0; i < measures.size(); ++i) {
       for (int j = 0; j < measures.get(i).getElements().size(); ++j) {
         switch (measures.get(i).getMusicElementAtIndex(j).getType()) {
           case SONG_MUSIC_ELEMENT_NOTE -> {
@@ -45,5 +45,23 @@ public class Staff extends DataConstants {
       JFugueString.append(".");
     }
     return JFugueString;
+  }
+
+  /**
+   * Gets the measures of the staff
+   * 
+   * @return The measures of the staff
+   */
+  public List<Measure> getMeasures() {
+    return measures;
+  }
+
+  /**
+   * Gets the clef type of the staff
+   * 
+   * @return The clef type of the staff
+   */
+  public String getClefType() {
+    return clefType;
   }
 }
