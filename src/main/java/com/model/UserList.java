@@ -16,7 +16,7 @@ public class UserList {
      * Constructor for UserList
      */
     private UserList() {
-        users = DataAssembler.getUsers();
+        //users = DataAssembler.get();
         if (users == null) {
             users = new ArrayList<>();
         }

@@ -7,11 +7,11 @@ import java.util.List;
  * 
  * @author 
  */
-public class Measure {
+public class Measure extends DataConstants {
 	private int keySignature;
 	private int timeSignatureNumerator;
 	private int timeSignatureDenominator;
-	private List<MusicElement> elements;
+	private List<MusicElement> musicElements;
 	private int measureNumber;
 	private double tempo;
 
@@ -58,7 +58,11 @@ public class Measure {
 	 */
 	public List<MusicElement> getElements() {
 		//TODO
-		return elements;
+		return musicElements;
+	}
+
+	public MusicElement getMusicElementAtIndex(int index) {
+		return musicElements.get(index);
 	}
 
 	/**
@@ -79,4 +83,6 @@ public class Measure {
 	public void setKeySignature(String keySignature) {
 		//TODO
 	}
+
+
 }

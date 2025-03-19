@@ -45,15 +45,15 @@ public class DataWriter extends DataConstants {
    */
   public static boolean saveUsers() {
     UserList users = UserList.getInstance();
-    ArrayList<User> userList = DataAssembler.getUsers(); //TODO: change this to users whenever we are ready for the data
+    //ArrayList<User> userList = DataAssembler.getAssembledUsers(); //TODO: change this to users whenever we are ready for the data
 
     // Create the root JSON object with "users" key
     JSONObject root = new JSONObject();
     JSONArray jsonUsers = new JSONArray();
     
-    for (int i = 0; i < userList.size(); i++) {
-      jsonUsers.add(getUserJSON(userList.get(i)));
-    }
+//    for (int i = 0; i < userList.size(); i++) {
+//      jsonUsers.add(getUserJSON(userList.get(i)));
+//    }
     
     // Add the users array to the root object
     root.put("users", jsonUsers);
@@ -98,9 +98,9 @@ public class DataWriter extends DataConstants {
     
     userDetails.put(USER_ID, user.getId().toString());
     userDetails.put(USER_EMAIL, user.getEmail());
-    userDetails.put(USER_NAME, user.getUsername());
+    userDetails.put(USER_USERNAME, user.getUsername());
     userDetails.put(USER_PASSWORD, user.getPassword());
-    userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
+    userDetails.put(USER_FAVORITED_SONGS, favoriteSongs);
     userDetails.put(USER_FOLLOWED_USERS, followedUsers);
     userDetails.put(USER_THEME_COLOR, user.getThemeColor().name());
 

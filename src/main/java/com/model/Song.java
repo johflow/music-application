@@ -36,8 +36,6 @@ public class Song {
         this.title = title;
         this.composer = composer;
         this.sheetMusic = new ArrayList<>();
-        this.tempo = 120; // Default tempo
-        this.key = KeySignature.C_MAJOR; // Default key
         this.pickUp = 0; // Default pickup
     }
 
@@ -86,33 +84,6 @@ public class Song {
         this.composer = composer;
     }
 
-    /**
-     * Gets the song's instrument
-     *
-     * @return The song's instrument
-     */
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    /**
-     * Sets the song's instrument
-     *
-     * @param instrument The new instrument
-     */
-    public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
-    }
-
-    /**
-     * Gets the song's tempo
-     *
-     * @return The song's tempo
-     */
-    public int getTempo() {
-        return tempo;
-    }
-
   public Song(UUID id, String title, String composer, int pickUp, List<SheetMusic> sheetMusic) {
     this.id = id;
     this.title = title;
@@ -121,31 +92,8 @@ public class Song {
     this.pickUp = pickUp;
   }
 
-    /**
-     * Sets the song's tempo
-     *
-     * @param tempo The new tempo
-     */
-    public void setTempo(int tempo) {
-        this.tempo = tempo;
-    }
 
-    /**
-     * Gets the song's key signature
-     *
-     * @return The song's key signature
-     */
-    public KeySignature getKey() {
-        return key;
-    }
 
-    /**
-     * Sets the song's key signature
-     *
-     * @param key The new key signature
-     */
-    public void setKey(KeySignature key) {
-        this.key = key;
     public List<SheetMusic> getSheetMusics() {
         return sheetMusic;
     }
@@ -166,15 +114,6 @@ public class Song {
      */
     public void setPickUp(int pickUp) {
         this.pickUp = pickUp;
-    }
-
-    /**
-     * Gets the song's sheet music
-     *
-     * @return ArrayList of sheet music
-     */
-    public ArrayList<SheetMusic> getSheetMusic() {
-        return sheetMusic;
     }
 
     /**
