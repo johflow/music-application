@@ -3,6 +3,7 @@ package com.service;
 import com.data.FileReaderUtil;
 import com.data.SongJsonParser;
 import com.data.UserJsonParser;
+import com.model.DataConstants;
 import com.model.ParsedSong;
 import com.model.ParsedUser;
 import com.model.Song;
@@ -14,15 +15,15 @@ import java.util.Map;
 import java.util.UUID;
 import org.json.simple.parser.ParseException;
 
-public class DataAssembler {
+public class DataAssembler extends DataConstants {
 
-  public List<User> getAssembledUsers(String userJSONLocation, String songJSONLocation) throws IOException, ParseException {
+  public List<User> getAssembledUsers() throws IOException, ParseException {
     FileReaderUtil fileReaderUtil = new FileReaderUtil();
     SongJsonParser songJsonParser = new SongJsonParser();
     UserJsonParser userJsonParser = new UserJsonParser();
 
-    String userJSONContent = fileReaderUtil.readFile(userJSONLocation);
-    String songJSONContent = fileReaderUtil.readFile(songJSONLocation);
+    String userJSONContent = fileReaderUtil.readFile(USER_FILE_LOCATION);
+    String songJSONContent = fileReaderUtil.readFile(SONG_FILE_LOCATION);
 
     List<ParsedUser> parsedUsers = userJsonParser.getParsedUsers(userJSONContent);
     List<ParsedSong> parsedSongs = songJsonParser.getParsedSongs(songJSONContent);
@@ -44,13 +45,13 @@ public class DataAssembler {
         .toList();
   }
 
-  public List<Song> getAssembledSongs(String songJSONLocation, String userJSONLocation) throws IOException, ParseException {
+  public List<Song> getAssembledSongs() throws IOException, ParseException {
     FileReaderUtil fileReaderUtil = new FileReaderUtil();
     SongJsonParser songJsonParser = new SongJsonParser();
     UserJsonParser userJsonParser = new UserJsonParser();
 
-    String userJSONContent = fileReaderUtil.readFile(userJSONLocation);
-    String songJSONContent = fileReaderUtil.readFile(songJSONLocation);
+    String userJSONContent = fileReaderUtil.readFile(USER_FILE_LOCATION);
+    String songJSONContent = fileReaderUtil.readFile(SONG_FILE_LOCATION);
 
     List<ParsedUser> parsedUsers = userJsonParser.getParsedUsers(userJSONContent);
     List<ParsedSong> parsedSongs = songJsonParser.getParsedSongs(songJSONContent);
