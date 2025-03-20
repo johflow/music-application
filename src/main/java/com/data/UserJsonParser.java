@@ -63,7 +63,7 @@ public class UserJsonParser extends DataConstants {
   }
 
   private List<UUID> getIDList(JSONObject userJson) {
-    JSONArray IDJson = (JSONArray) userJson.get(USER_FAVORITED_SONGS);
+    JSONArray IDJson = (JSONArray) userJson.get(USER_FAVORITE_SONGS);
     List<UUID> IDs = new ArrayList<>();
     if (IDJson != null) {
       for (Object idObj : IDJson) {

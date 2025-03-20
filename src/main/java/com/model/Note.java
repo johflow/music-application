@@ -1,23 +1,25 @@
 package com.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.jfugue.player.Player;
+
 
 /**
  * Represents a musical note
  */
 public class Note implements MusicElement {
-	private static final String type = "note";
-	private double pitch;
-	private int midiNumber;
-	private String noteName;
-	private double duration;
-	private char durationChar;
-	private int dotted;
-	private boolean tied;
-	private String lyric;
-	private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+    private double pitch;
+    private int midiNumber;
+    private String noteName;
+    private double duration;
+    private char durationChar;
+    private int dotted;
+    private boolean tied;
+    private String lyric;
+    private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
-	/**
+    /**
 	 * Constructor for Note
 	 * 
 	 * @param pitch    The pitch of the note (MIDI value)
@@ -92,48 +94,103 @@ public class Note implements MusicElement {
 		this.lyric = lyric;
 	}
 
-	private void findMissingAttributes() {
-		if(pitch != 0.0) {
-			midiNumber = (int)(69 + 12*(Math.log(pitch/440)/Math.log(2)));
-			noteName = NOTE_NAMES[midiNumber % 12] + ((midiNumber/12)-1);
-		}
-		else if(midiNumber != 0.0) {
-			pitch = 440*Math.pow(2,(midiNumber - 69)/12.0);
-			noteName = NOTE_NAMES[midiNumber % 12] + ((midiNumber/12)-1);
-		}
-		else if(noteName != null) {
-			midiNumber = (int)(69 + 12*(Math.log(pitch/440)/Math.log(2)));
-			pitch = 440*Math.pow(2,(midiNumber - 69)/12.0);
-		}
-		if(duration != 0.0) {
-			if(duration == 1.0) {
-				durationChar = 'w';
-			} else if(duration == 0.5) {
-				durationChar = 'h';
-			} else if(duration == 0.25) {
-				durationChar = 'q';
-			} else if(duration == 0.125) {
-				durationChar = 'e';
-			} else if(duration == 0.0625) {
-				durationChar = 's';
-			}
-		}
-		else if(durationChar != '\0') {
-			if(durationChar == 'w') {
-				duration = 1.0;
-			} else if(durationChar == 'h') {
-				duration = 0.5;
-			} else if(durationChar == 'q') {
-				duration = 0.25;
-			} else if(durationChar == 'e') {
-				duration = 0.125;
-			} else if(durationChar == 's') {
-				duration = 0.0625;
-			}
-		}
-	}
+    /**
+     * Calculate missing note attributes based on provided values
+     * Uses the relationships between pitch (Hz), MIDI number, and note name
+     * Also converts between fractional duration and duration characters
+     */
+    private void findMissingAttributes() {
+        // Maps for more efficient lookups
+        final Map<Character, Double> DURATION_MAP = Map.of(
+            'w', 1.0,         // whole note
+            'h', 0.5,         // half note
+            'q', 0.25,        // quarter note
+            'i', 0.125,       // eighth note
+            's', 0.0625      // sixteenth note
+        );
 
-	public String toJFugueString(String tiesDurationChar) {
+        final Map<String, Integer> NOTE_INDEX_MAP = new HashMap<>();
+        for (int i = 0; i < NOTE_NAMES.length; i++) {
+            NOTE_INDEX_MAP.put(NOTE_NAMES[i], i);
+        }
+
+        // A440 frequency standard and mathematical constants for conversion
+        final double A440 = 440.0;
+        final double LOG_2 = Math.log(2);
+        
+        // Calculate pitch/MIDI number/note name based on what's available
+        computePitchAndName(A440, LOG_2, NOTE_INDEX_MAP);
+        
+        // Convert between duration and duration character
+        computeDuration(DURATION_MAP);
+    }
+
+    /**
+     * Computes the relationships between pitch, MIDI number, and note name
+     */
+    private void computePitchAndName(double a440, double log2, Map<String, Integer> noteMap) {
+        // Pitch to MIDI number and note name
+        if (pitch > 0 && midiNumber == 0) {
+            midiNumber = (int)(69 + 12 * (Math.log(pitch / a440) / log2));
+            noteName = NOTE_NAMES[midiNumber % 12] + ((midiNumber / 12) - 1);
+        } 
+        // MIDI number to pitch and note name
+        else if (midiNumber > 0 && (Math.abs(pitch) < 0.001 || noteName == null)) {
+            pitch = a440 * Math.pow(2, (midiNumber - 69) / 12.0);
+            noteName = NOTE_NAMES[midiNumber % 12] + ((midiNumber / 12) - 1);
+        } 
+        // Note name to MIDI number and pitch
+        else if (noteName != null && noteName.length() > 1 && 
+                (midiNumber == 0 || Math.abs(pitch) < 0.001)) {
+            try {
+                // Parse the noteName (e.g., "C4", "D#5")
+                String notePart = noteName.substring(0, noteName.length() - 1);
+                int octave = Integer.parseInt(noteName.substring(noteName.length() - 1));
+                
+                Integer noteIndex = noteMap.get(notePart);
+                if (noteIndex != null) {
+                    midiNumber = noteIndex + (octave + 1) * 12;
+                    pitch = a440 * Math.pow(2, (midiNumber - 69) / 12.0);
+                }
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                // Handle invalid note name format
+                System.err.println("Invalid note name format: " + noteName);
+            }
+        }
+    }
+
+    /**
+     * Computes duration and duration character conversions
+     */
+    private void computeDuration(Map<Character, Double> durationMap) {
+        // Convert duration to duration character
+        if (duration > 0 && durationChar == '\0') {
+            // Find closest duration character
+            double minDiff = Double.MAX_VALUE;
+            for (Map.Entry<Character, Double> entry : durationMap.entrySet()) {
+                double diff = Math.abs(entry.getValue() - duration);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    durationChar = entry.getKey();
+                }
+            }
+        } 
+        // Convert duration character to duration
+        else if (durationChar != '\0' && Math.abs(duration) < 0.001) {
+            Double durationValue = durationMap.get(durationChar);
+            if (durationValue != null) {
+                duration = durationValue;
+            } else {
+                // Default to quarter note if unknown character
+                duration = 0.25;
+                durationChar = 'q';
+            }
+        }
+    }
+
+    // Getters and setters
+    
+    public String toJFugueString(String tiesDurationChar) {
 		String JFugueString;
 		JFugueString = noteName + durationChar;
 		return JFugueString;
@@ -151,12 +208,7 @@ public class Note implements MusicElement {
 	}
 
 	public String getType() {
-		return type;
-	}
-
-	@Override
-	public String toJFugueString() {
-		return "";
+		return getType();
 	}
 
 	public double getPitch() {
@@ -228,4 +280,10 @@ public class Note implements MusicElement {
 		}
 		this.lyric = lyric;
 	}
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'play'");
+    }
 }

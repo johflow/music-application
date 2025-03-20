@@ -7,7 +7,7 @@ import java.util.List;
  * 
  * @author 
  */
-public class Measure extends DataConstants {
+public class Measure {
 	private int keySignature;
 	private int timeSignatureNumerator;
 	private int timeSignatureDenominator;

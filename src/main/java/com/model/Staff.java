@@ -18,7 +18,7 @@ public class Staff extends DataConstants {
       for (int j = 0; j < measures.get(i).getMusicElements().size(); ++j) {
         switch (measures.get(i).getMusicElementAtIndex(j).getType()) {
           case SONG_MUSIC_ELEMENT_NOTE -> {
-            //JFugueString.append(noteToJFugueString(measures.get(i).getMusicElementAtIndex(j)));
+            JFugueString.append(noteToJFugueString(measures.get(i).getMusicElementAtIndex(j)));
           }
           case SONG_MUSIC_ELEMENT_CHORD -> {
 
@@ -32,21 +32,20 @@ public class Staff extends DataConstants {
         }
       }
     }
-    return "";
   }
 
-//  private StringBuilder noteToJFugueString(MusicElement musicElement) {
-//    StringBuilder JFugueString = new StringBuilder();
-//    Note note = (Note) measures.get(i).getMusicElementAtIndex(j);
-//    JFugueString.append(note.toJFugueString());
-//    for (int k = 1; ((Note) measures.get(i).getMusicElementAtIndex(k-1)).hasTie(); ++k) {
-//      JFugueString.append(((Note) measures.get(i).getMusicElementAtIndex(k)).getDurationChar());
-//    }
-//    for (int l = 0; l < ((Note) measures.get(i).getMusicElementAtIndex(j)).getDotted(); ++l) {
-//      JFugueString.append(".");
-//    }
-//    return JFugueString;
-//  }
+  private StringBuilder noteToJFugueString(MusicElement musicElement) {
+    StringBuilder JFugueString = new StringBuilder();
+    Note note = (Note) measures.get(i).getMusicElementAtIndex(j);
+    JFugueString.append(note.toJFugueString());
+    for (int k = 1; ((Note) measures.get(i).getMusicElementAtIndex(k-1)).hasTie(); ++k) {
+      JFugueString.append(((Note) measures.get(i).getMusicElementAtIndex(k)).getDurationChar());
+    }
+    for (int l = 0; l < ((Note) measures.get(i).getMusicElementAtIndex(j)).getDotted(); ++l) {
+      JFugueString.append(".");
+    }
+    return JFugueString;
+  }
 
   /**
    * Gets the measures of the staff
