@@ -5,7 +5,7 @@ import org.jfugue.player.Player;
 /**
  * Represents a musical note
  */
-public class Note {
+public class Note implements MusicElement {
 	private static final String type = "note";
 	private double pitch;
 	private int midiNumber;
@@ -152,6 +152,11 @@ public class Note {
 
 	public String getType() {
 		return type;
+	}
+
+	@Override
+	public String toJFugueString() {
+		return "";
 	}
 
 	public double getPitch() {

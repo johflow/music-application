@@ -26,7 +26,7 @@ public class MusicAppFacade {
         this.dataWriter = new DataWriter();
         this.dataAssembler = new DataAssembler();
         this.songList = SongList.getInstance();
-        this.userList = UserList.getInstance();
+        //this.userList = UserList.getInstance();
         this.user = null; // Initialize as null until login
     }
 
@@ -67,7 +67,7 @@ public class MusicAppFacade {
         songList.addSong(song);
         
         // Save the song to persistent storage
-        dataWriter.saveSongs();
+        //dataWriter.saveSongs();
     }
 
     /**
@@ -241,9 +241,9 @@ public class MusicAppFacade {
      * 
      * @return ArrayList of all users
      */
-    public ArrayList<User> getUsers() {
-        return userList.getUsers();
-    }
+//    public ArrayList<User> getUsers() {
+//        return userList.getUsers();
+//    }
     
     /**
      * Gets all available theme colors

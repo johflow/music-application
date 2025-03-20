@@ -16,10 +16,6 @@ public class Tuplet implements MusicElement {
   public Tuplet(int subdivisions, int impliedDivision, double duration, List<MusicElement> elements) {
   }
 
-  @Override
-  public void play() {
-
-  }
 
   public String toJFugueString() {
     //TODO

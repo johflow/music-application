@@ -98,9 +98,9 @@ public class DataWriter extends DataConstants {
     
     userDetails.put(USER_ID, user.getId().toString());
     userDetails.put(USER_EMAIL, user.getEmail());
-    userDetails.put(USER_NAME, user.getUsername());
+    userDetails.put(USER_USERNAME, user.getUsername());
     userDetails.put(USER_PASSWORD, user.getPassword());
-    userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
+    userDetails.put(USER_FAVORITED_SONGS, favoriteSongs);
     userDetails.put(USER_FOLLOWED_USERS, followedUsers);
     userDetails.put(USER_THEME_COLOR, user.getThemeColor().name());
 
