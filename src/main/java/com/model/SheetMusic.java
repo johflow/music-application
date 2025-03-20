@@ -39,4 +39,22 @@ public class SheetMusic {
       return pattern;
   }
 
+  /**
+  * Gets the instrument of the sheet music
+  * 
+  * @return The instrument of the sheet music
+  */
+  public Instrument getInstrument() {
+    return instrument;
+  }
+
+  /**
+  * Gets the staves of the sheet music
+  * 
+  * @return The staves of the sheet music
+  */
+  public List<Staff> getStaves() {
+    return staves;
+  }
 }
+
