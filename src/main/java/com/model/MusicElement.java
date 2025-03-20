@@ -2,6 +2,7 @@ package com.model;
 
 public interface MusicElement {
 
-    public void play();
+  public String getType();
 
+  public String toJFugueString();
 }

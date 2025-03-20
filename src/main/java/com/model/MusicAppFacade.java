@@ -55,15 +55,12 @@ public class MusicAppFacade {
      * @param numberOfMeasures          The number of measures in the song
      * @param pickup                    The pickup value
      */
-    public void createSong(String title, String composer, Instrument instrument, int tempo, KeySignature key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
+    public void createSong(String title, String composer, Instrument instrument, int tempo, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
         if (user == null) {
             return; // User must be logged in to create a song
         }
         
         Song song = new Song(title, composer);
-        song.setInstrument(instrument);
-        song.setTempo(tempo);
-        song.setKey(key);
         song.setPickUp(pickup);
         
         // Add the song to the song list

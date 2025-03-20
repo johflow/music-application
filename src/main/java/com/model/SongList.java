@@ -81,16 +81,10 @@ public class SongList {
      * @param pickup The pickup value
      * @return The newly created song
      */
-    public Song addSong(String title, String composer, Instrument instrument, int tempo, KeySignature key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
+    public Song addSong(String title, String composer, Instrument instrument, int tempo, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup) {
         Song newSong = new Song(title, composer);
-        newSong.setInstrument(instrument);
-        newSong.setTempo(tempo);
-        newSong.setKey(key);
         newSong.setPickUp(pickup);
-        
-        // Create sheet music with the specified parameters
-        SheetMusic sheetMusic = new SheetMusic(numberOfMeasures, timeSignatureNumerator, timeSignatureDenominator);
-        newSong.addSheetMusic(sheetMusic);
+
         
         songs.add(newSong);
         return newSong;

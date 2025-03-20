@@ -8,20 +8,20 @@ import java.util.List;
  * @author 
  */
 public class Instrument {
-    private List<String> cleftTypes;
+    private List<String> clefTypes;
     private String instrumentName;
 
     public Instrument(List<String> clefTypes, String instrumentName) {
-        this.cleftTypes = clefTypes;
+        this.clefTypes = clefTypes;
         this.instrumentName = instrumentName;
     }
 
-    public List<String> getCleftTypes() {
-        return cleftTypes;
+    public List<String> getClefTypes() {
+        return clefTypes;
     }
 
-    public void setCleftTypes(List<String> cleftTypes) {
-        this.cleftTypes = cleftTypes;
+    public void setClefTypes(List<String> clefTypes) {
+        this.clefTypes = clefTypes;
     }
 
     public String getInstrumentName() {
