@@ -16,169 +16,82 @@ public class Note implements MusicElement {
     private int dotted;
     private boolean tied;
     private String lyric;
-    private boolean isRest;
-    private boolean isSelected;
-    private int position;
-    
     private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
     /**
-     * Constructs a Note with all its properties as specified in the UML.
-     * 
-     * @param pitch The frequency of the note
-     * @param midiNumber The MIDI number representation of the note
-     * @param noteName The name of the note (e.g., "C4", "D#5")
-     * @param duration The duration value of the note
-     * @param durationChar The character representation of the duration
-     * @param dotted The number of dots applied to the note duration
-     * @param tied Whether the note is tied to the next note
-     * @param lyric The lyric associated with this note, if any
-     */
-    public Note(double pitch, int midiNumber, String noteName, double duration, 
-                char durationChar, int dotted, boolean tied, String lyric) {
-        this.pitch = pitch;
-        this.midiNumber = midiNumber;
-        this.noteName = noteName;
-        this.duration = duration;
-        this.durationChar = durationChar;
-        this.dotted = dotted;
-        this.tied = tied;
-        this.lyric = lyric;
-        this.isSelected = false;
-        this.isRest = false;
-    }
-    
-    /**
-     * Constructor for Note with position and rest parameters
-     *
-     * @param pitch    The pitch of the note (MIDI value)
-     * @param duration The duration of the note
-     * @param position The position of the note in the measure
-     * @param isRest   Whether the note is a rest
-     */
-    public Note(int pitch, int duration, int position, boolean isRest) {
-        this.pitch = pitch;
-        this.duration = duration;
-        this.position = position;
-        this.isRest = isRest;
-        this.isSelected = false;
-        this.dotted = 0;
-        this.tied = false;
-        findMissingAttributes();
-    }
+	 * Constructor for Note
+	 * 
+	 * @param pitch    The pitch of the note (MIDI value)
+	 * @param duration The duration of the note
+	 * @param isRest   Whether the note is a rest
+	 */
+	public Note(int pitch, int duration, boolean isRest) {
+		this.pitch = pitch;
+		this.duration = duration;
+		findMissingAttributes();
+	}
 
-    /**
-     * Constructor with pitch, duration, and lyric
-     */
-    public Note(double pitch, double duration, String lyric) {
-        this.pitch = pitch;
-        this.duration = duration;
-        this.lyric = lyric;
-        this.dotted = 0;
-        this.tied = false;
-        findMissingAttributes();
-    }
+	public Note(double pitch, double duration, String lyric) {
+		this.pitch = (int)pitch;
+		this.duration = (int)duration;
+		this.lyric = lyric;
+		findMissingAttributes();
+	}
 
-    /**
-     * Constructor with MIDI number, duration, and lyric
-     */
-    public Note(int midiNumber, double duration, String lyric) {
-        this.midiNumber = midiNumber;
-        this.duration = duration;
-        this.lyric = lyric;
-        this.dotted = 0;
-        this.tied = false;
-        findMissingAttributes();
-    }
+	public Note(int midiNumber, double duration, String lyric) {
+		this.midiNumber = midiNumber;
+		this.duration = (int)duration;
+		this.lyric = lyric;
+		findMissingAttributes();
+	}
 
-    /**
-     * Constructor with note name, duration, and lyric
-     */
-    public Note(String noteName, double duration, String lyric) {
-        this.noteName = noteName;
-        this.duration = duration;
-        this.lyric = lyric;
-        this.dotted = 0;
-        this.tied = false;
-        findMissingAttributes();
-    }
+	public Note(String noteName, double duration, String lyric) {
+		this.noteName = noteName;
+		this.duration = (int)duration;
+		this.lyric = lyric;
+		findMissingAttributes();
+	}
 
-    /**
-     * Constructor with pitch, duration character, and lyric
-     */
-    public Note(double pitch, char durationChar, String lyric) {
-        this.pitch = pitch;
-        this.durationChar = durationChar;
-        this.lyric = lyric;
-        this.dotted = 0;
-        this.tied = false;
-        findMissingAttributes();
-    }
+	public Note(double pitch, char durationChar, String lyric) {
+		this.pitch = (int)pitch;
+		this.durationChar = durationChar;
+		this.lyric = lyric;
+		findMissingAttributes();
+	}
 
-    /**
-     * Constructor with MIDI number, duration character, and lyric
-     */
-    public Note(int midiNumber, char durationChar, String lyric) {
-        this.midiNumber = midiNumber;
-        this.durationChar = durationChar;
-        this.lyric = lyric;
-        this.dotted = 0;
-        this.tied = false;
-        findMissingAttributes();
-    }
+	public Note(int midiNumber, char durationChar, String lyric) {
+		this.midiNumber = midiNumber;
+		this.durationChar = durationChar;
+		this.lyric = lyric;
+		findMissingAttributes();
+	}
 
-    /**
-     * Constructor with note name, duration character, and lyric
-     */
-    public Note(String noteName, char durationChar, String lyric) {
-        this.noteName = noteName;
-        this.durationChar = durationChar;
-        this.lyric = lyric;
-        this.dotted = 0;
-        this.tied = false;
-        findMissingAttributes();
-    }
-    
-    /**
-     * Plays the note using JFugue Player
-     */
-    public void play() {
-        Player player = new Player();
-        player.play(toJfugueString());
-    }
+	public Note(String noteName, char durationChar, String lyric) {
+		this.noteName = noteName;
+		this.durationChar = durationChar;
+		this.lyric = lyric;
+		findMissingAttributes();
+	}
 
-    /**
-     * Converts the note to a JFugue string representation.
-     * 
-     * @return A JFugue-compatible string representation of the note
-     */
-    @Override
-    public String toJfugueString() {
-        StringBuilder sb = new StringBuilder();
+	public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, String lyric) {
+		this.pitch = pitch;
+		this.midiNumber = midiNumber;
+		this.noteName = noteName;
+		this.duration = duration;
+		this.durationChar = durationChar;
+		this.lyric = lyric;
+	}
 
-        // Add note name
-        sb.append(noteName);
-
-        // Add duration
-        sb.append(durationChar);
-        
-        // Add dots if any
-        for (int i = 0; i < dotted; i++) {
-            sb.append('.');
-        }
-
-        // Add tie if present
-        if (tied) {
-            sb.append('-');
-        }
-
-        // Add lyric if present
-        if (lyric != null && !lyric.isEmpty()) {
-            sb.append('[').append(lyric).append(']');
-        }
-
-        return sb.toString();
-    }
+  public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
+		this.pitch = pitch;
+		this.midiNumber = midiNumber;
+		this.noteName = noteName;
+		this.duration = duration;
+		this.durationChar = durationChar;
+		this.dotted = dotted;
+		this.tied = tied;
+		this.lyric = lyric;
+	}
 
     /**
      * Calculate missing note attributes based on provided values
@@ -276,96 +189,100 @@ public class Note implements MusicElement {
 
     // Getters and setters
     
-    public double getPitch() {
-        return pitch;
-    }
-    
-    public void setPitch(double pitch) {
-        this.pitch = pitch;
-        findMissingAttributes();
-    }
-    
-    public int getMidiNumber() {
-        return midiNumber;
-    }
-    
-    public void setMidiNumber(int midiNumber) {
-        this.midiNumber = midiNumber;
-        findMissingAttributes();
-    }
-    
-    public String getNoteName() {
-        return noteName;
-    }
-    
-    public void setNoteName(String noteName) {
-        this.noteName = noteName;
-        findMissingAttributes();
-    }
-    
-    public double getDuration() {
-        return duration;
-    }
-    
-    public void setDuration(double duration) {
-        this.duration = duration;
-        findMissingAttributes();
-    }
-    
-    public char getDurationChar() {
-        return durationChar;
-    }
-    
-    public void setDurationChar(char durationChar) {
-        this.durationChar = durationChar;
-        findMissingAttributes();
-    }
-    
-    public int getDotted() {
-        return dotted;
-    }
-    
-    public void setDotted(int dotted) {
-        this.dotted = dotted;
-    }
-    
-    public boolean isTied() {
-        return tied;
-    }
-    
-    public void setTied(boolean tied) {
-        this.tied = tied;
-    }
-    
-    public String getLyric() {
-        return lyric;
-    }
-    
-    public void setLyric(String lyric) {
-        this.lyric = lyric;
-    }
-    
-    public boolean isRest() {
-        return isRest;
-    }
-    
-    public void setRest(boolean isRest) {
-        this.isRest = isRest;
-    }
-    
-    public boolean isSelected() {
-        return isSelected;
-    }
-    
-    public void setSelected(boolean isSelected) {
-        this.isSelected = isSelected;
-    }
-    
-    public int getPosition() {
-        return position;
-    }
-    
-    public void setPosition(int position) {
-        this.position = position;
+    public String toJFugueString(String tiesDurationChar) {
+		String JFugueString;
+		JFugueString = noteName + durationChar;
+		return JFugueString;
+	}
+
+	public char getDurationChar() {
+		return durationChar;
+	}
+	public int getDotted() {
+		return dotted;
+	}
+
+	public boolean hasTie() {
+		return tied;
+	}
+
+	public String getType() {
+		return getType();
+	}
+
+	public double getPitch() {
+		return pitch;
+	}
+
+	public int getMidiNumber() {
+		return midiNumber;
+	}
+
+	public String getNoteName() {
+		return noteName;
+	}
+
+	public double getDuration() {
+		return duration;
+	}
+
+	public String getLyric() {
+		return lyric;
+	}
+
+	public void setPitch(double pitch) {
+		if (pitch < 0) {
+			throw new IllegalArgumentException("Notes cannot have a pitch of zero or less!");
+		}
+		this.pitch = pitch;
+	}
+
+	public void setMidiNumber(int midiNumber) {
+		if (midiNumber < 0) {
+			throw new IllegalArgumentException("Notes cannot have a Midi Number of zero or less!");
+		}
+		this.midiNumber = midiNumber;
+	}
+
+	public void setNoteName(String noteName) {
+		if (noteName == null) {
+			throw new IllegalArgumentException("Note name cannot be null!");
+		}
+		this.noteName = noteName;
+	}
+
+	public void setDuration(double duration) {
+		if (duration <= 0 || duration > 2) {
+			throw new IllegalArgumentException("Invalid duration argument!");
+		}
+		this.duration = duration;
+	}
+
+	public void setDurationChar(char durationChar) {
+		this.durationChar = durationChar;
+	}
+
+	public void setDotted(int dotted) {
+		if (dotted < 0) {
+			throw new IllegalArgumentException("You cannot dot a note negative times!");
+		}
+		this.dotted = dotted;
+	}
+
+	public void setTied(boolean tied) {
+		this.tied = tied;
+	}
+
+	public void setLyric(String lyric) {
+		if (lyric == null) {
+			throw new IllegalArgumentException("Lyrics cannot be null! (Try making it \"\")");
+		}
+		this.lyric = lyric;
+	}
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'play'");
     }
 }
