@@ -1,6 +1,9 @@
 package com.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.jfugue.player.Player;
+
 
 /**
  * Represents a musical note
@@ -35,19 +38,7 @@ public class Note implements MusicElement {
 		this.lyric = lyric;
 		findMissingAttributes();
 	}
-	public Note(double pitch, double duration, String lyric) {
-		this.pitch = (int)pitch;
-		this.duration = (int)duration;
-		this.lyric = lyric;
-		findMissingAttributes();
-	}
 
-	public Note(int midiNumber, double duration, String lyric) {
-		this.midiNumber = midiNumber;
-		this.duration = (int)duration;
-		this.lyric = lyric;
-		findMissingAttributes();
-	}
 	public Note(int midiNumber, double duration, String lyric) {
 		this.midiNumber = midiNumber;
 		this.duration = (int)duration;
@@ -61,12 +52,6 @@ public class Note implements MusicElement {
 		this.lyric = lyric;
 		findMissingAttributes();
 	}
-	public Note(String noteName, double duration, String lyric) {
-		this.noteName = noteName;
-		this.duration = (int)duration;
-		this.lyric = lyric;
-		findMissingAttributes();
-	}
 
 	public Note(double pitch, char durationChar, String lyric) {
 		this.pitch = (int)pitch;
@@ -74,19 +59,7 @@ public class Note implements MusicElement {
 		this.lyric = lyric;
 		findMissingAttributes();
 	}
-	public Note(double pitch, char durationChar, String lyric) {
-		this.pitch = (int)pitch;
-		this.durationChar = durationChar;
-		this.lyric = lyric;
-		findMissingAttributes();
-	}
 
-	public Note(int midiNumber, char durationChar, String lyric) {
-		this.midiNumber = midiNumber;
-		this.durationChar = durationChar;
-		this.lyric = lyric;
-		findMissingAttributes();
-	}
 	public Note(int midiNumber, char durationChar, String lyric) {
 		this.midiNumber = midiNumber;
 		this.durationChar = durationChar;
@@ -135,7 +108,7 @@ public class Note implements MusicElement {
             'i', 0.125,       // eighth note
             's', 0.0625      // sixteenth note
         );
-        
+
         final Map<String, Integer> NOTE_INDEX_MAP = new HashMap<>();
         for (int i = 0; i < NOTE_NAMES.length; i++) {
             NOTE_INDEX_MAP.put(NOTE_NAMES[i], i);
