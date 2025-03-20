@@ -20,8 +20,9 @@ import com.model.Measure;
 /**
  * Class that writes data to JSON.
  * 
- * @author
+ * @author Joshua Gould
  */
+@SuppressWarnings("unchecked")
 public class DataWriter extends DataConstants {
     /**
      * Writes user data to JSON.
@@ -41,7 +42,8 @@ public class DataWriter extends DataConstants {
         // Add the users array to the root object
         root.put("users", jsonUsers);
         
-        try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) {
+        // try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) { uncomment this when done testing
+		try (FileWriter file = new FileWriter("src/main/java/com/data/TESTusers.json")) {  // delete this when done testing
             file.write(root.toJSONString());
             file.flush();
             return true;
@@ -67,7 +69,8 @@ public class DataWriter extends DataConstants {
 
         root.put("songs", jsonSongs);
 
-        try (FileWriter file = new FileWriter(SONG_FILE_LOCATION)) {
+        // try (FileWriter file = new FileWriter(SONG_FILE_LOCATION)) { uncomment this when done testing
+		try (FileWriter file = new FileWriter("src/main/java/com/data/TESTsongs.json")) {
             file.write(root.toJSONString());
             file.flush();
             return true;
@@ -97,7 +100,7 @@ public class DataWriter extends DataConstants {
         
         userDetails.put(USER_ID, user.getId().toString());
         userDetails.put(USER_EMAIL, user.getEmail());
-        userDetails.put(USER_NAME, user.getUsername());
+        userDetails.put(USER_USERNAME, user.getUsername());
         userDetails.put(USER_PASSWORD, user.getPassword());
         userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
         userDetails.put(USER_FOLLOWED_USERS, followedUsers);

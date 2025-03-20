@@ -8,7 +8,7 @@ public abstract class DataConstants {
   public static final String USER_OBJECT_KEY = "users";
   public static final String USER_ID = "id";
   public static final String USER_EMAIL = "email";
-  public static final String USER_NAME = "username";
+  public static final String USER_USERNAME = "username";
   public static final String USER_PASSWORD = "password";
   public static final String USER_FAVORITE_SONGS = "favoriteSongs";
   public static final String USER_FOLLOWED_USERS = "followedUsers";

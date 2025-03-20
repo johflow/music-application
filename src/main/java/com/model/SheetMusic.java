@@ -20,6 +20,15 @@ public class SheetMusic {
     this.instrument = instrument;
   }
 
+    /**
+   * Constructor for the SheetMusic class
+   * @param instrument The insrument associated with this sheet music
+   */
+  public SheetMusic(Instrument instrument, List<Staff> staves) {
+    this.staves = staves;
+    this.instrument = instrument;
+  }
+
   /**
   * Converts this sheet music to a JFugue Pattern
   * @return Pattern representing this sheet music in JFugue format

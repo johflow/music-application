@@ -7,16 +7,31 @@ import com.model.DataConstants;
 import com.model.ParsedUser;
 import com.model.User;
 import com.service.DataAssembler;
+import com.service.DataWriter;
+
+
 import java.io.IOException;
 import java.util.List;
 import org.jfugue.player.Player;
 import org.jfugue.pattern.Pattern;
 import org.json.simple.parser.ParseException;
 
-public class MusicPlayer {
+public class MusicPlayer extends DataConstants {
 
   public static void main(String[] args) throws IOException, ParseException {
-    Player player = new Player();
+	// Data writing testing
+	// DataAssembler UserData = new DataAssembler();
+	// List<User> userData = UserData.getAssembledUsers(USER_FILE_LOCATION, SONG_FILE_LOCATION);
+	// DataWriter.saveUsers(userData);
+
+	// DataAssembler SongData = new DataAssembler();
+	// List<User> songData = SongData.getAssembledUsers(USER_FILE_LOCATION, SONG_FILE_LOCATION);
+	// DataWriter.saveUsers(songData);
+
+
+
+
+        Player player = new Player();
 
     DataAssembler assembler = new DataAssembler();
 //    System.out.println(assembler.getAssembledUsers(DataConstants.USER_FILE_LOCATION, DataConstants.SONG_FILE_LOCATION));
