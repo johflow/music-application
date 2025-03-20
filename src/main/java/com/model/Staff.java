@@ -15,7 +15,7 @@ public class Staff extends DataConstants {
   public String toJFugueString() {
     StringBuilder JFugueString = new StringBuilder();
     for (int i = 0; i < measures.size(); ++i) {
-      for (int j = 0; j < measures.get(i).getElements().size(); ++j) {
+      for (int j = 0; j < measures.get(i).getMusicElements().size(); ++j) {
         switch (measures.get(i).getMusicElementAtIndex(j).getType()) {
           case SONG_MUSIC_ELEMENT_NOTE -> {
             JFugueString.append(noteToJFugueString(measures.get(i).getMusicElementAtIndex(j)));
@@ -32,6 +32,7 @@ public class Staff extends DataConstants {
         }
       }
     }
+    return JFugueString.toString();
   }
 
   private StringBuilder noteToJFugueString(MusicElement musicElement) {
