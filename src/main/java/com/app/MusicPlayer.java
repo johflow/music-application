@@ -1,34 +1,51 @@
 package com.app;
 
-import com.data.FileReaderUtil;
-import com.data.SongJsonParser;
-import com.data.UserJsonParser;
-import com.model.DataConstants;
-import com.model.ParsedUser;
-import com.model.User;
-import com.service.DataAssembler;
-import com.service.DataWriter;
-
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import org.jfugue.player.Player;
-import org.jfugue.pattern.Pattern;
+
 import org.json.simple.parser.ParseException;
+
+import com.model.Song;
+import com.model.ThemeColor;
+import com.model.User;
+import com.service.DataWriter;
 
 public class MusicPlayer {
 
   public static void main(String[] args) throws IOException, ParseException {
-	DataAssembler UserData = new DataAssembler();
-	List<User> userData = UserData.getAssembledUsers();
-	DataWriter.saveUsers(userData);
+	// Josh's tests for DataWriter
+	// Create test data
+	List<User> users = new ArrayList<>();
+	List<Song> songs = new ArrayList<>();
 
-	DataAssembler SongData = new DataAssembler();
-	List<User> songData = SongData.getAssembledUsers();
-	DataWriter.saveUsers(songData);
+	// Create a test user
+	User testUser = new User(null, "testuser", "password123");
+	testUser.setThemeColor(ThemeColor.BLUE);
+	testUser.setEmail("testuser@example.com");
+	users.add(testUser);
 
+	// Create a test song
+	Song testSong = new Song("Test Song", "Test Composer");
+	testSong.setComposer("Test Composer");
+	testSong.setPickUp(0);
+	songs.add(testSong);
 
+	// Save test data using DataWriter
+	try {
+		boolean usersSaved = DataWriter.saveUsers(users);
+		boolean songsSaved = DataWriter.saveSongs(songs);
 
+		if (usersSaved && songsSaved) {
+			System.out.println("Test data saved successfully!");
+		} else {
+			System.out.println("Error saving test data");
+		}
+	} catch (Exception e) {
+		System.err.println("Error during test:");
+		System.err.println(e.getMessage());
+		e.printStackTrace();
+	}
 
 //         Player player = new Player();
 
