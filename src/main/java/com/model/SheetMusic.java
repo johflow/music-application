@@ -65,5 +65,12 @@ public class SheetMusic {
   public List<Staff> getStaves() {
     return staves;
   }
+
+  @Override
+  public String toString() {
+    return "SheetMusic{" +
+        "staves=" + staves +
+        '}';
+  }
 }
 

@@ -128,5 +128,12 @@ public class Measure {
 	 */
 	public double getTempo() {
 		return tempo;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "Measure{" +
+				"musicElements=" + musicElements +
+				'}';
+	}
 }

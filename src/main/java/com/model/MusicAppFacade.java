@@ -232,7 +232,7 @@ public class MusicAppFacade {
      * 
      * @return ArrayList of all songs
      */
-    public ArrayList<Song> getSongs() {
+    public List<Song> getSongs() {
         return songList.getSongs();
     }
     

@@ -36,7 +36,7 @@ public class SongList {
      * 
      * @return ArrayList of songs
      */
-    public ArrayList<Song> getSongs() {
+    public List<Song> getSongs() {
         return songs;
     }
 

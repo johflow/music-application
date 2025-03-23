@@ -2,13 +2,15 @@ package com.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.datatype.Duration;
 import org.jfugue.player.Player;
 
 
 /**
  * Represents a musical note
  */
-public class Note implements MusicElement {
+public class Note implements MusicElement, DurationElement {
+		private String type;
     private double pitch;
     private int midiNumber;
     private String noteName;
@@ -83,7 +85,8 @@ public class Note implements MusicElement {
 		this.lyric = lyric;
 	}
 
-  public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
+  public Note(String type, double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
+		this.type = type;
 		this.pitch = pitch;
 		this.midiNumber = midiNumber;
 		this.noteName = noteName;
@@ -208,7 +211,11 @@ public class Note implements MusicElement {
 	}
 
 	public String getType() {
-		return getType();
+		return type;
+	}
+
+	public String toJFugueString() {
+		return "";
 	}
 
 	public double getPitch() {
@@ -281,9 +288,12 @@ public class Note implements MusicElement {
 		this.lyric = lyric;
 	}
 
-    @Override
-    public void play() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'play'");
-    }
+	@Override
+	public String toString() {
+		return "Note{" +
+				"noteName='" + noteName + '\'' +
+				", durationChar=" + durationChar +
+				", dotted=" + dotted +
+				'}';
+	}
 }
