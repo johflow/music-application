@@ -18,7 +18,6 @@ public class UserList {
      */
     private UserList() {
         users = new ArrayList<>();
-        loadUsers();
     }
     
     /**
@@ -29,6 +28,7 @@ public class UserList {
     public static UserList getInstance() {
         if (instance == null) {
             instance = new UserList();
+            instance.loadUsers();
         }
         return instance;
     }
