@@ -1,0 +1,12 @@
+{
+    "songs": [
+        {
+            "composer": "Test Composer",
+            "publisher": null,
+            "pickUp": 0,
+            "id": "6bf82e70-b66f-4720-9641-0355b506c256",
+            "sheetMusic": [],
+            "title": "Test Song"
+        }
+    ]
+}

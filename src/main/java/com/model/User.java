@@ -7,12 +7,12 @@ import java.util.UUID;
  * Represents a user in the music application
  */
 public class User {
-    private UUID id;
+    private final UUID id;
     private String email;
     private String username;
     private String password;
-    private ArrayList<Song> favoriteSongs;
-    private ArrayList<User> followedUsers;
+    private final ArrayList<Song> favoriteSongs;
+    private final ArrayList<User> followedUsers;
     private ThemeColor themeColor;
 
     /**
@@ -29,7 +29,7 @@ public class User {
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
-        this.themeColor = ThemeColor.getDefault(); // Default theme color
+        this.themeColor = ThemeColor.getDefault();
     }
 
     /**
@@ -47,7 +47,7 @@ public class User {
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
-        this.themeColor = ThemeColor.getDefault(); // Default theme color
+        this.themeColor = ThemeColor.getDefault();
     }
     
     /**
@@ -220,6 +220,12 @@ public class User {
         return (this.email.equals(email) || this.username.equals(username)) && this.password.equals(password);
     }
 
+    /**
+     * Checks if this user is equal to another object
+     * 
+     * @param obj The object to compare to
+     * @return True if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -228,8 +234,23 @@ public class User {
         return id.equals(user.id);
     }
 
+    /**
+     * Returns a hash code value for the user
+     * 
+     * @return Hash code value for the user
+     */
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+    
+    /**
+     * Returns a string representation of the user
+     * 
+     * @return String representation of the user
+     */
     @Override
     public String toString() {
-        return this.username + " " + this.email + " " +  " " + this.password + " " + getFavoriteSongs();
+        return this.username + " " + this.email + " " + this.id + " " + this.password + " " + getFavoriteSongs() + " " + getFollowedUsers() + " " + getThemeColor();
     }
 }
