@@ -29,7 +29,7 @@ public class User {
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
-        this.themeColor = ThemeColor.getDefault(); // Default theme color
+        this.themeColor = ThemeColor.getDefault();
     }
 
     /**
@@ -47,7 +47,7 @@ public class User {
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
-        this.themeColor = ThemeColor.getDefault(); // Default theme color
+        this.themeColor = ThemeColor.getDefault();
     }
     
     /**
