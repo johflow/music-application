@@ -2,10 +2,10 @@
   "songs": [
     {
       "id": "fc85ecc3-ee58-43a3-a3b5-c23ddaf138f6",
-      "title": "Moonlight Sonata",
-      "composer": "Ludwig van Beethoven",
+      "title": "Generated Song",
+      "composer": "Unknown",
       "publisher": "123e4567-e89b-12d3-a456-426614174000",
-      "pickUp": 1,
+      "pickUp": 0,
       "sheetMusic": [
         {
           "instrument": {
@@ -20,153 +20,13 @@
                   "keySignature": 0,
                   "timeSignatureNumerator": 4,
                   "timeSignatureDenominator": 4,
-                  "tempo": 120.0,
+                  "tempo": 120,
                   "musicElements": [
                     {
-                      "type": "note",
-                      "pitch": 60,
-                      "midiNumber": 60,
-                      "noteName": "C4",
-                      "duration": 1.0,
-                      "durationChar": "q",
-                      "dotted": 0,
-                      "tied": false,
-                      "lyric": "la"
-                    },
-                    {
-                      "type": "note",
-                      "pitch": 60,
-                      "midiNumber": 60,
-                      "noteName": "C4",
-                      "duration": 1.0,
-                      "durationChar": "q",
-                      "dotted": 0,
-                      "tied": false,
-                      "lyric": "la"
-                    },
-                    {
-                      "type": "note",
-                      "pitch": 60,
-                      "midiNumber": 60,
-                      "noteName": "C4",
-                      "duration": 1.0,
-                      "durationChar": "q",
-                      "dotted": 0,
-                      "tied": false,
-                      "lyric": "la"
-                    },
-                    {
-                      "type": "note",
-                      "pitch": 60,
-                      "midiNumber": 60,
-                      "noteName": "C4",
-                      "duration": 1.0,
-                      "durationChar": "q",
-                      "dotted": 0,
-                      "tied": false,
-                      "lyric": "la"
-                    },
-                    {
-                      "type": "tuplet",
-                      "subdivisions": 3,
-                      "impliedDivision": 2,
-                      "duration": 0.75,
-                      "elements": [
-                        {
-                          "type": "note",
-                          "pitch": 62,
-                          "midiNumber": 62,
-                          "noteName": "D4",
-                          "duration": 0.25,
-                          "durationChar": "i",
-                          "dotted": 0,
-                          "tied": false,
-                          "lyric": "do"
-                        },
-                        {
-                          "type": "note",
-                          "pitch": 64,
-                          "midiNumber": 64,
-                          "noteName": "E4",
-                          "duration": 0.25,
-                          "durationChar": "i",
-                          "dotted": 0,
-                          "tied": false,
-                          "lyric": "re"
-                        },
-                        {
-                          "type": "note",
-                          "pitch": 64,
-                          "midiNumber": 64,
-                          "noteName": "E4",
-                          "duration": 0.25,
-                          "durationChar": "i",
-                          "dotted": 0,
-                          "tied": false,
-                          "lyric": "re"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "chord",
-                      "lyric": "harmony",
-                      "notes": [
-                        {
-                          "type": "note",
-                          "pitch": 65,
-                          "midiNumber": 65,
-                          "noteName": "E4",
-                          "duration": 1.0,
-                          "durationChar": "q",
-                          "dotted": 0,
-                          "tied": false,
-                          "lyric": ""
-                        },
-                        {
-                          "type": "note",
-                          "pitch": 67,
-                          "midiNumber": 67,
-                          "noteName": "G4",
-                          "duration": 1.0,
-                          "durationChar": "q",
-                          "dotted": 0,
-                          "tied": false,
-                          "lyric": ""
-                        },
-                        {
-                          "type": "note",
-                          "pitch": 67,
-                          "midiNumber": 67,
-                          "noteName": "G4",
-                          "duration": 1.0,
-                          "durationChar": "q",
-                          "dotted": 0,
-                          "tied": false,
-                          "lyric": ""
-                        }
-                      ]
-                    },
-                    {
-                      "type": "note",
-                      "pitch": 60,
-                      "midiNumber": 60,
-                      "noteName": "C4",
-                      "duration": 1.0,
-                      "durationChar": "q",
-                      "dotted": 0,
-                      "tied": false,
-                      "lyric": "la"
-                    },
-                    {
-                      "type": "note",
-                      "pitch": 60,
-                      "midiNumber": 60,
-                      "noteName": "C4",
-                      "duration": 1.0,
-                      "durationChar": "q",
-                      "dotted": 0,
-                      "tied": false,
-                      "lyric": "la"
+                      "type": "pattern",
+                      "voice": 0,
+                      "instrument": "Piano",
+                      "pattern": "Rq V0 I[Piano] Rq (pattern repeated 16 times)"
                     }
                   ]
                 }
@@ -176,21 +36,16 @@
               "clefType": "Bass",
               "measures": [
                 {
-                  "keySignature": -3,
-                  "timeSignatureNumerator": 3,
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
                   "timeSignatureDenominator": 4,
-                  "tempo": 90.0,
+                  "tempo": 120,
                   "musicElements": [
                     {
-                      "type": "note",
-                      "pitch": 48,
-                      "midiNumber": 48,
-                      "noteName": "C3",
-                      "duration": 1.0,
-                      "durationChar": "q",
-                      "dotted": 0,
-                      "tied": false,
-                      "lyric": "bass"
+                      "type": "pattern",
+                      "voice": 1,
+                      "instrument": "Piano",
+                      "pattern": "Rq Rwww Rh G4h F3+C4+A4 E5 A4 G4 A4w ... (full left-hand pattern)"
                     }
                   ]
                 }
