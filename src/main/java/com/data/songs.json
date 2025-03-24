@@ -10,28 +10,12 @@
         {
           "instrument": {
             "instrumentName": "Piano",
-            "clefTypes": ["Treble", "Bass"]
+            "clefTypes": [
+              "Treble",
+              "Bass"
+            ]
           },
           "staves": [
-            {
-              "clefType": "Treble",
-              "measures": [
-                {
-                  "keySignature": 0,
-                  "timeSignatureNumerator": 4,
-                  "timeSignatureDenominator": 4,
-                  "tempo": 120,
-                  "musicElements": [
-                    {
-                      "type": "pattern",
-                      "voice": 0,
-                      "instrument": "Piano",
-                      "pattern": "Rq V0 I[Piano] Rq (pattern repeated 16 times)"
-                    }
-                  ]
-                }
-              ]
-            },
             {
               "clefType": "Bass",
               "measures": [
@@ -42,10 +26,1638 @@
                   "tempo": 120,
                   "musicElements": [
                     {
-                      "type": "pattern",
-                      "voice": 1,
-                      "instrument": "Piano",
-                      "pattern": "Rq Rwww Rh G4h F3+C4+A4 E5 A4 G4 A4w ... (full left-hand pattern)"
+                      "type": "rest",
+                      "duration": 1.0,
+                      "durationChar": "q"
+                    },
+                    {
+                      "type": "rest",
+                      "duration": 4.0,
+                      "durationChar": "w"
+                    },
+                    {
+                      "type": "rest",
+                      "duration": 2.0,
+                      "durationChar": "h"
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "F3",
+                          "pitch": 174.61,
+                          "midiNumber": 53,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "C4",
+                          "pitch": 261.63,
+                          "midiNumber": 60,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 4.0,
+                      "durationChar": "w",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G3",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 196.0,
+                      "midiNumber": 55,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "A3",
+                          "pitch": 220.0,
+                          "midiNumber": 57,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "C4",
+                          "pitch": 261.63,
+                          "midiNumber": 60,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "E4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 329.63,
+                      "midiNumber": 64,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "D4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 293.66,
+                      "midiNumber": 62,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "G3",
+                          "pitch": 196.0,
+                          "midiNumber": 55,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "F3",
+                          "pitch": 174.61,
+                          "midiNumber": 53,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "E3",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 164.81,
+                      "midiNumber": 52,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "F2",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 87.31,
+                      "midiNumber": 41,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "D4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 293.66,
+                      "midiNumber": 62,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "G3",
+                          "pitch": 196.0,
+                          "midiNumber": 55,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "F3",
+                          "pitch": 174.61,
+                          "midiNumber": 53,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "C4",
+                          "pitch": 261.63,
+                          "midiNumber": 60,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "E4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 329.63,
+                      "midiNumber": 64,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "D4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 293.66,
+                      "midiNumber": 62,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "G3",
+                          "pitch": 196.0,
+                          "midiNumber": 55,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "F3",
+                          "pitch": 174.61,
+                          "midiNumber": 53,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "D4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 293.66,
+                      "midiNumber": 62,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "G3",
+                          "pitch": 196.0,
+                          "midiNumber": 55,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "F3",
+                          "pitch": 174.61,
+                          "midiNumber": 53,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "C4",
+                          "pitch": 261.63,
+                          "midiNumber": 60,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "E4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 329.63,
+                      "midiNumber": 64,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "D4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 293.66,
+                      "midiNumber": 62,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "G3",
+                          "pitch": 196.0,
+                          "midiNumber": 55,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "F3",
+                          "pitch": 174.61,
+                          "midiNumber": 53,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "D4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 293.66,
+                      "midiNumber": 62,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.5,
+                      "durationChar": "h.",
+                      "notes": [
+                        {
+                          "noteName": "G3",
+                          "pitch": 196.0,
+                          "midiNumber": 55,
+                          "duration": 1.5,
+                          "durationChar": "h.",
+                          "dotted": true
+                        },
+                        {
+                          "noteName": "B3",
+                          "pitch": 246.94,
+                          "midiNumber": 59,
+                          "duration": 1.5,
+                          "durationChar": "h.",
+                          "dotted": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "C4",
+                          "pitch": 261.63,
+                          "midiNumber": 60,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "E4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 329.63,
+                      "midiNumber": 64,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "D4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 293.66,
+                      "midiNumber": 62,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "G3",
+                          "pitch": 196.0,
+                          "midiNumber": 55,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "F3",
+                          "pitch": 174.61,
+                          "midiNumber": 53,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "A4",
+                          "pitch": 440.0,
+                          "midiNumber": 69,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    }
+                  ]
+                },
+                {
+                  "keySignature": 0,
+                  "timeSignatureNumerator": 4,
+                  "timeSignatureDenominator": 4,
+                  "tempo": 120,
+                  "musicElements": [
+                    {
+                      "type": "note",
+                      "noteName": "G4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 392.0,
+                      "midiNumber": 67,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 659.25,
+                      "midiNumber": 76,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "C5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 523.25,
+                      "midiNumber": 72,
+                      "dotted": false
+                    },
+                    {
+                      "type": "chord",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "notes": [
+                        {
+                          "noteName": "C4",
+                          "pitch": 261.63,
+                          "midiNumber": 60,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "E4",
+                          "pitch": 329.63,
+                          "midiNumber": 64,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        },
+                        {
+                          "noteName": "B4",
+                          "pitch": 493.88,
+                          "midiNumber": 71,
+                          "duration": 1.0,
+                          "durationChar": "q",
+                          "dotted": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "C5",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 523.25,
+                      "midiNumber": 72,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "B4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 493.88,
+                      "midiNumber": 71,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "A4",
+                      "duration": 1.0,
+                      "durationChar": "q",
+                      "pitch": 440.0,
+                      "midiNumber": 69,
+                      "dotted": false
+                    },
+                    {
+                      "type": "note",
+                      "noteName": "E4",
+                      "duration": 2.0,
+                      "durationChar": "h",
+                      "pitch": 329.63,
+                      "midiNumber": 64,
+                      "dotted": false
                     }
                   ]
                 }
