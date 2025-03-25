@@ -16,6 +16,18 @@ public class Note implements MusicElement {
     private String lyric;
     private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
+    public Note(String type, double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
+        this.type = type;
+        this.pitch = pitch;
+        this.midiNumber = midiNumber;
+        this.noteName = noteName;
+        this.duration = duration;
+        this.durationChar = durationChar;
+        this.dotted = dotted;
+        this.tied = tied;
+        this.lyric = lyric;
+    }
+
     /**
      * Constructor for Note
      *

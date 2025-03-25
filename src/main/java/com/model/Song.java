@@ -16,7 +16,7 @@ public class Song {
     private int pickUp;
 
      /**
-     * Constructor for new Song
+     * Constructor for a Song
      *
      * @param title     The title of the song
      * @param composer  The composer of the song
@@ -48,6 +48,19 @@ public class Song {
         this.publisher = publisher;
         this.sheetMusic = sheetMusic;
         this.pickUp = pickUp;
+    }
+
+    public Song(String title, String composer) {
+        this.title = title;
+        this.composer = composer;
+    }
+
+    public Song(UUID id, String title, String composer, int pickUp, List<SheetMusic> sheetMusic) {
+        this.id = id;
+        this.title = title;
+        this.composer = composer;
+        this.pickUp = pickUp;
+        this.sheetMusic = sheetMusic;
     }
 
     /**

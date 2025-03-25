@@ -75,7 +75,6 @@ public class SongList {
      * @param composer The composer of the song
      * @param instrument The instrument used in the song
      * @param tempo The tempo of the song
-     * @param key The key signature of the song
      * @param timeSignatureNumerator The numerator of the time signature
      * @param timeSignatureDenominator The denominator of the time signature
      * @param numberOfMeasures The number of measures in the song

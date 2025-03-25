@@ -1,63 +1,147 @@
 package com.model;
 
-import com.service.DataWriter;
-
 public class MusicAppFacade {
     private User user;
-    private MusicAppFacade instance;
+    private static MusicAppFacade instance;
     private SongList songList;
     private UserList userList;
+    private Song viewedSong;
 
+    /**
+     * Private constructor to enforce singleton pattern.
+     */
     private MusicAppFacade() {
-
+        this.user = null;
+        this.songList = null;
+        this.userList = null;
+        this.viewedSong = null;
     }
 
+    /**
+     * Returns the singleton instance of the MusicAppFacade.
+     *
+     * @return the singleton instance
+     */
     public MusicAppFacade getInstance() {
+        if (instance == null) {
+            instance = new MusicAppFacade();
+        }
         return instance;
     }
 
-    public createSong(String title, String composer, Instrument instrument, int tempo, KeySignature key, int timeSignatureNumerator, int timeSignatureDenominator, int numberOfMeasures, int pickup = 0) {
-
+    /**
+     * Creates a new song and adds it to the song list.
+     *
+     * @param title    The title of the song.
+     * @param composer The composer of the song.
+     */
+    public void createSong(String title, String composer) {
+        Song song = new Song(title, composer);
+        songList.addSong(song);
     }
 
-    public playViewedSong() {
-
+    /**
+     * Adds a music element to the currently viewed song.
+     *
+     * @param musicElement The music element to be added.
+     */
+    public void addMusicElement(MusicElement musicElement) {
+        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures().getFirst().addMusicElement(musicElement);
     }
 
-    public pauseViewedSong() {
-
+    /**
+     * Adds a measure to the currently viewed song.
+     *
+     * @param measure The measure to be added.
+     */
+    public void addMeasure(Measure measure) {
+        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().addMeasure(measure);
     }
 
-    public User register(String userName, String password, String email) {
+    /**
+     * Adds a staff to the currently viewed song.
+     *
+     * @param staff the staff to be added.
+     */
+    public void addStaff(Staff staff) {
+        viewedSong.getSheetMusic().getFirst().addStaff(staff);
+    }
+
+    /**
+     * Plays the currently viewed song.
+     */
+    public void playViewedSong() {
+        // Implementation for playing the viewed song
+    }
+
+    /**
+     * Pauses the currently viewed song.
+     */
+    public void pauseViewedSong() {
+        // Implementation for pausing the viewed song
+    }
+
+    /**
+     * Registers a new user.
+     *
+     * @param userName The username of the new user.
+     * @param password The password for the new user.
+     * @param email    The email of the new user.
+     */
+    public void register(String userName, String password, String email) {
         userList.addUser(new User(email, userName, password));
     }
 
-    public User login(String userName, String password) {
+    /**
+     * Logs in a user with the given username and password.
+     *
+     * @param userName The username of the user.
+     * @param password The password of the user.
+     */
+    public void login(String userName, String password) {
         user = userList.getUser(userName, password);
     }
 
+    /**
+     * Logs out the current user.
+     */
     public void logout() {
         user = null;
     }
 
-    public Song getSongByKeyWord(String word) {
-        
-    }
-
+    /**
+     * Adds a song to the user's list of favorite songs.
+     *
+     * @param song The song to be added to favorites.
+     */
     public void addFavoriteSong(Song song) {
         user.addFavoriteSong(song);
     }
 
+    /**
+     * Removes a song from the user's list of favorite songs.
+     *
+     * @param song The song to be removed from favorites.
+     */
     public void removeFavoriteSong(Song song) {
         user.removeFavoriteSong(song);
     }
 
+    /**
+     * Follows another user.
+     *
+     * @param user The user to follow.
+     */
     public void followUser(User user) {
         this.user.followUser(user);
     }
 
+    /**
+     * Unfollows another user.
+     *
+     * @param user The user to unfollow.
+     */
     public void unfollowUser(User user) {
         this.user.unfollowUser(user);
     }
-
 }

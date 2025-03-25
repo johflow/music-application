@@ -10,7 +10,7 @@ public class Rest implements MusicElement {
   private boolean tied;
   private String lyric;
 
-  public Rest(double duration, char durationChar, int dotted, boolean tied, String lyric) {
+  public Rest(String type, double duration, char durationChar, int dotted, boolean tied, String lyric) {
     this.duration = duration;
     this.durationChar = durationChar;
     this.dotted = dotted;

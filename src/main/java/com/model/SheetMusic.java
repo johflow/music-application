@@ -72,5 +72,9 @@ public class SheetMusic {
         "staves=" + staves +
         '}';
   }
+
+  public void addStaff(Staff staff) {
+    staves.add(staff);
+  }
 }
 

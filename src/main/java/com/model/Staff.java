@@ -13,11 +13,6 @@ public class Staff extends DataConstants {
     this.measures = measures;
   }
 
-
-
-
-
-
   /**
    * Gets the measures of the staff
    * 
@@ -34,6 +29,10 @@ public class Staff extends DataConstants {
    */
   public String getClefType() {
     return clefType;
+  }
+
+  public void addMeasure(Measure measure) {
+    measures.add(measure);
   }
 
   public Pattern toJfuguePattern() {

@@ -42,6 +42,12 @@ public class Chord implements MusicElement {
         this.notes = (notes != null) ? notes : new ArrayList<>();
     }
 
+    public Chord(String type, String lyric, List<Note> notes) {
+        this.type = type;
+        this.lyric = lyric;
+        this.notes = notes;
+    }
+
     //Core Methods
 
     /**
