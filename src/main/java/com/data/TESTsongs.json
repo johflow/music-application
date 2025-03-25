@@ -2,9 +2,9 @@
     "songs": [
         {
             "composer": "Test Composer",
-            "publisher": null,
+            "publisher": "5c2e61fb-a1eb-412b-b2a0-79bef47246a9",
             "pickUp": 0,
-            "id": "6bf82e70-b66f-4720-9641-0355b506c256",
+            "id": "f151edb3-b68e-4e13-89f8-8aa542d8468a",
             "sheetMusic": [],
             "title": "Test Song"
         }

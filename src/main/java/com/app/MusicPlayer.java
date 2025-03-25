@@ -26,7 +26,7 @@ public class MusicPlayer {
 	users.add(testUser);
 
 	// Create a test song
-	Song testSong = new Song("Test Song", "Test Composer");
+	Song testSong = new Song("Test Song", "Test Composer", testUser);
 	testSong.setComposer("Test Composer");
 	
 	testSong.setPickUp(0);

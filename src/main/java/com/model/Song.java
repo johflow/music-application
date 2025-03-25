@@ -41,8 +41,7 @@ public class Song {
      * @param sheetMusic The sheetMusic that goes to that song
      * @param pickUp     Beats before the first downbeat
      */
-    public Song(UUID id, String title, String composer, User publisher, List<SheetMusic> sheetMusic,
-        int pickUp) {
+    public Song(UUID id, String title, String composer, User publisher, List<SheetMusic> sheetMusic, int pickUp) {
         this.id = id;
         this.title = title;
         this.composer = composer;

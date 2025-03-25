@@ -195,7 +195,7 @@ public class User {
      *
      * @return The theme color
      */
-    public String getThemeColor() {
+    public ThemeColor getThemeColor() {
         return themeColor;
     }
 
