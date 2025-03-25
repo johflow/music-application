@@ -1,13 +1,1 @@
-{
-    "users": [
-        {
-            "followedUsers": [],
-            "password": "password123",
-            "themeColor": "BLUE",
-            "id": "ce5944e3-7f35-4e18-9c11-00f2af071fc4",
-            "email": "testuser@example.com",
-            "username": "testuser",
-            "favoriteSongs": []
-        }
-    ]
-}
+{"users":[{"followedUsers":[],"password":"password123","themeColor":"BLUE","id":"5c2e61fb-a1eb-412b-b2a0-79bef47246a9","email":"testuser@example.com","username":"testuser","favoriteSongs":[]}]}
