@@ -19,4 +19,8 @@ public class ParsedSong {
   public UUID getPublisher() {
     return publisher;
   }
+
+  public UUID getId() {
+    return song.getId();
+  }
 }

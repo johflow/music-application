@@ -21,7 +21,7 @@ public class SongList {
 
     /**
      * Gets the singleton instance of SongList
-     * 
+     *
      * @return The singleton instance
      */
     public static SongList getInstance() {
@@ -33,7 +33,7 @@ public class SongList {
 
     /**
      * Gets the list of songs
-     * 
+     *
      * @return ArrayList of songs
      */
     public ArrayList<Song> getSongs() {
@@ -70,7 +70,7 @@ public class SongList {
 
     /**
      * Creates and adds a new song with the specified parameters
-     * 
+     *
      * @param title The title of the song
      * @param composer The composer of the song
      * @param instrument The instrument used in the song
@@ -93,7 +93,7 @@ public class SongList {
 
     /**
      * Removes a song from the list
-     * 
+     *
      * @param song The song to remove
      * @return True if the song was removed successfully, false otherwise
      */
@@ -125,7 +125,7 @@ public class SongList {
 
     /**
      * Searches for a single song by criteria
-     * 
+     *
      * @param searchQuery The search query
      * @return The first song that matches the criteria, or null if none found
      */

@@ -35,22 +35,22 @@ public class SheetMusic {
   */
   public Pattern toJfuguePattern() {
     Pattern pattern = new Pattern();
-      
+
     // Set the instrument for this pattern
     pattern.setInstrument(instrument.getInstrumentName());
-      
+
     // Convert each staff to a pattern and add it to the main pattern
     for (Staff staff : staves) {
         Pattern staffPattern = staff.toJfuguePattern();
         pattern.add(staffPattern);
       }
-      
+
       return pattern;
   }
 
   /**
   * Gets the instrument of the sheet music
-  * 
+  *
   * @return The instrument of the sheet music
   */
   public Instrument getInstrument() {
@@ -59,7 +59,7 @@ public class SheetMusic {
 
   /**
   * Gets the staves of the sheet music
-  * 
+  *
   * @return The staves of the sheet music
   */
   public List<Staff> getStaves() {

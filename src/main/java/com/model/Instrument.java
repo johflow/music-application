@@ -31,4 +31,30 @@ public class Instrument {
     public void setInstrumentName(String instrumentName) {
         this.instrumentName = instrumentName;
     }
+
+    /**
+     * Adds a single clef type to the list of supported clefs
+     * @param clefType Clef type to add
+     * @return true if added successfully
+     */
+    public boolean addClefType(String clefType) {
+        if (!clefTypes.contains(clefType)) {
+            return clefTypes.add(clefType);
+        }
+        return false;
+    }
+    
+    /**
+     * Removes a clef type from the list of supported clefs
+     * @param clefType Clef type to remove
+     * @return true if removed successfully
+     */
+    public boolean removeClefType(String clefType) {
+        return clefTypes.remove(clefType);
+    } 
+
+    @Override
+    public String toString() {
+        return instrumentName;
+    }
 }

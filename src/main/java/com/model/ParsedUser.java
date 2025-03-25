@@ -26,4 +26,9 @@ public class ParsedUser {
   public List<UUID> getFavoritedSongs() {
     return favoritedSongs;
   }
+
+  public UUID getId() {
+    return user.getId();
+  }
+
 }

@@ -71,7 +71,7 @@ public class User {
 
     /**
      * Gets the user's ID
-     * 
+     *
      * @return The user's UUID
      */
     public UUID getId() {
@@ -116,7 +116,7 @@ public class User {
 
     /**
      * Gets the user's password
-     * 
+     *
      * @return The user's password
      */
     public String getPassword() {
@@ -192,10 +192,10 @@ public class User {
 
     /**
      * Gets the user's theme color
-     * 
+     *
      * @return The theme color
      */
-    public ThemeColor getThemeColor() {
+    public String getThemeColor() {
         return themeColor;
     }
 
