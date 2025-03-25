@@ -2,7 +2,7 @@ package com.model;
 
 import org.jfugue.player.Player;
 
-public class Rest implements MusicElement {
+public class Rest implements MusicElement, DurationElement {
   private String type = "rest";
   private double duration;
   private char durationChar;

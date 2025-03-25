@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.jfugue.player.Player;
 
-public class Note implements MusicElement {
+public class Note implements MusicElement, DurationElement {
     private String type;
     private double pitch;
     private int midiNumber;
