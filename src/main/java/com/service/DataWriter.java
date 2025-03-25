@@ -95,7 +95,7 @@ public class DataWriter extends DataConstants {
      * @param user user that is saving their data
      * @return     a JSONObject of user details
      */
-    public static JSONObject getUserJSON(User user) {
+    private static JSONObject getUserJSON(User user) {
         JSONObject userDetails = new JSONObject();
         JSONArray favoriteSongs = new JSONArray();
         JSONArray followedUsers = new JSONArray();
@@ -124,7 +124,7 @@ public class DataWriter extends DataConstants {
      * @param song The song to convert to JSON
      * @return A JSONObject representing the song
      */
-    public static JSONObject getSongJSON(Song song) {
+    private static JSONObject getSongJSON(Song song) {
         JSONObject songDetails = new JSONObject();
         
         // Basic song details
@@ -184,17 +184,9 @@ public class DataWriter extends DataConstants {
                     
                     for (MusicElement element : measure.getMusicElements()) {
                         // Process each music element
-                        String type = element.getType();
-                        JSONObject elementJSON = switch (type) {
-                            case SONG_MUSIC_ELEMENT_REST -> getRestJSON(element);
-                            case SONG_MUSIC_ELEMENT_TUPLET -> getTupletJSON(element);
-                            case SONG_MUSIC_ELEMENT_CHORD -> getChordJSON(element);
-                            case SONG_MUSIC_ELEMENT_NOTE -> getNoteJSON(element);
-                            default -> throw new IllegalArgumentException("Invalid music element type: " + type);
-                        };
+                        JSONObject elementJSON = getMusicElementByType(element.getType(), element);
                         musicElementsArray.add(elementJSON);
                     }
-                    
                     measuresArray.add(measureJSON);
                 }
             }
@@ -287,16 +279,28 @@ public class DataWriter extends DataConstants {
 
         JSONArray elementsJSON = new JSONArray();
         for (MusicElement tupletElement : tuplet.getElements()) {
-            JSONObject tupletElementJSON = switch (tupletElement.getType()) {
-                case SONG_MUSIC_ELEMENT_NOTE -> getNoteJSON(tupletElement);
-                case SONG_MUSIC_ELEMENT_REST -> getRestJSON(tupletElement);
-                case SONG_MUSIC_ELEMENT_CHORD -> getChordJSON(tupletElement);
-                case SONG_MUSIC_ELEMENT_TUPLET -> getTupletJSON(tupletElement);
-                default -> throw new IllegalArgumentException("Invalid music element type: " + tupletElement.getType());
-            };
+            JSONObject tupletElementJSON = getMusicElementByType(tupletElement.getType(), tupletElement);
             elementsJSON.add(tupletElementJSON);
         }
         tupletJSON.put(SONG_MUSIC_ELEMENTS, elementsJSON);
         return tupletJSON;
+    }
+
+    /**
+     * Returns a JSON object for the given music element based on its type.
+     * 
+     * @param type    The type of the music element
+     * @param element The music element to convert
+     * @return        A JSONObject representing the music element
+     */
+    private static JSONObject getMusicElementByType(String type, MusicElement element) {
+        JSONObject musicElementJSON = switch (type) {
+            case SONG_MUSIC_ELEMENT_REST -> getRestJSON(element);
+            case SONG_MUSIC_ELEMENT_TUPLET -> getTupletJSON(element);
+            case SONG_MUSIC_ELEMENT_CHORD -> getChordJSON(element);
+            case SONG_MUSIC_ELEMENT_NOTE -> getNoteJSON(element);
+            default -> throw new IllegalArgumentException("Invalid music element type: " + type);
+        };
+        return musicElementJSON;
     }
 }
