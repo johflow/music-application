@@ -51,7 +51,15 @@ public class User {
         this.themeColor = themeColor;
     }
 
-    /**
+  public User(UUID id, String email, String username, String password) {
+    this.id = id;
+    this.email = email;
+    this.username = username;
+    this.password = password;
+    this.themeColor = ThemeColor.getDefault();
+  }
+
+  /**
      * Gets the user's ID
      *
      * @return The user's UUID

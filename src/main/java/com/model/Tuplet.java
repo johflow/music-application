@@ -75,4 +75,12 @@ public class Tuplet implements MusicElement {
     public List<MusicElement> getElements() {
         return elements;
     }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (MusicElement element : elements) {
+          stringBuilder.append(element).append("*").append(subdivisions).append(":").append(impliedDivision).append(" ");
+        }
+        return stringBuilder.toString();
+    }
 }

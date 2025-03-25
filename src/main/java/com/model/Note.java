@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.jfugue.player.Player;
 
-public class Note implements MusicElement {
+public class Note implements MusicElement, DurationElement {
     private String type;
     private double pitch;
     private int midiNumber;
@@ -299,5 +299,14 @@ public class Note implements MusicElement {
             throw new IllegalArgumentException("Lyrics cannot be null! (Try making it \"\")");
         }
         this.lyric = lyric;
+    }
+
+    @Override
+    public String toString() {
+        return noteName + durationChar + getDottedString() + (hasTie() ? "-" : "");
+    }
+
+    public String getDottedString() {
+        return ".".repeat(Math.max(0, this.dotted));
     }
 }

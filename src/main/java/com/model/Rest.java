@@ -2,7 +2,7 @@ package com.model;
 
 import org.jfugue.player.Player;
 
-public class Rest implements MusicElement {
+public class Rest implements MusicElement, DurationElement {
   private String type = "rest";
   private double duration;
   private char durationChar;
@@ -124,6 +124,15 @@ public class Rest implements MusicElement {
 
   public void setLyric(String lyric) {
     this.lyric = lyric;
+  }
+
+  @Override
+  public String toString() {
+    return "R" + durationChar + getDottedString() + (hasTie() ? "-" : "");
+  }
+
+  public String getDottedString() {
+    return ".".repeat(Math.max(0, this.dotted));
   }
 
 }

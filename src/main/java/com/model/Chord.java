@@ -172,5 +172,14 @@ public class Chord implements MusicElement {
      *
      * @return String with lyric and note count
      */
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("(");
+        for (Note note : notes) {
+            stringBuilder.append(note).append(" ");
+        }
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
 
 }

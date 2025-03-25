@@ -68,9 +68,11 @@ public class SheetMusic {
 
   @Override
   public String toString() {
-    return "SheetMusic{" +
-        "staves=" + staves +
-        '}';
+    StringBuilder stringBuilder = new StringBuilder();
+    for (Staff staff : staves) {
+      stringBuilder.append(staff).append("\n");
+    }
+    return stringBuilder.toString();
   }
 
   public void addStaff(Staff staff) {
