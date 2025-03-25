@@ -300,4 +300,13 @@ public class Note implements MusicElement, DurationElement {
         }
         this.lyric = lyric;
     }
+
+    @Override
+    public String toString() {
+        return noteName + durationChar + getDottedString() + (hasTie() ? "-" : "");
+    }
+
+    public String getDottedString() {
+        return ".".repeat(Math.max(0, this.dotted));
+    }
 }

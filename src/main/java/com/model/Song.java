@@ -196,11 +196,14 @@ public class Song {
         this.publisher = publisher;
     }
 
-  @Override
-  public String toString() {
-    return "Song{" +
-        "sheetMusic=" + sheetMusic +
-        '}';
-  }
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(title).append("\n");
+        for (SheetMusic aSheetMusic : sheetMusic) {
+            stringBuilder.append(aSheetMusic).append("\n\n\n\n\n\n");
+        }
+        return stringBuilder.toString();
+    }
 }
 

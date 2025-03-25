@@ -41,8 +41,12 @@ public class Staff extends DataConstants {
 
   @Override
   public String toString() {
-    return "Staff{" +
-        "measures=" + measures +
-        '}';
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(clefType).append(" ");
+    for (Measure measure : measures) {
+      stringBuilder.append(measure).append(" ");
+    }
+    stringBuilder.append("\n");
+    return stringBuilder.toString();
   }
 }

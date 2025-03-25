@@ -1,5 +1,6 @@
 package com.app;
 
+import com.service.DataAssembler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,8 @@ public class MusicPlayer {
 		System.err.println(e.getMessage());
 		e.printStackTrace();
 	}
+		DataAssembler dataAssembler = new DataAssembler();
+	System.out.println(dataAssembler.getAssembledSongs().getFirst());
 
 //         Player player = new Player();
 

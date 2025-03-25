@@ -127,4 +127,14 @@ public class Measure {
     public void setMusicElements(List<MusicElement> musicElements) {
         this.musicElements = musicElements;
     }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("| ");
+        for (MusicElement musicElement : musicElements) {
+            stringBuilder.append(musicElement).append(" ");
+        }
+        stringBuilder.append("|");
+        return stringBuilder.toString();
+    }
 }

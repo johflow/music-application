@@ -126,4 +126,13 @@ public class Rest implements MusicElement, DurationElement {
     this.lyric = lyric;
   }
 
+  @Override
+  public String toString() {
+    return "R" + durationChar + getDottedString() + (hasTie() ? "-" : "");
+  }
+
+  public String getDottedString() {
+    return ".".repeat(Math.max(0, this.dotted));
+  }
+
 }
