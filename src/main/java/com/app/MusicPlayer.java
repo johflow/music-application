@@ -15,23 +15,36 @@ import com.service.DataWriter;
 public class MusicPlayer {
 
   public static void main(String[] args) throws IOException, ParseException {
-	// Josh's tests for DataWriter
+// Josh's tests for DataWriter
 	// Create test data
 	List<User> users = new ArrayList<>();
 	List<Song> songs = new ArrayList<>();
+	
 
 	// Create a test user
-	User testUser = new User(null, "testuser", "password123");
-	testUser.setThemeColor(ThemeColor.BLUE);
-	testUser.setEmail("testuser@example.com");
-	users.add(testUser);
+	User testUser1 = new User(null, "testuser", "password123");
+	testUser1.setThemeColor(ThemeColor.BLUE);
+	testUser1.setEmail("testuser@example.com");
+
+	User testUser2 = new User("randomemail@email.com", "testuser", "password123"); // this makes a new user
+	testUser2.setThemeColor(ThemeColor.DEEP_PURPLE); // works as intended just need to somehow implement that in front end
+
+	testUser1.followUser(testUser2); // works as intended
+	testUser2.followUser(testUser1); // also works as intended
+	testUser1.followUser(testUser1); //doesnt add user to user cus thats dumb so works as intended
 
 	// Create a test song
-	Song testSong = new Song("Test Song", "Test Composer", testUser);
+	Song testSong = new Song("Test Song", "Test Composer", testUser1);
 	testSong.setComposer("Test Composer");
 	
+	testUser1.addFavoriteSong(testSong);
+	testUser1.addFavoriteSong(testSong);
+
 	testSong.setPickUp(0);
 	songs.add(testSong);
+	users.add(testUser1);
+	users.add(testUser2);
+
 
 	// Save test data using DataWriter
 	try {
@@ -48,6 +61,7 @@ public class MusicPlayer {
 		System.err.println(e.getMessage());
 		e.printStackTrace();
 	}
+
 		DataAssembler dataAssembler = new DataAssembler();
 	System.out.println(dataAssembler.getAssembledSongs().getFirst());
 
