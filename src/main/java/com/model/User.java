@@ -11,12 +11,12 @@ public class User {
     private String email;
     private String username;
     private String password;
-    private final ArrayList<Song> favoriteSongs;
-    private final ArrayList<User> followedUsers;
+    private ArrayList<Song> favoriteSongs;
+    private ArrayList<User> followedUsers;
     private ThemeColor themeColor;
 
     /**
-     * Constructor for User
+     * Constructor for a new User
      * 
      * @param email User's email
      * @param username User's username
@@ -34,24 +34,6 @@ public class User {
 
     /**
      * Constructor with all parameters for User
-     * 
-     * @param id User's UUID
-     * @param email User's email
-     * @param username User's username
-     * @param password User's password
-     */
-    public User(UUID id, String email, String username, String password) {
-        this.id = id;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.favoriteSongs = new ArrayList<>();
-        this.followedUsers = new ArrayList<>();
-        this.themeColor = ThemeColor.getDefault();
-    }
-    
-    /**
-     * Constructor with all parameters including theme color
      * 
      * @param id User's UUID
      * @param email User's email
