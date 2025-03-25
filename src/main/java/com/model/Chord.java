@@ -11,7 +11,8 @@ public class Chord implements MusicElement {
         //TODO
     }
 
-    public Chord(String lyric, List<Note> notes) {
+    public Chord(String type, String lyric, List<Note> notes) {
+        this.type = type;
         this.lyric = lyric;
         this.notes = notes;
     }
@@ -63,5 +64,12 @@ public class Chord implements MusicElement {
      */
     public List<Note> getNotes() {
         return notes;
+    }
+
+    @Override
+    public String toString() {
+        return "Chord{" +
+            "notes=" + notes +
+            '}';
     }
 }

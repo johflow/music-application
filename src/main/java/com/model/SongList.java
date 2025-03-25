@@ -1,5 +1,6 @@
 package com.model;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
 import com.service.DataWriter;
@@ -9,7 +10,7 @@ import com.service.DataWriter;
  */
 public class SongList {
     private static SongList instance;
-    private ArrayList<Song> songs;
+    private List<Song> songs;
 
     /**
      * Constructor for SongList
@@ -35,7 +36,7 @@ public class SongList {
      * 
      * @return ArrayList of songs
      */
-    public ArrayList<Song> getSongs() {
+    public List<Song> getSongs() {
         return songs;
     }
 

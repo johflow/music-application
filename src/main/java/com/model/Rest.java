@@ -1,6 +1,6 @@
 package com.model;
 
-public class Rest implements MusicElement {
+public class Rest implements MusicElement, DurationElement {
   private String type;
   private double duration;
   private char durationChar;
@@ -8,7 +8,14 @@ public class Rest implements MusicElement {
   private boolean tied;
   private String lyric;
 
-  public Rest(double duration, char durationChar, int dotted, boolean tied, String lyric) {
+  public Rest(String type, double duration, char durationChar, int dotted, boolean tied,
+      String lyric) {
+    this.type = type;
+    this.duration = duration;
+    this.durationChar = durationChar;
+    this.dotted = dotted;
+    this.tied = tied;
+    this.lyric = lyric;
   }
 
   public void play(){
@@ -72,5 +79,12 @@ public class Rest implements MusicElement {
    */
   public String getLyric() {
     return lyric;
+  }
+
+  @Override
+  public String toString() {
+    return "Rest{" +
+        "durationChar=" + durationChar +
+        '}';
   }
 }

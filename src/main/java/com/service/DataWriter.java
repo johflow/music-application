@@ -3,25 +3,27 @@ package com.service;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.model.DataConstants;
-import com.model.MusicElement;
-import com.model.Rest;
-import com.model.Song;
-import com.model.User;
-import com.model.Note;
 import com.model.Chord;
-import com.model.Tuplet;
-import com.model.SheetMusic;
-import com.model.Staff;
+import com.model.DataConstants;
 import com.model.Measure;
+import com.model.MusicElement;
+import com.model.Note;
+import com.model.Rest;
+import com.model.SheetMusic;
+import com.model.Song;
+import com.model.Staff;
+import com.model.Tuplet;
+import com.model.User;
 /**
  * Class that writes data to JSON.
  * 
- * @author
+ * @author Joshua Gould
  */
+@SuppressWarnings("unchecked")
 public class DataWriter extends DataConstants {
     /**
      * Writes user data to JSON.
@@ -29,23 +31,28 @@ public class DataWriter extends DataConstants {
      * @return True or false depending on success of write.
      */
     public static boolean saveUsers(List<User> users) {
-        // Create the root JSON object with "users" key
-        JSONObject root = new JSONObject();
-        JSONArray jsonUsers = new JSONArray();
-        
-        // Add each user to the JSON array
-        for (User user : users) {
-            jsonUsers.add(getUserJSON(user));
-        }
-        
-        // Add the users array to the root object
-        root.put("users", jsonUsers);
-        
-        try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) {
-            file.write(root.toJSONString());
-            file.flush();
-            return true;
+        try {
+            // Create the root JSON object with "users" key
+            JSONObject root = new JSONObject();
+            JSONArray jsonUsers = new JSONArray();
+            
+            // Add each user to the JSON array
+            for (User user : users) {
+                jsonUsers.add(getUserJSON(user));
+            }
+            
+            // Add the users array to the root object
+            root.put("users", jsonUsers);
+            
+            // try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) { uncomment this when done testing
+            try (FileWriter file = new FileWriter("src/main/java/com/data/TESTusers.json")) {  // delete this when done testing
+                file.write(root.toJSONString());
+                file.flush();
+                return true;
+            }
         } catch (IOException e) {
+            System.err.println("Failed to save users to JSON file:");
+            System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -57,21 +64,26 @@ public class DataWriter extends DataConstants {
      * @return True or false depending on success of write.
      */
     public static boolean saveSongs(List<Song> songs) {
-        JSONObject root = new JSONObject();
-        JSONArray jsonSongs = new JSONArray();
-        
-        // Add each song to the JSON array
-        for (Song song : songs) {
-            jsonSongs.add(getSongJSON(song));
-        }
+        try {
+            JSONObject root = new JSONObject();
+            JSONArray jsonSongs = new JSONArray();
+            
+            // Add each song to the JSON array
+            for (Song song : songs) {
+                jsonSongs.add(getSongJSON(song));
+            }
 
-        root.put("songs", jsonSongs);
+            root.put("songs", jsonSongs);
 
-        try (FileWriter file = new FileWriter(SONG_FILE_LOCATION)) {
-            file.write(root.toJSONString());
-            file.flush();
-            return true;
+            // try (FileWriter file = new FileWriter(SONG_FILE_LOCATION)) { uncomment this when done testing
+            try (FileWriter file = new FileWriter("src/main/java/com/data/TESTsongs.json")) {  // delete this when done testing
+                file.write(root.toJSONString());
+                file.flush();
+                return true;
+            }
         } catch (IOException e) {
+            System.err.println("Failed to save songs to JSON file:");
+            System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -97,9 +109,9 @@ public class DataWriter extends DataConstants {
         
         userDetails.put(USER_ID, user.getId().toString());
         userDetails.put(USER_EMAIL, user.getEmail());
-        userDetails.put(USER_NAME, user.getUsername());
+        userDetails.put(USER_USERNAME, user.getUsername());
         userDetails.put(USER_PASSWORD, user.getPassword());
-        userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
+        userDetails.put(USER_FAVORITED_SONGS, favoriteSongs);
         userDetails.put(USER_FOLLOWED_USERS, followedUsers);
         userDetails.put(USER_THEME_COLOR, user.getThemeColor().name());
 
@@ -127,7 +139,7 @@ public class DataWriter extends DataConstants {
         songDetails.put(SONG_SHEET_MUSIC, sheetMusicJSON);
         
         // Process each sheet music entry
-        for (SheetMusic sheet : song.getSheetMusics()) {
+        for (SheetMusic sheet : song.getSheetMusic()) {
             JSONObject sheetMusicEntry = new JSONObject();
             sheetMusicJSON.add(sheetMusicEntry);
             
@@ -173,23 +185,13 @@ public class DataWriter extends DataConstants {
                     for (MusicElement element : measure.getMusicElements()) {
                         // Process each music element
                         String type = element.getType();
-                        JSONObject elementJSON = null;
-                        switch (type) {
-                            case SONG_MUSIC_ELEMENT_REST:
-                                elementJSON = getRestJSON(element);
-                                break;
-                            case SONG_MUSIC_ELEMENT_TUPLET:
-                                elementJSON = getTupletJSON(element);
-                                break;
-                            case SONG_MUSIC_ELEMENT_CHORD:
-                                elementJSON = getChordJSON(element);
-                                break;
-                            case SONG_MUSIC_ELEMENT_NOTE:
-                                elementJSON = getNoteJSON(element);
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Invalid music element type: " + type);
-                        }
+                        JSONObject elementJSON = switch (type) {
+                            case SONG_MUSIC_ELEMENT_REST -> getRestJSON(element);
+                            case SONG_MUSIC_ELEMENT_TUPLET -> getTupletJSON(element);
+                            case SONG_MUSIC_ELEMENT_CHORD -> getChordJSON(element);
+                            case SONG_MUSIC_ELEMENT_NOTE -> getNoteJSON(element);
+                            default -> throw new IllegalArgumentException("Invalid music element type: " + type);
+                        };
                         musicElementsArray.add(elementJSON);
                     }
                     
@@ -285,24 +287,13 @@ public class DataWriter extends DataConstants {
 
         JSONArray elementsJSON = new JSONArray();
         for (MusicElement tupletElement : tuplet.getElements()) {
-            JSONObject tupletElementJSON = null;
-
-            switch (tupletElement.getType()) {
-                case SONG_MUSIC_ELEMENT_NOTE:
-                    tupletElementJSON = getNoteJSON(tupletElement);
-                    break;
-                case SONG_MUSIC_ELEMENT_REST:
-                    tupletElementJSON = getRestJSON(tupletElement);
-                    break;
-                case SONG_MUSIC_ELEMENT_CHORD:
-                    tupletElementJSON = getChordJSON(tupletElement);
-                    break;
-                case SONG_MUSIC_ELEMENT_TUPLET:
-                    tupletElementJSON = getTupletJSON(tupletElement);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid music element type: " + tupletElement.getType());
-            }
+            JSONObject tupletElementJSON = switch (tupletElement.getType()) {
+                case SONG_MUSIC_ELEMENT_NOTE -> getNoteJSON(tupletElement);
+                case SONG_MUSIC_ELEMENT_REST -> getRestJSON(tupletElement);
+                case SONG_MUSIC_ELEMENT_CHORD -> getChordJSON(tupletElement);
+                case SONG_MUSIC_ELEMENT_TUPLET -> getTupletJSON(tupletElement);
+                default -> throw new IllegalArgumentException("Invalid music element type: " + tupletElement.getType());
+            };
             elementsJSON.add(tupletElementJSON);
         }
         tupletJSON.put(SONG_MUSIC_ELEMENTS, elementsJSON);

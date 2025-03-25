@@ -1,0 +1,13 @@
+{
+    "users": [
+        {
+            "followedUsers": [],
+            "password": "password123",
+            "themeColor": "BLUE",
+            "id": "ce5944e3-7f35-4e18-9c11-00f2af071fc4",
+            "email": "testuser@example.com",
+            "username": "testuser",
+            "favoriteSongs": []
+        }
+    ]
+}

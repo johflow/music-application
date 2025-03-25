@@ -13,12 +13,13 @@ public class Tuplet implements MusicElement {
     //TODO
   }
 
-  public Tuplet(int subdivisions, int impliedDivision, double duration, List<MusicElement> elements) {
-  }
-
-  @Override
-  public void play() {
-
+  public Tuplet(String type, int subdivisions, int impliedDivision, double duration,
+      List<MusicElement> elements) {
+    this.type = type;
+    this.subdivisions = subdivisions;
+    this.impliedDivision = impliedDivision;
+    this.duration = duration;
+    this.elements = elements;
   }
 
   public String toJFugueString() {
