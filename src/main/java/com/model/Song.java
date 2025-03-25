@@ -131,7 +131,7 @@ public class Song {
         return publisher;
     }
 
-    public List<SheetMusic> getSheetMusics() {
+    public List<SheetMusic> getSheetMusic() {
         return sheetMusic;
     }
 
@@ -179,5 +179,12 @@ public class Song {
     public void setPublisher(User publisher) {
         this.publisher = publisher;
     }
+
+  @Override
+  public String toString() {
+    return "Song{" +
+        "sheetMusic=" + sheetMusic +
+        '}';
+  }
 }
 

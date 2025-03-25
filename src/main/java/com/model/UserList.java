@@ -2,6 +2,7 @@ package com.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.service.DataAssembler;
 import com.service.DataWriter;
 
@@ -10,12 +11,26 @@ import com.service.DataWriter;
  */
 public class UserList {
     private List<User> users;
-
+    private static UserList instance;
+    
     /**
      * Constructor for UserList
      */
     private UserList() {
         users = new ArrayList<>();
+    }
+    
+    /**
+     * Gets the singleton instance of UserList
+     * 
+     * @return The UserList instance
+     */
+    public static UserList getInstance() {
+        if (instance == null) {
+            instance = new UserList();
+            instance.loadUsers();
+        }
+        return instance;
     }
 
     /**
@@ -69,10 +84,11 @@ public class UserList {
     /**
      * Gets a list of users by username
      * 
-     * @return ArrayList of users
+     * @param username The username to search for
+     * @return List of users matching the username
      */
-    public ArrayList<User> getUsers(String username) {
-        ArrayList<User> matchingUsers = new ArrayList<>();
+    public List<User> getUsersByUsername(String username) {
+        List<User> matchingUsers = new ArrayList<>();
         
         if (username == null || username.isEmpty()) {
             return matchingUsers;
@@ -118,7 +134,11 @@ public class UserList {
      * @return True if the user was removed successfully, false otherwise
      */
     public boolean removeUser(User user) {
-        return users.remove(user);
+        boolean removed = users.remove(user);
+        if (removed) {
+            save(); // Save after removing a user
+        }
+        return removed;
     }
 
     /**
@@ -127,11 +147,36 @@ public class UserList {
      * @return True if the save was successful, false otherwise
      */
     public boolean save() {
-        DataWriter.saveUsers(this.users);
-        return true;
+        return DataWriter.saveUsers(this.users);
+    }
+    
+    /**
+     * Loads users from persistent storage
+     * 
+     * @return True if loading was successful, false otherwise
+     */
+    public boolean loadUsers() {
+        try {
+            DataAssembler dataAssembler = new DataAssembler();
+            List<User> loadedUsers = dataAssembler.getAssembledUsers();
+            if (loadedUsers != null) {
+                this.users = loadedUsers;
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.err.println("Error loading users: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public ArrayList<User> getAllUsers() {
+    /**
+     * Gets all users
+     * 
+     * @return List of all users
+     */
+    public List<User> getAllUsers() {
         return new ArrayList<>(users);
     }
 }

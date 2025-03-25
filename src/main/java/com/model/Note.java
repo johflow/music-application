@@ -5,7 +5,7 @@ import java.util.Map;
 import org.jfugue.player.Player;
 
 public class Note implements MusicElement {
-    private final String type = "Note";
+    private String type;
     private double pitch;
     private int midiNumber;
     private String noteName;

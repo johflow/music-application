@@ -111,7 +111,7 @@ public class DataWriter extends DataConstants {
         userDetails.put(USER_EMAIL, user.getEmail());
         userDetails.put(USER_USERNAME, user.getUsername());
         userDetails.put(USER_PASSWORD, user.getPassword());
-        userDetails.put(USER_FAVORITE_SONGS, favoriteSongs);
+        userDetails.put(USER_FAVORITED_SONGS, favoriteSongs);
         userDetails.put(USER_FOLLOWED_USERS, followedUsers);
         userDetails.put(USER_THEME_COLOR, user.getThemeColor().name());
 
@@ -139,7 +139,7 @@ public class DataWriter extends DataConstants {
         songDetails.put(SONG_SHEET_MUSIC, sheetMusicJSON);
         
         // Process each sheet music entry
-        for (SheetMusic sheet : song.getSheetMusics()) {
+        for (SheetMusic sheet : song.getSheetMusic()) {
             JSONObject sheetMusicEntry = new JSONObject();
             sheetMusicJSON.add(sheetMusicEntry);
             

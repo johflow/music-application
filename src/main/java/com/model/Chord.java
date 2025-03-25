@@ -9,7 +9,7 @@ import org.jfugue.player.Player;
  * A chord can optionally contain a lyric annotation and supports playback using JFugue.
  */
 public class Chord implements MusicElement {
-    private final String type = "chord";
+    private String type;
     private String lyric;
     private List<Note> notes;
 

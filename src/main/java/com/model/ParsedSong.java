@@ -2,7 +2,7 @@ package com.model;
 
 import java.util.UUID;
 
-public class ParsedSong {
+public record ParsedSong(Song song, UUID publisher) {
 
   private final Song song;
   private final UUID publisher;

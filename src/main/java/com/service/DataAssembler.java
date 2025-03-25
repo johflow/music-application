@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.xml.crypto.Data;
 import org.json.simple.parser.ParseException;
 
 public class DataAssembler extends DataConstants {
@@ -30,18 +31,18 @@ public class DataAssembler extends DataConstants {
 
     Map<UUID, User> userMap = new HashMap<>();
     for (ParsedUser parsedUser : parsedUsers) {
-      userMap.put(parsedUser.getUser().getId(), parsedUser.getUser());
+      userMap.put(parsedUser.user().getId(), parsedUser.user());
     }
 
     Map<UUID, Song> songMap = new HashMap<>();
     for (ParsedSong parsedSong : parsedSongs) {
-      songMap.put(parsedSong.getSong().getId(), parsedSong.getSong());
+      songMap.put(parsedSong.song().getId(), parsedSong.song());
     }
 
     resolveParsedUsers(parsedUsers, userMap, songMap);
 
     return parsedUsers.stream()
-        .map(ParsedUser::getUser)
+        .map(ParsedUser::user)
         .toList();
   }
 
@@ -58,36 +59,41 @@ public class DataAssembler extends DataConstants {
 
     Map<UUID, User> userMap = new HashMap<>();
     for (ParsedUser parsedUser : parsedUsers) {
-      userMap.put(parsedUser.getUser().getId(), parsedUser.getUser());
+      userMap.put(parsedUser.user().getId(), parsedUser.user());
     }
 
     Map<UUID, Song> songMap = new HashMap<>();
     for (ParsedSong parsedSong : parsedSongs) {
-      songMap.put(parsedSong.getSong().getId(), parsedSong.getSong());
+      songMap.put(parsedSong.song().getId(), parsedSong.song());
     }
 
     resolveParsedSongs(parsedSongs, userMap, songMap);
 
     return parsedSongs.stream()
-        .map(ParsedSong::getSong)
+        .map(ParsedSong::song)
         .toList();
   }
 
   private void resolveParsedUsers(List<ParsedUser> parsedUsers, Map<UUID, User> userMap, Map<UUID, Song> songMap) {
     for (ParsedUser parsedUser : parsedUsers) {
-      for (UUID id : parsedUser.getFollowedUsers()) {
-        parsedUser.getUser().followUser(userMap.get(id));
+      for (UUID id : parsedUser.followedUsers()) {
+        parsedUser.user().followUser(userMap.get(id));
       }
-      for (UUID id : parsedUser.getFavoritedSongs()) {
-        parsedUser.getUser().addFavoriteSong(songMap.get(id));
+      for (UUID id : parsedUser.favoritedSongs()) {
+        parsedUser.user().addFavoriteSong(songMap.get(id));
       }
     }
   }
 
   private void resolveParsedSongs(List<ParsedSong> parsedSongs, Map<UUID, User> userMap, Map<UUID, Song> songMap) {
     for (ParsedSong parsedSong : parsedSongs) {
-        parsedSong.getSong().setPublisher(userMap.get(parsedSong.getPublisher()));
+        parsedSong.song().setPublisher(userMap.get(parsedSong.publisher()));
     }
+  }
+
+  public static void main(String[] args) throws IOException, ParseException {
+    DataAssembler dataAssembler = new DataAssembler();
+    System.out.println(dataAssembler.getAssembledSongs());
   }
 
 
