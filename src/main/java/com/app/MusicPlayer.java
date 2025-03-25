@@ -28,6 +28,7 @@ public class MusicPlayer {
 	// Create a test song
 	Song testSong = new Song("Test Song", "Test Composer");
 	testSong.setComposer("Test Composer");
+	
 	testSong.setPickUp(0);
 	songs.add(testSong);
 

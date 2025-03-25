@@ -15,34 +15,38 @@ public class Song {
     private List<SheetMusic> sheetMusic;
     private int pickUp;
 
-  public Song(UUID id, String title, String composer, User publisher, List<SheetMusic> sheetMusic,
-      int pickUp) {
-    this.id = id;
-    this.title = title;
-    this.composer = composer;
-    this.publisher = publisher;
-    this.sheetMusic = sheetMusic;
-    this.pickUp = pickUp;
-  }
-
-    /**
-     * Constructor for Song
+     /**
+     * Constructor for new Song
      *
-     * @param title The title of the song
-     * @param composer The composer of the song
+     * @param title     The title of the song
+     * @param composer  The composer of the song
+     * @param publisher The User that made the song
      */
-    public Song(String title, String composer) {
+    public Song(String title, String composer, User publisher) {
         this.id = UUID.randomUUID();
         this.title = title;
         this.composer = composer;
+        this.publisher = publisher;
         this.sheetMusic = new ArrayList<>();
-        this.pickUp = 0; // Default pickup
+        this.pickUp = 0;
     }
 
-    public Song(UUID id, String title, String composer, int pickUp, List<SheetMusic> sheetMusic) {
+     /**
+     * Constructor for a Song
+     *
+     * @param id         Universially unique identifier for a song
+     * @param title      The title of the song
+     * @param composer   The composer of the song
+     * @param publisher  The User that made the song
+     * @param sheetMusic The sheetMusic that goes to that song
+     * @param pickUp     Beats before the first downbeat
+     */
+    public Song(UUID id, String title, String composer, User publisher, List<SheetMusic> sheetMusic,
+        int pickUp) {
         this.id = id;
         this.title = title;
         this.composer = composer;
+        this.publisher = publisher;
         this.sheetMusic = sheetMusic;
         this.pickUp = pickUp;
     }
