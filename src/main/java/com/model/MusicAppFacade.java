@@ -30,6 +30,25 @@ public class MusicAppFacade {
     }
 
     /**
+     * Returns the top search result for a song that matches a keyword
+     *
+     * @param searchQuery the keyword used in the song search
+     * @return the song found in the search
+     */
+    public Song searchForSong(String searchQuery) {
+        return songList.searchSong(searchQuery);
+    }
+
+    /**
+     * Sets the currently viewed song to a song input
+     *
+     * @param song the song being set as currently viewed
+     */
+    public void setViewedSong(Song song) {
+        this.viewedSong = song;
+    }
+
+    /**
      * Creates a new song and adds it to the song list.
      *
      * @param title    The title of the song.
