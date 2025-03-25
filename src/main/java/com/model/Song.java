@@ -18,8 +18,9 @@ public class Song {
      /**
      * Constructor for new Song
      *
-     * @param title The title of the song
-     * @param composer The composer of the song
+     * @param title     The title of the song
+     * @param composer  The composer of the song
+     * @param publisher The User that made the song
      */
     public Song(String title, String composer, User publisher) {
         this.id = UUID.randomUUID();
@@ -33,8 +34,12 @@ public class Song {
      /**
      * Constructor for a Song
      *
-     * @param title The title of the song
-     * @param composer The composer of the song
+     * @param id         Universially unique identifier for a song
+     * @param title      The title of the song
+     * @param composer   The composer of the song
+     * @param publisher  The User that made the song
+     * @param sheetMusic The sheetMusic that goes to that song
+     * @param pickUp     Beats before the first downbeat
      */
     public Song(UUID id, String title, String composer, User publisher, List<SheetMusic> sheetMusic,
         int pickUp) {
@@ -45,8 +50,6 @@ public class Song {
         this.sheetMusic = sheetMusic;
         this.pickUp = pickUp;
     }
-
-
 
     /**
      * Adds sheet music to the song
