@@ -51,15 +51,15 @@ public class User {
         this.themeColor = themeColor;
     }
 
-  public User(UUID id, String email, String username, String password) {
-    this.id = id;
-    this.email = email;
-    this.username = username;
-    this.password = password;
-    this.themeColor = ThemeColor.getDefault();
-    this.favoriteSongs = new ArrayList<>();
-    this.followedUsers = new ArrayList<>();
-  }
+    public User(UUID id, String email, String username, String password) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.themeColor = ThemeColor.getDefault();
+        this.favoriteSongs = new ArrayList<>();
+        this.followedUsers = new ArrayList<>();
+    }
 
   /**
      * Gets the user's ID

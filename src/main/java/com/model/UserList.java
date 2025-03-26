@@ -173,7 +173,7 @@ public class UserList {
     }
 
     /**
-     * Gets all users
+     * Gets all users.
      * 
      * @return List of all users
      */
@@ -181,6 +181,11 @@ public class UserList {
         return new ArrayList<>(users);
     }
 
+    /**
+     * Prints users to a String.
+     * 
+     * @return A String of Users
+     */
     public String toString() {
         return users.toString();
     }
