@@ -1,8 +1,8 @@
 package com.model;
 
-import com.service.SongPlayer;
-
 import java.util.ArrayList;
+
+import com.service.SongPlayer;
 
 public class MusicAppFacade {
     private User user;
@@ -145,8 +145,8 @@ public class MusicAppFacade {
      * Logs out the current user.
      */
     public void logout() {
-        user = null;
         save();
+        user = null;
     }
 
     /**

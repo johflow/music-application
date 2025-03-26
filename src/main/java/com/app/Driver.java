@@ -27,7 +27,7 @@ public class Driver {
 
     // Fred searching for Tom Petty songs
     List<Song> songs = facade.searchForSongs("Tom Petty");
-    System.out.println(facade.searchForSongs("Tom Petty"));
+    System.out.println(songs);
     
     // Fred selecting Free Fallin', playing it, printing it, and logging out
     facade.setViewedSong(songs.get(2));
@@ -71,8 +71,6 @@ public class Driver {
     facade.login("ffred", "mypassword");
     facade.setViewedSong(facade.searchForSong("A horses journey"));
     facade.playViewedSong();
-
-
 
   }
 }
