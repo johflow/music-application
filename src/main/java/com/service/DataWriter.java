@@ -44,8 +44,7 @@ public class DataWriter extends DataConstants {
             // Add the users array to the root object
             root.put("users", jsonUsers);
             
-            // try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) { uncomment this when done testing
-            try (FileWriter file = new FileWriter("src/main/java/com/data/TESTusers.json")) {  // delete this when done testing
+            try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) {
                 file.write(root.toJSONString());
                 file.flush();
                 return true;
@@ -75,8 +74,7 @@ public class DataWriter extends DataConstants {
 
             root.put("songs", jsonSongs);
 
-            // try (FileWriter file = new FileWriter(SONG_FILE_LOCATION)) { uncomment this when done testing
-            try (FileWriter file = new FileWriter("src/main/java/com/data/TESTsongs.json")) {  // delete this when done testing
+            try (FileWriter file = new FileWriter(SONG_FILE_LOCATION)) {
                 file.write(root.toJSONString());
                 file.flush();
                 return true;

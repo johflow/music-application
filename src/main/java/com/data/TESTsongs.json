@@ -1,1 +1,205 @@
-{"songs":[{"composer":"Test Composer","publisher":"335b3ac6-413d-4299-b81d-003d53d1a86f","pickUp":0,"id":"514379e9-44ae-4973-ad61-69ea43029d50","sheetMusic":[],"title":"Test Song"}]}
+{
+    "songs": [
+      {
+        "id": "fc85ecc3-ee58-43a3-a3b5-c23ddaf138f6",
+        "title": "Test Song",
+        "composer": "Composer Name",
+        "publisher": "8d94c649-5022-4339-80bb-b3d14d77f8bc",
+        "pickUp": 0,
+        "sheetMusic": [
+          {
+            "instrument": {
+              "instrumentName": "Piano",
+              "clefTypes": ["Treble", "Bass"]
+            },
+            "staves": [
+              {
+                "clefType": "Bass",
+                "measures": [
+                  {
+                    "keySignature": 0,
+                    "timeSignatureNumerator": 4,
+                    "timeSignatureDenominator": 4,
+                    "tempo": 120,
+                    "musicElements": [
+                      {
+                        "type": "rest",
+                        "duration": 1.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "rest",
+                        "duration": 12.0,
+                        "durationChar": "www",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "rest",
+                        "duration": 2.0,
+                        "durationChar": "h",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "G4",
+                        "pitch": 392.0,
+                        "midiNumber": 67,
+                        "duration": 2.0,
+                        "durationChar": "h",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "chord",
+                        "lyric": "",
+                        "notes": [
+                          {
+                            "noteName": "F3",
+                            "pitch": 174.61,
+                            "midiNumber": 53,
+                            "duration": 1.0,
+                            "durationChar": "q",
+                            "dotted": 0,
+                            "tied": false,
+                            "lyric": ""
+                          },
+                          {
+                            "noteName": "C4",
+                            "pitch": 261.63,
+                            "midiNumber": 60,
+                            "duration": 1.0,
+                            "durationChar": "q",
+                            "dotted": 0,
+                            "tied": false,
+                            "lyric": ""
+                          },
+                          {
+                            "noteName": "A4",
+                            "pitch": 440.0,
+                            "midiNumber": 69,
+                            "duration": 1.0,
+                            "durationChar": "q",
+                            "dotted": 0,
+                            "tied": false,
+                            "lyric": ""
+                          }
+                        ]
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "E5",
+                        "pitch": 659.26,
+                        "midiNumber": 76,
+                        "duration": 1.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "A4",
+                        "pitch": 440.0,
+                        "midiNumber": 69,
+                        "duration": 1.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "G4",
+                        "pitch": 392.0,
+                        "midiNumber": 67,
+                        "duration": 1.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "A4",
+                        "pitch": 440.0,
+                        "midiNumber": 69,
+                        "duration": 4.0,
+                        "durationChar": "w",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "G3",
+                        "pitch": 196.0,
+                        "midiNumber": 55,
+                        "duration": 2.0,
+                        "durationChar": "h",
+                        "dotted": 1,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "G4",
+                        "pitch": 196.0,
+                        "midiNumber": 55,
+                        "duration": 2.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "A4",
+                        "pitch": 196.0,
+                        "midiNumber": 55,
+                        "duration": 2.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "E5",
+                        "pitch": 196.0,
+                        "midiNumber": 55,
+                        "duration": 2.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      },
+                      {
+                        "type": "note",
+                        "noteName": "A4",
+                        "pitch": 196.0,
+                        "midiNumber": 55,
+                        "duration": 2.0,
+                        "durationChar": "q",
+                        "dotted": 0,
+                        "tied": false,
+                        "lyric": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  
