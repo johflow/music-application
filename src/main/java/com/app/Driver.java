@@ -1,8 +1,10 @@
 package com.app;
 
+import java.util.List;
+
 import com.model.MusicAppFacade;
 import com.model.Song;
-import java.util.List;
+import com.model.Measure;
 
 
 public class Driver {
@@ -21,10 +23,14 @@ public class Driver {
     
     facade.setViewedSong(songs.get(2));
     facade.playViewedSong();
-    facade.printSong();
+    facade.printViewedSong();
     facade.logout();
-    
+
     facade.login("ffredrickson", "password123");
+
+    facade.createSong("A horses journey", "Fellicia");
+    facade.addMeasure(new Measure(1, 1, 1, 1.0));
+
   }
 
 
