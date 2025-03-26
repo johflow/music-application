@@ -9,6 +9,7 @@ import com.model.ParsedUser;
 import com.model.Song;
 import com.model.User;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +137,9 @@ public class DataAssembler extends DataConstants {
   public static void main(String[] args) throws IOException, ParseException {
     DataAssembler dataAssembler = new DataAssembler();
     System.out.println(dataAssembler.getAssembledSongs());
-    System.out.println(dataAssembler.getAssembledUsers());
+    List<User> users = dataAssembler.getAssembledUsers();
+    for (User user : users) {
+      System.out.println(user);
+    }
   }
 }
