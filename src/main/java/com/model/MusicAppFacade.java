@@ -63,7 +63,7 @@ public class MusicAppFacade {
      * @param composer The composer of the song.
      */
     public void createSong(String title, String composer) {
-        Song song = new Song(title, composer);
+        Song song = new Song(title, composer, user);
         songList.addSong(song);
     }
 
@@ -74,6 +74,10 @@ public class MusicAppFacade {
      */
     public void addMusicElement(MusicElement musicElement) {
         viewedSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures().getFirst().addMusicElement(musicElement);
+    }
+
+    public void addSheetMusic(SheetMusic sheetMusic) {
+        viewedSong.addSheetMusic(sheetMusic);
     }
 
     /**

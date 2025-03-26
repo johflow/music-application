@@ -1,5 +1,6 @@
 package com.app;
 
+import com.model.Instrument;
 import com.service.DataAssembler;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class MusicPlayer {
 	songs.add(testSong);
 	users.add(testUser1);
 	users.add(testUser2);
+	Instrument instrument = new Instrument(new List<String> clef =, "voice");
 
 
 	// Save test data using DataWriter
