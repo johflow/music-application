@@ -1,5 +1,7 @@
 package com.model;
 
+import java.util.ArrayList;
+
 public class MusicAppFacade {
     private User user;
     private static MusicAppFacade instance;
@@ -40,6 +42,8 @@ public class MusicAppFacade {
     public Song searchForSong(String searchQuery) {
         return songList.searchSong(searchQuery);
     }
+
+    public ArrayList<Song> searchForSongs(String searchQuery) { return songList.searchSongs(searchQuery); }
 
     /**
      * Sets the currently viewed song to a song input
