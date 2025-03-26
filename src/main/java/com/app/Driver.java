@@ -55,10 +55,10 @@ public class Driver {
 
     // Fellicia uses the UI to add notes to her 2nd measure
     List<MusicElement> notes2 = new ArrayList<>();
-    notes2.add(new Note("NOTE", 60.0, 60, "C4", 1.0, 'q', 0, false, ""));
+    notes2.add(new Note("NOTE", 60.0, 60, "E4", 1.0, 'q', 0, false, ""));
     notes2.add(new Note("NOTE", 62.0, 62, "D4", 1.0, 'q', 0, false, ""));
-    notes2.add(new Note("NOTE", 64.0, 64, "E4", 1.0, 'q', 0, false, ""));
-    notes2.add(new Note("NOTE", 65.0, 65, "F4", 1.0, 'q', 0, false, ""));
+    notes2.add(new Note("NOTE", 64.0, 64, "C4", 1.0, 'q', 0, false, ""));
+    notes2.add(new Note("NOTE", 65.0, 65, "B4", 1.0, 'q', 0, false, ""));
     
     facade.addMeasure(new Measure(0, 4, 4, 120, notes2));
 
