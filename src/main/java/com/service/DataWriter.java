@@ -207,7 +207,7 @@ public class DataWriter extends DataConstants {
         noteJSON.put(SONG_MUSIC_ELEMENT_MIDI_NUMBER, note.getMidiNumber());
         noteJSON.put(SONG_MUSIC_ELEMENT_NOTE_NAME, note.getNoteName());
         noteJSON.put(SONG_MUSIC_ELEMENT_DURATION, note.getDuration());
-        noteJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, note.getDurationChar());
+        noteJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, "\"" + note.getDurationChar() + "\"");
         noteJSON.put(SONG_MUSIC_ELEMENT_DOTTED, note.getDotted());
         noteJSON.put(SONG_MUSIC_ELEMENT_TIED, note.hasTie());
         noteJSON.put(SONG_MUSIC_ELEMENT_LYRIC, note.getLyric());
@@ -225,7 +225,7 @@ public class DataWriter extends DataConstants {
         JSONObject restJSON = new JSONObject();
         restJSON.put(SONG_MUSIC_ELEMENT_TYPE, rest.getType());
         restJSON.put(SONG_MUSIC_ELEMENT_DURATION, rest.getDuration());
-        restJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, rest.getDurationChar());
+        restJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, "\"" + rest.getDurationChar() + "\"");
         restJSON.put(SONG_MUSIC_ELEMENT_DOTTED, rest.getDotted());
         restJSON.put(SONG_MUSIC_ELEMENT_TIED, rest.hasTie());
         restJSON.put(SONG_MUSIC_ELEMENT_LYRIC, rest.getLyric());
@@ -251,7 +251,7 @@ public class DataWriter extends DataConstants {
             noteJSON.put(SONG_MUSIC_ELEMENT_MIDI_NUMBER, note.getMidiNumber());
             noteJSON.put(SONG_MUSIC_ELEMENT_NOTE_NAME, note.getNoteName());
             noteJSON.put(SONG_MUSIC_ELEMENT_DURATION, note.getDuration());
-            noteJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, note.getDurationChar());
+            noteJSON.put(SONG_MUSIC_ELEMENT_DURATION_CHAR, "\"" + note.getDurationChar()  + "\"");
             noteJSON.put(SONG_MUSIC_ELEMENT_DOTTED, note.getDotted());
             noteJSON.put(SONG_MUSIC_ELEMENT_TIED, note.hasTie());
             noteJSON.put(SONG_MUSIC_ELEMENT_LYRIC, note.getLyric());
