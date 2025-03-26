@@ -57,6 +57,8 @@ public class User {
     this.username = username;
     this.password = password;
     this.themeColor = ThemeColor.getDefault();
+    this.favoriteSongs = new ArrayList<>();
+    this.followedUsers = new ArrayList<>();
   }
 
   /**

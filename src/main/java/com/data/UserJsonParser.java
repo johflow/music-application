@@ -56,15 +56,15 @@ public class UserJsonParser extends DataConstants {
   }
 
   private List<UUID> getFollowedUserIds(JSONObject userJson) {
-    return getIDList(userJson);
+    return getIDList(userJson, USER_FOLLOWED_USERS);
   }
 
   private List<UUID> getFavoritedSongs(JSONObject userJson) {
-    return getIDList(userJson);
+    return getIDList(userJson, USER_FAVORITED_SONGS);
   }
 
-  private List<UUID> getIDList(JSONObject userJson) {
-    JSONArray IDJson = (JSONArray) userJson.get(USER_FAVORITED_SONGS);
+  private List<UUID> getIDList(JSONObject userJson, String idKey) {
+    JSONArray IDJson = (JSONArray) userJson.get(idKey);
     List<UUID> IDs = new ArrayList<>();
     if (IDJson != null) {
       for (Object idObj : IDJson) {

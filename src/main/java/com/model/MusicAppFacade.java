@@ -13,7 +13,8 @@ public class MusicAppFacade {
     private MusicAppFacade() {
         this.user = null;
         this.songList = null;
-        this.userList = null;
+        this.userList = UserList.getInstance();
+        userList.loadUsers();
         this.viewedSong = null;
     }
 
@@ -22,7 +23,7 @@ public class MusicAppFacade {
      *
      * @return the singleton instance
      */
-    public MusicAppFacade getInstance() {
+    public static MusicAppFacade getInstance() {
         if (instance == null) {
             instance = new MusicAppFacade();
         }

@@ -179,4 +179,8 @@ public class UserList {
     public List<User> getAllUsers() {
         return new ArrayList<>(users);
     }
+
+    public String toString() {
+        return users.toString();
+    }
 }
