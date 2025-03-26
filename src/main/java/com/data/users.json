@@ -1,1 +1,22 @@
-{"users":[{"followedUsers":[],"password":"mypassword","themeColor":"BLUE","id":"ff6ede3c-53ad-4472-b2e8-57c5ce1e4195","favoritedSongs":[],"email":"fmail@gmail.com","username":"ffred"}]}
+{
+  "users": [
+    {
+      "followedUsers": [],
+      "password": "mypassword",
+      "themeColor": "BLUE",
+      "id": "ff6ede3c-53ad-4472-b2e8-57c5ce1e4195",
+      "favoritedSongs": [],
+      "email": "fmail@gmail.com",
+      "username": "ffred"
+    },
+    {
+      "followedUsers": [],
+      "password": "mypassword",
+      "themeColor": "BLUE",
+      "id": "758043af-2350-4e58-ab2f-43d1b51f1125",
+      "favoritedSongs": [],
+      "email": "fmail@gmail.com",
+      "username": "ffredrickson"
+    }
+  ]
+}
