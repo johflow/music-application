@@ -3,6 +3,8 @@ package com.model;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import com.service.DataAssembler;
 import com.service.DataWriter;
 
 /**
@@ -157,6 +159,22 @@ public class SongList {
         // Example: Sort by composer
         else if (criteria.equalsIgnoreCase("composer")) {
             songs.sort((s1, s2) -> s1.getComposer().compareToIgnoreCase(s2.getComposer()));
+        }
+    }
+
+    public boolean loadSongs() {
+        try {
+            DataAssembler dataAssembler = new DataAssembler();
+            List<Song> loadedSongs = dataAssembler.getAssembledSongs();
+            if (loadedSongs != null) {
+                this.songs = loadedSongs;
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.err.println("Error loading songs: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 

@@ -12,7 +12,8 @@ public class MusicAppFacade {
      */
     private MusicAppFacade() {
         this.user = null;
-        this.songList = null;
+        this.songList = SongList.getInstance();
+        songList.loadSongs();
         this.userList = UserList.getInstance();
         userList.loadUsers();
         this.viewedSong = null;
