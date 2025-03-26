@@ -110,6 +110,13 @@ public class MusicAppFacade {
     }
 
     /**
+     * Prints the currently viewed song to the console
+     */
+    public void printViewedSong() {
+        System.out.println(viewedSong.toString());
+    }
+
+    /**
      * Registers a new user.
      *
      * @param userName The username of the new user.
