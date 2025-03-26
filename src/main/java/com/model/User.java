@@ -243,6 +243,6 @@ public class User {
      */
     @Override
     public String toString() {
-        return this.username + " " + this.email + " " + this.id + " " + this.password + " " + getFavoriteSongs() + " " + getFollowedUsers() + " " + getThemeColor();
+        return this.username;
     }
 }
