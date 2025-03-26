@@ -1,5 +1,7 @@
 package com.model;
 
+import com.service.SongPlayer;
+
 import java.util.ArrayList;
 
 public class MusicAppFacade {
@@ -96,7 +98,8 @@ public class MusicAppFacade {
      * Plays the currently viewed song.
      */
     public void playViewedSong() {
-        // Implementation for playing the viewed song
+        SongPlayer player = new SongPlayer();
+        player.play(viewedSong);
     }
 
     /**
