@@ -206,7 +206,7 @@
       "title": "I Won't Back Down",
       "composer": "Tom Petty",
       "publisher": "8b8e46e9-681a-4f55-bdfd-b176b18cef4b",
-      "pickup": 0,
+      "pickUp": 0,
       "sheetMusic": [
         {
           "instrument": {
@@ -407,7 +407,7 @@
       "title": "Mary Jane's Last Dance",
       "composer": "Tom Petty",
       "publisher": "326d423e-92af-4d80-86ab-3826cfe6007d",
-      "pickup": 0,
+      "pickUp": 0,
       "sheetMusic": [
         {
           "instrument": {
@@ -608,7 +608,7 @@
       "title": "Free Fallin",
       "composer": "Tom Petty",
       "publisher": "fc469af4-cb67-4b1d-8fd7-8a52459b97ce",
-      "pickup": 0,
+      "pickUp": 0,
       "sheetMusic": [
         {
           "instrument": {

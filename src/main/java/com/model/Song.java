@@ -201,7 +201,7 @@ public class Song {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(title).append("\n");
         for (SheetMusic aSheetMusic : sheetMusic) {
-            stringBuilder.append(aSheetMusic).append("\n\n\n\n\n\n");
+            stringBuilder.append(aSheetMusic).append("\n\n");
         }
         return stringBuilder.toString();
     }

@@ -54,9 +54,9 @@ public class DataAssembler extends DataConstants {
 
     resolveParsedUsers(parsedUsers, userMap, songMap);
 
-    return parsedUsers.stream()
+    return new ArrayList<>(parsedUsers.stream()
         .map(ParsedUser::user)
-        .toList();
+        .toList());
   }
 
   /**
@@ -90,9 +90,9 @@ public class DataAssembler extends DataConstants {
 
     resolveParsedSongs(parsedSongs, userMap, songMap);
 
-    return parsedSongs.stream()
+    return new ArrayList<>(parsedSongs.stream()
         .map(ParsedSong::song)
-        .toList();
+        .toList());
   }
 
   /**

@@ -118,7 +118,8 @@ public class UserList {
         // Check if a user with the same username already exists
         for (User existingUser : users) {
             if (existingUser.getUsername().equals(user.getUsername())) {
-                throw new IllegalArgumentException("Username " + user.getUsername() + " is already taken!");
+                System.out.println("Username " + user.getUsername() + " is already taken!");
+                return false;
             }
         }
         
