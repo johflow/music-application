@@ -146,6 +146,7 @@ public class MusicAppFacade {
      */
     public void logout() {
         user = null;
+        save();
     }
 
     /**
@@ -182,5 +183,14 @@ public class MusicAppFacade {
      */
     public void unfollowUser(User user) {
         this.user.unfollowUser(user);
+    }
+
+    /**
+     * Saves user list and song list.
+     * 
+     * @return True if both user and song save correctly
+     */
+    public boolean save() {
+        return userList.save() && songList.save();
     }
 }
