@@ -1,8 +1,7 @@
 package com.model;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
 
 import com.service.DataAssembler;
 import com.service.DataWriter;
@@ -184,8 +183,6 @@ public class SongList {
      * @return True if the save was successful, false otherwise
      */
     public boolean save() {
-        // This would typically interact with a persistence layer
-        // For now, we'll just return true
-        return true;
+        return DataWriter.saveSongs(this.songs);
     }
 }

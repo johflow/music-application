@@ -6,9 +6,9 @@
 				"75e3e12a-09b0-4d63-b82f-588688c58a0e"
 			],
 			"password": "password123",
-			"themeColor": "default",
+			"themeColor": "BLUE",
 			"id": "7fd7c3a0-dde3-4caa-9cc7-f2c030206bee",
-			"email": "john.doe@example.com",
+			"email": "felicia.fredrickson@example.com",
 			"username": "ffredrickson",
 			"favoritedSongs": [
 				"fc85ecc3-ee58-43a3-a3b5-c23ddaf138f6"
@@ -20,7 +20,7 @@
 				"75e3e12a-09b0-4d63-b82f-588688c58a0e"
 			],
 			"password": "qwerty789",
-			"themeColor": "default",
+			"themeColor": "BLUE",
 			"id": "8d94c649-5022-4339-80bb-b3d14d77f8bc",
 			"email": "jane.smith@example.com",
 			"username": "janesmith",
@@ -34,7 +34,7 @@
 				"7fd7c3a0-dde3-4caa-9cc7-f2c030206bee"
 			],
 			"password": "secret456",
-			"themeColor": "default",
+			"themeColor": "BLUE",
 			"id": "75e3e12a-09b0-4d63-b82f-588688c58a0e",
 			"email": "bob@example.com",
 			"username": "bobby",
