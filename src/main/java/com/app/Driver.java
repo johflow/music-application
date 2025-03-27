@@ -36,7 +36,7 @@ public class Driver {
     facade.logout();
 
     // Fellicia logging in
-    facade.login("ffredrickson", "password123");
+    facade.login("ffredrickson", "mypassword");
 
     // Fellicia creating a new song
     facade.createSong("A horses journey", "Fellicia");
