@@ -3,6 +3,7 @@ package com.model;
 import java.util.ArrayList;
 
 import com.service.SongPlayer;
+import java.util.List;
 
 public class MusicAppFacade {
     private User user;
@@ -139,6 +140,23 @@ public class MusicAppFacade {
      */
     public void login(String userName, String password) {
         user = userList.getUser(userName, password);
+    }
+
+    /**
+     * Takes a song and exports it to a text document
+     *
+     */
+    public void exportViewedSongToFile() {
+        viewedSong.outputToFile();
+    }
+
+    /**
+     *
+     */
+    public void printSongTitles(List<Song> songs) {
+        for (Song song : songs) {
+            System.out.println(song.getTitle());
+        }
     }
 
     /**

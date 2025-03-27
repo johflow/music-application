@@ -1,5 +1,8 @@
 package com.model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -204,6 +207,18 @@ public class Song {
             stringBuilder.append(aSheetMusic).append("\n\n");
         }
         return stringBuilder.toString();
+    }
+
+    public void outputToFile() {
+        String fileName = "song.txt";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write(this.toString());
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
 
