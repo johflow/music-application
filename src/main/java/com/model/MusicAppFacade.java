@@ -46,7 +46,15 @@ public class MusicAppFacade {
         return songList.searchSong(searchQuery);
     }
 
-    public ArrayList<Song> searchForSongs(String searchQuery) { return songList.searchSongs(searchQuery); }
+    /**
+     * Searches for songs based off a query.
+     * 
+     * @param searchQuery the query
+     * @return a ArrayList of songs matching the query
+     */
+    public ArrayList<Song> searchForSongs(String searchQuery) { 
+        return songList.searchSongs(searchQuery); 
+    }
 
     /**
      * Sets the currently viewed song to a song input
@@ -77,6 +85,11 @@ public class MusicAppFacade {
         viewedSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures().getFirst().addMusicElement(musicElement);
     }
 
+    /**
+     * Adds a sheet music to the viewed song.
+     * 
+     * @param sheetMusic The sheet music object
+     */
     public void addSheetMusic(SheetMusic sheetMusic) {
         viewedSong.addSheetMusic(sheetMusic);
     }
@@ -151,7 +164,7 @@ public class MusicAppFacade {
     }
 
     /**
-     *
+     * Prints title of song
      */
     public void printSongTitles(List<Song> songs) {
         for (Song song : songs) {
