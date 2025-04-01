@@ -32,7 +32,7 @@ public class FileReaderUtil {
 
     Path path = Paths.get(filePath);
 
-    if (Files.exists(path)) {
+    if (!Files.exists(path)) {
       logger.severe("File not found at: " + filePath);
       return "";
     }
