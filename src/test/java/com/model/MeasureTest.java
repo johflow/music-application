@@ -18,6 +18,26 @@ public class MeasureTest {
         assertEquals(1, mus.size());
     }
 
+    @Test
+    public void TestAddNote() {
+        Note note = new Note(440.0, 1.0, "");
+        List<MusicElement> mus = new ArrayList<>();
+        Measure m = new Measure(1, 5, 4, 1, mus);
+
+        m.addMusicElement(note);
+        assertEquals(1, mus.size());
+    }
+
+    @Test
+    public void TestAddChord() {
+        Chord chord = new Chord();
+        List<MusicElement> mus = new ArrayList<>();
+        Measure m = new Measure(1, 5, 4, 1, mus);
+
+        m.addMusicElement(chord);
+        assertEquals(1, mus.size());
+    }
+
     @Test 
     public void TestInvalidTimeSignature() {
         List<MusicElement> mus = new ArrayList<>();
