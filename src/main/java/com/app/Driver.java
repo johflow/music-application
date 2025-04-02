@@ -50,17 +50,17 @@ public class Driver {
 
     // Fellicia uses the UI to add notes to her 1st measure
     facade.addMeasure(new Measure(0, 4, 4, 120, new ArrayList<>()));
-    facade.addMusicElement(new Note("note", 60.0, 60, "C4", 1.0, 'q', 0, false, ""));
-    facade.addMusicElement(new Note("note", 62.0, 62, "D4", 1.0, 'q', 0, false, ""));
-    facade.addMusicElement(new Note("note", 64.0, 64, "E4", 1.0, 'q', 0, false, ""));
-    facade.addMusicElement(new Note("note", 65.0, 65, "F4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(60.0, 60, "C4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(62.0, 62, "D4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(64.0, 64, "E4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(65.0, 65, "F4", 1.0, 'q', 0, false, ""));
 
     // Fellicia uses the UI to add notes to her 2nd measure
     facade.addMeasure(new Measure(0, 4, 4, 120, new ArrayList<>()));
-    facade.addMusicElement(new Note("note", 60.0, 60, "E4", 1.0, 'q', 0, false, ""));
-    facade.addMusicElement(new Note("note", 62.0, 62, "D4", 1.0, 'q', 0, false, ""));
-    facade.addMusicElement(new Note("note", 64.0, 64, "C4", 1.0, 'q', 0, false, ""));
-    facade.addMusicElement(new Note("note", 65.0, 65, "B4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(60.0, 60, "E4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(62.0, 62, "D4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(64.0, 64, "C4", 1.0, 'q', 0, false, ""));
+    facade.addMusicElement(new Note(65.0, 65, "B4", 1.0, 'q', 0, false, ""));
 
     // Fellicia plays the song and logs out
     facade.playViewedSong();

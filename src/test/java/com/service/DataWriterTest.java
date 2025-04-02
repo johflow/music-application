@@ -624,18 +624,18 @@ public class DataWriterTest {
     public void testSaveSongWithModifiedTupletProperties() {
         // Create a song with a tuplet
         Song song = createTestSong();
-        
+
         // Get the fourth element (which should be a tuplet)
         SheetMusic sheetMusic = song.getSheetMusic().get(0);
         Staff staff = sheetMusic.getStaves().get(0);
         Measure measure = staff.getMeasures().get(0);
         MusicElement element = measure.getMusicElements().get(3);
-        
+
         if (element instanceof Tuplet) {
             Tuplet tuplet = (Tuplet) element;
-            
+
             tuplet.setDuration(0.0001);
-            
+
             // Modify elements within tuplet
             List<MusicElement> tupletElements = tuplet.getElements();
             if (!tupletElements.isEmpty() && tupletElements.get(0) instanceof Note) {
@@ -643,14 +643,14 @@ public class DataWriterTest {
                 note.setDuration(0.00001);
                 note.setMidiNumber(999);
         }
-        
+
         assertTrue(DataWriter.saveSongs(List.of(song), TEST_SONG_FILE));
-        
+
         try {
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject) parser.parse(new FileReader(TEST_SONG_FILE));
             JSONArray jsonSongs = (JSONArray) json.get("songs");
-            
+
             // Navigate to the tuplet in JSON
             JSONObject jsonSong = (JSONObject) jsonSongs.get(0);
             JSONArray jsonSheetMusic = (JSONArray) jsonSong.get("sheetMusic");
@@ -661,17 +661,17 @@ public class DataWriterTest {
             JSONObject firstMeasure = (JSONObject) jsonMeasures.get(0);
             JSONArray jsonElements = (JSONArray) firstMeasure.get("musicElements");
             JSONObject tupletElement = (JSONObject) jsonElements.get(3);
-            
+
             // Verify tuplet properties
             assertEquals("tuplet", tupletElement.get("type"));
             assertEquals(99L, tupletElement.get("numerator"));
             assertEquals(1L, tupletElement.get("denominator"));
             assertEquals(0.0001, ((Number)tupletElement.get("duration")).doubleValue(), 0.00001);
-            
+
             // Verify elements within tuplet
             JSONArray jsonTupletElements = (JSONArray) tupletElement.get("elements");
             assertTrue(jsonTupletElements.size() > 0);
-            
+
             // First element (if it's a note)
             JSONObject firstElement = (JSONObject) jsonTupletElements.get(0);
             if ("note".equals(firstElement.get("type"))) {

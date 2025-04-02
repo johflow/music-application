@@ -9,6 +9,7 @@ module com.frontend.gui {
 
   opens com.frontend.gui to javafx.fxml;
     exports com.frontend.gui;
+  opens com.service to junit;
 
     opens com.model to javafx.fxml;
     exports com.model;
