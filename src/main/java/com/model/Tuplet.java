@@ -8,7 +8,7 @@ import java.util.List;
  * of notes. This class implements the {@link MusicElement} interface.
  */
 public class Tuplet implements MusicElement {
-    private String type;
+    private final String type = "tuplet";
     private int subdivisions;
     private int impliedDivision;
     private double duration;
@@ -17,14 +17,12 @@ public class Tuplet implements MusicElement {
     /**
      * Constructs a {@code Tuplet} with the specified parameters.
      *
-     * @param type the type of the music element, typically "tuplet"
      * @param subdivisions the number of subdivisions in the tuplet
      * @param impliedDivision the implied division of the tuplet
      * @param duration the duration of the tuplet
      * @param elements the list of music elements contained in the tuplet
      */
-    public Tuplet(String type, int subdivisions, int impliedDivision, double duration, List<MusicElement> elements) {
-        this.type = type;
+    public Tuplet(int subdivisions, int impliedDivision, double duration, List<MusicElement> elements) {
         this.subdivisions = subdivisions;
         this.impliedDivision = impliedDivision;
         this.duration = duration;
@@ -35,7 +33,6 @@ public class Tuplet implements MusicElement {
      * Default constructor that initializes the {@code Tuplet} with type "tuplet" and an empty list of elements.
      */
     public Tuplet() {
-        this.type = "tuplet";
         this.elements = new ArrayList<>();
     }
 

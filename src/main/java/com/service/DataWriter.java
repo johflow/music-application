@@ -28,9 +28,11 @@ public class DataWriter extends DataConstants {
     /**
      * Writes user data to JSON.
      * 
+     * @param users The users to save
+     * @param filePath The file path to save to (REMOVE WHEN DONE TESTING)
      * @return True or false depending on success of write.
      */
-    public static boolean saveUsers(List<User> users) {
+    public static boolean saveUsers(List<User> users, String filePath) {
         try {
             // Create the root JSON object with "users" key
             JSONObject root = new JSONObject();
@@ -44,7 +46,9 @@ public class DataWriter extends DataConstants {
             // Add the users array to the root object
             root.put("users", jsonUsers);
             
-            try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) {
+            //try (FileWriter file = new FileWriter(USER_FILE_LOCATION)) { uncomment this and delete the two lines below when done testing
+            String fileToUse = (filePath != null) ? filePath : USER_FILE_LOCATION;
+            try (FileWriter file = new FileWriter(fileToUse)) {
                 file.write(root.toJSONString());
                 file.flush();
                 return true;
@@ -60,9 +64,11 @@ public class DataWriter extends DataConstants {
     /**
      * Writes song data to JSON.
      * 
+     * @param songs The songs to save
+     * @param filePath The file path to save to (REMOVE WHEN DONE TESTING)
      * @return True or false depending on success of write.
      */
-    public static boolean saveSongs(List<Song> songs) {
+    public static boolean saveSongs(List<Song> songs, String filePath) {
         try {
             JSONObject root = new JSONObject();
             JSONArray jsonSongs = new JSONArray();
@@ -74,7 +80,8 @@ public class DataWriter extends DataConstants {
 
             root.put("songs", jsonSongs);
 
-            try (FileWriter file = new FileWriter(SONG_FILE_LOCATION)) {
+            String fileToUse = (filePath != null) ? filePath : SONG_FILE_LOCATION;
+            try (FileWriter file = new FileWriter(fileToUse)) {
                 file.write(root.toJSONString());
                 file.flush();
                 return true;
@@ -86,6 +93,28 @@ public class DataWriter extends DataConstants {
             return false;
         }
     }
+
+    // #TODO:<------------REMOVE BELOW WHEN DONE TESTING------------>
+    /**
+     * Writes song data to JSON.
+     * 
+     * @param songs The songs to save
+     * @return True or false depending on success of write.
+     */
+    public static boolean saveSongs(List<Song> songs) {
+        return saveSongs(songs, null);
+    }
+
+    /**
+     * Writes user data to JSON.
+     * 
+     * @param users The users to save
+     * @return True or false depending on success of write.
+     */
+    public static boolean saveUsers(List<User> users) {
+        return saveUsers(users, null);
+    }
+    // <------------REMOVE ABOVE WHEN DONE TESTING------------>
 
     /**
      * For each data variable, it gets added to a JSONObject to be written in users.json

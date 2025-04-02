@@ -3,14 +3,14 @@ package com.model;
 import org.jfugue.player.Player;
 
 public class Rest implements MusicElement, DurationElement {
-  private String type = "rest";
+  private final String type = "rest";
   private double duration;
   private char durationChar;
   private int dotted;
   private boolean tied;
   private String lyric;
 
-  public Rest(String type, double duration, char durationChar, int dotted, boolean tied, String lyric) {
+  public Rest(double duration, char durationChar, int dotted, boolean tied, String lyric) {
     this.duration = duration;
     this.durationChar = durationChar;
     this.dotted = dotted;

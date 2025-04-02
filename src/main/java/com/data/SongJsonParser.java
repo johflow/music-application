@@ -159,7 +159,7 @@ public class SongJsonParser extends DataConstants {
     int dotted = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_DOTTED, Number.class).intValue();
     boolean tied = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TIED, Boolean.class);
     String lyric = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_LYRIC, String.class);
-    return new Rest(SONG_MUSIC_ELEMENT_REST, duration, durationChar, dotted, tied, lyric);
+    return new Rest(duration, durationChar, dotted, tied, lyric);
   }
 
   /**
@@ -177,7 +177,7 @@ public class SongJsonParser extends DataConstants {
     for (Object musicElementObject : tupletElementsJSON) {
       elements.add(getMusicElement(musicElementObject));
     }
-    return new Tuplet(SONG_MUSIC_ELEMENT_TUPLET, subdivisions, impliedDivision, duration, elements);
+    return new Tuplet(subdivisions, impliedDivision, duration, elements);
   }
 
   /**
@@ -195,7 +195,7 @@ public class SongJsonParser extends DataConstants {
     int dotted = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_DOTTED, Number.class).intValue();
     boolean tied = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TIED, Boolean.class);
     String lyric = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_LYRIC, String.class);
-    return new Note(SONG_MUSIC_ELEMENT_NOTE, pitch, midiNumber, noteName, duration, durationChar, dotted, tied, lyric);
+    return new Note(pitch, midiNumber, noteName, duration, durationChar, dotted, tied, lyric);
   }
 
   /**
@@ -212,7 +212,7 @@ public class SongJsonParser extends DataConstants {
       JSONObject chordNoteJSON = (JSONObject) noteObject;
       notes.add(getNote(chordNoteJSON));
     }
-    return new Chord(SONG_MUSIC_ELEMENT_CHORD, chordLyric, notes);
+    return new Chord(chordLyric, notes);
   }
 
   /**
