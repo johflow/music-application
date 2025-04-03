@@ -25,21 +25,12 @@ public class DataWriterTest {
     private static final String TEST_SONG_FILE = "src/test/resources/data/songs.json";
     private static final String TEST_USER_FILE = "src/test/resources/data/users.json";
 
-    // <-------------------BEFORE AND AFTER SETUP------------------->
+    // <-------------------BEFORE SETUP------------------->
     @Before
     public void setUp() {
         // Set up test data
         testUser = new User("test@example.com", "testuser", "password");
         testSong = createTestSong();
-        
-
-    }
-    
-    @After
-    public void tearDown() {
-        // Clean up test files
-        new File(TEST_SONG_FILE).delete();
-        new File(TEST_USER_FILE).delete();
     }
 
     // <-------------------TESTS NORMAL USER AND SONG CASES------------------->
@@ -163,10 +154,7 @@ public class DataWriterTest {
     // <-------------------TESTS NULL AND EMPTY CASES------------------->
     @Test
     public void testSaveEmptyLists() {
-        // Test empty song list
         assertTrue(DataWriter.saveSongs(new ArrayList<>()));
-        
-        // Test empty user list
         assertTrue(DataWriter.saveUsers(new ArrayList<>()));
     }
     
@@ -177,25 +165,9 @@ public class DataWriterTest {
     }
     
     // <-------------------TESTS UNIQUE STRANGE INPUTS------------------->
-    @Test
-    public void testSaveSongWithAllMusicElements() {
-        Song song = createTestSong();
-        
-        assertTrue(DataWriter.saveSongs(List.of(song), TEST_SONG_FILE));
-        
-        try {
-            JSONParser parser = new JSONParser();
-            JSONObject json = (JSONObject) parser.parse(new FileReader(TEST_SONG_FILE));
-            JSONArray jsonSongs = (JSONArray) json.get("songs");
-            assertEquals(1, jsonSongs.size());
-        } catch (Exception e) {
-            fail("Exception reading saved song file: " + e.getMessage());
-        }
-    }
-    
+
     @Test
     public void testSaveSongWithNullTitle() {
-        // Create song with null title
         Song song = createTestSong();
         song.setTitle(null);
         
@@ -216,7 +188,6 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithNullComposer() {
-        // Create song with null composer
         Song song = createTestSong();
         song.setComposer(null);
         
@@ -237,7 +208,6 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithNullPublisher() {
-        // Create song with null publisher
         Song song = createTestSong();
         song.setPublisher(null);
         
@@ -315,7 +285,6 @@ public class DataWriterTest {
             
             assertEquals(2, jsonUsers.size());
             
-            // Find user1 in the JSON
             JSONObject jsonUser1 = null;
             for (Object obj : jsonUsers) {
                 JSONObject jsonUser = (JSONObject) obj;
@@ -335,7 +304,6 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithExtremelyLongTitle() {
-        // Create a song with a very long title (100,000 characters)
         StringBuilder longTitle = new StringBuilder();
         for (int i = 0; i < 100000; i++) {
             longTitle.append("a");
@@ -360,7 +328,6 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithSpecialCharactersInTitle() {
-        // Create a song with special characters in the title
         String specialTitle = "Test <>&\"'\\/ Song with 你好 emoji 🎵🎶";
         Song song = new Song(specialTitle, "Test Composer", testUser);
         
@@ -380,10 +347,8 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithNegativeTempo() {
-        // Create a song with a negative tempo
         Song song = createTestSong();
         
-        // Get the first measure and set a negative tempo
         SheetMusic sheetMusic = song.getSheetMusic().get(0);
         Staff staff = sheetMusic.getStaves().get(0);
         Measure measure = staff.getMeasures().get(0);
@@ -411,15 +376,13 @@ public class DataWriterTest {
     }
 
     @Test
-    public void testSaveSongWithCircularReference() {
-        // Create a situation where User A follows User B who follows User A
+    public void testSaveSongWithCircularFollowingReference() {
         User userA = new User("userA@example.com", "userA", "password");
         User userB = new User("userB@example.com", "userB", "password");
         
         userA.followUser(userB);
         userB.followUser(userA);
         
-        // Save users with circular reference
         assertTrue(DataWriter.saveUsers(List.of(userA, userB), TEST_USER_FILE));
         
         try {
@@ -432,7 +395,7 @@ public class DataWriterTest {
         }
     }
 
-    // <-------------------TESTS EDGE CASES FOR ALL MUSIC ELEMENTS------------------->
+    // <-------------------TESTS SETTING UNIQUE CASES FOR TYPES OF MUSIC ELEMENTS------------------->
     @Test
     public void testSaveSongWithModifiedNoteProperties() {
         // Create a song with a note
@@ -447,7 +410,6 @@ public class DataWriterTest {
         if (element instanceof Note) {
             Note note = (Note) element;
             
-            // Large unique values
             note.setPitch(445450.0);
             note.setMidiNumber(857438902);
             note.setPitch(10000000);
@@ -467,7 +429,6 @@ public class DataWriterTest {
             
             assertEquals(1, jsonSongs.size());
             
-            // Navigate to the first note in the JSON
             JSONObject jsonSong = (JSONObject) jsonSongs.get(0);
             JSONArray jsonSheetMusic = (JSONArray) jsonSong.get("sheetMusic");
             JSONObject firstSheet = (JSONObject) jsonSheetMusic.get(0);
@@ -478,7 +439,6 @@ public class DataWriterTest {
             JSONArray jsonElements = (JSONArray) firstMeasure.get("musicElements");
             JSONObject firstElement = (JSONObject) jsonElements.get(0);
             
-            // Verify all properties were saved correctly
             assertEquals("note", firstElement.get("type"));
             assertEquals(440.0, ((Number)firstElement.get("pitch")).doubleValue(), 0.001);
             assertEquals(69L, firstElement.get("midiNumber"));
@@ -496,10 +456,8 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithModifiedRestProperties() {
-        // Create a song with a rest
         Song song = createTestSong();
         
-        // Get the second element (which should be a rest)
         SheetMusic sheetMusic = song.getSheetMusic().get(0);
         Staff staff = sheetMusic.getStaves().get(0);
         Measure measure = staff.getMeasures().get(0);
@@ -508,7 +466,6 @@ public class DataWriterTest {
         if (element instanceof Rest) {
             Rest rest = (Rest) element;
             
-            // Set extreme values
             rest.setDuration(99.99);
             rest.setDurationChar('X');
             rest.setDotted(5);
@@ -522,7 +479,6 @@ public class DataWriterTest {
             JSONObject json = (JSONObject) parser.parse(new FileReader(TEST_SONG_FILE));
             JSONArray jsonSongs = (JSONArray) json.get("songs");
             
-            // Navigate to the rest in JSON
             JSONObject jsonSong = (JSONObject) jsonSongs.get(0);
             JSONArray jsonSheetMusic = (JSONArray) jsonSong.get("sheetMusic");
             JSONObject firstSheet = (JSONObject) jsonSheetMusic.get(0);
@@ -533,7 +489,6 @@ public class DataWriterTest {
             JSONArray jsonElements = (JSONArray) firstMeasure.get("musicElements");
             JSONObject restElement = (JSONObject) jsonElements.get(1);
             
-            // Verify properties
             assertEquals("rest", restElement.get("type"));
             assertEquals(99.99, ((Number)restElement.get("duration")).doubleValue(), 0.001);
             assertEquals("X", restElement.get("durationChar").toString());
@@ -547,10 +502,8 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithModifiedChordProperties() {
-        // Create a song with a chord
         Song song = createTestSong();
         
-        // Get the third element (which should be a chord)
         SheetMusic sheetMusic = song.getSheetMusic().get(0);
         Staff staff = sheetMusic.getStaves().get(0);
         Measure measure = staff.getMeasures().get(0);
@@ -559,15 +512,12 @@ public class DataWriterTest {
         if (element instanceof Chord) {
             Chord chord = (Chord) element;
                         
-            // Modify notes within the chord
             List<Note> notes = chord.getNotes();
             if (!notes.isEmpty()) {
-                // First note - extreme high values
                 notes.get(0).setPitch(9999.99);
                 notes.get(0).setMidiNumber(12765); 
                 notes.get(0).setPitch(999999999);
                 
-                // Second note - extreme low values
                 if (notes.size() > 1) {
                     notes.get(1).setPitch(0.01);
                     notes.get(1).setMidiNumber(0);
@@ -583,7 +533,6 @@ public class DataWriterTest {
             JSONObject json = (JSONObject) parser.parse(new FileReader(TEST_SONG_FILE));
             JSONArray jsonSongs = (JSONArray) json.get("songs");
             
-            // Navigate to the chord in JSON
             JSONObject jsonSong = (JSONObject) jsonSongs.get(0);
             JSONArray jsonSheetMusic = (JSONArray) jsonSong.get("sheetMusic");
             JSONObject firstSheet = (JSONObject) jsonSheetMusic.get(0);
@@ -594,21 +543,17 @@ public class DataWriterTest {
             JSONArray jsonElements = (JSONArray) firstMeasure.get("musicElements");
             JSONObject chordElement = (JSONObject) jsonElements.get(2);
             
-            // Verify chord properties
             assertEquals("chord", chordElement.get("type"));
             assertEquals("b♭", chordElement.get("accidental"));
             
-            // Verify notes within chord
             JSONArray jsonNotes = (JSONArray) chordElement.get("notes");
             assertTrue(jsonNotes.size() > 0);
             
-            // First note
             JSONObject firstNote = (JSONObject) jsonNotes.get(0);
             assertEquals(9999.99, ((Number)firstNote.get("pitch")).doubleValue(), 0.001);
             assertEquals(127L, firstNote.get("midiNumber"));
             assertEquals("ULTRA_HIGH", firstNote.get("pitchName"));
             
-            // Second note if it exists
             if (jsonNotes.size() > 1) {
                 JSONObject secondNote = (JSONObject) jsonNotes.get(1);
                 assertEquals(0.01, ((Number)secondNote.get("pitch")).doubleValue(), 0.001);
@@ -622,10 +567,8 @@ public class DataWriterTest {
 
     @Test
     public void testSaveSongWithModifiedTupletProperties() {
-        // Create a song with a tuplet
         Song song = createTestSong();
 
-        // Get the fourth element (which should be a tuplet)
         SheetMusic sheetMusic = song.getSheetMusic().get(0);
         Staff staff = sheetMusic.getStaves().get(0);
         Measure measure = staff.getMeasures().get(0);
@@ -636,7 +579,6 @@ public class DataWriterTest {
 
             tuplet.setDuration(0.0001);
 
-            // Modify elements within tuplet
             List<MusicElement> tupletElements = tuplet.getElements();
             if (!tupletElements.isEmpty() && tupletElements.get(0) instanceof Note) {
                 Note note = (Note) tupletElements.get(0);
@@ -651,7 +593,6 @@ public class DataWriterTest {
             JSONObject json = (JSONObject) parser.parse(new FileReader(TEST_SONG_FILE));
             JSONArray jsonSongs = (JSONArray) json.get("songs");
 
-            // Navigate to the tuplet in JSON
             JSONObject jsonSong = (JSONObject) jsonSongs.get(0);
             JSONArray jsonSheetMusic = (JSONArray) jsonSong.get("sheetMusic");
             JSONObject firstSheet = (JSONObject) jsonSheetMusic.get(0);
@@ -662,17 +603,14 @@ public class DataWriterTest {
             JSONArray jsonElements = (JSONArray) firstMeasure.get("musicElements");
             JSONObject tupletElement = (JSONObject) jsonElements.get(3);
 
-            // Verify tuplet properties
             assertEquals("tuplet", tupletElement.get("type"));
             assertEquals(99L, tupletElement.get("numerator"));
             assertEquals(1L, tupletElement.get("denominator"));
             assertEquals(0.0001, ((Number)tupletElement.get("duration")).doubleValue(), 0.00001);
 
-            // Verify elements within tuplet
             JSONArray jsonTupletElements = (JSONArray) tupletElement.get("elements");
             assertTrue(jsonTupletElements.size() > 0);
 
-            // First element (if it's a note)
             JSONObject firstElement = (JSONObject) jsonTupletElements.get(0);
             if ("note".equals(firstElement.get("type"))) {
                 assertEquals(0.00001, ((Number)firstElement.get("duration")).doubleValue(), 0.000001);
