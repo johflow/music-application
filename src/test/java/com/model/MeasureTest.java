@@ -38,6 +38,25 @@ public class MeasureTest {
         assertEquals(1, mus.size());
     }
 
+    @Test
+    public void TestAddNull() {
+        List<MusicElement> mus = new ArrayList<>();
+        Measure m = new Measure(1, 5, 4, 1, mus);
+
+        m.addMusicElement(null);
+        assertEquals(0, mus.size());
+    }
+
+    @Test
+    public void TestNullNote() {
+        Note note = null;
+        List<MusicElement> mus = new ArrayList<>();
+        Measure m = new Measure(1, 5, 4, 1, mus);
+
+        m.addMusicElement(note);
+        assertEquals(0, mus.size());
+    }
+
     @Test 
     public void TestInvalidTimeSignature() {
         List<MusicElement> mus = new ArrayList<>();

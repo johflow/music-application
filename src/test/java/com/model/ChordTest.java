@@ -26,6 +26,14 @@ public class ChordTest {
     }
 
     @Test
+    public void TestAddNullNote() {
+        Chord chord = new Chord();
+
+        chord.addNote(null);
+        assertEquals(chord.getNotes().size(), 0);
+    }
+
+    @Test
     public void TestRemoveNote() {
         List<Note> notes = new ArrayList<>();
         Note note = new Note(440.0, 0.5, "");
@@ -47,5 +55,5 @@ public class ChordTest {
         chord.removeNote(new Note(120.0, 1.0, ""));
         assertEquals(chord.getNotes().size(), 1);
     }
-    
+
 }

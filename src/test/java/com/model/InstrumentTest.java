@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InstrumentTest {
-    
+
     @Test
     public void TestAddClefType() {
         List<String> clefs = new ArrayList<>();
         Instrument instrument = new Instrument(clefs, "piano");
-
+        
         instrument.addClefType("C");
         assertEquals(instrument.getClefTypes().size(), 1);
     }
