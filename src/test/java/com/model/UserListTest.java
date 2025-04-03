@@ -3,10 +3,6 @@ package com.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
-import com.model.User;
-import com.model.UserList;
-
 import java.util.List;
 
 public class UserListTest {
