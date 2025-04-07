@@ -43,8 +43,8 @@ public class Staff extends DataConstants {
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(clefType).append(" ");
-    for (Measure measure : measures) {
-      stringBuilder.append(measure).append(" ");
+    for (int i = 0; i<measures.size(); ++i) {
+      stringBuilder.append(i+1).append(measures.get(i)).append(" ");
     }
     stringBuilder.append("\n");
     return stringBuilder.toString();

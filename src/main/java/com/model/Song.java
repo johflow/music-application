@@ -54,8 +54,11 @@ public class Song {
     }
 
     public Song(String title, String composer) {
+        this.id = UUID.randomUUID();
         this.title = title;
         this.composer = composer;
+        this.sheetMusic = new ArrayList<>();
+        this.pickUp = 0;
     }
 
     public Song(UUID id, String title, String composer, int pickUp, List<SheetMusic> sheetMusic) {

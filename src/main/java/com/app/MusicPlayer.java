@@ -18,55 +18,55 @@ import com.service.DataWriter;
 public class MusicPlayer {
 
   public static void main(String[] args) throws IOException, ParseException {
-// Josh's tests for DataWriter
-	// Create test data
-	List<User> users = new ArrayList<>();
-	List<Song> songs = new ArrayList<>();
-	
-
-	// Create a test user
-	User testUser1 = new User(null, "testuser", "password123");
-	testUser1.setThemeColor(ThemeColor.BLUE);
-	testUser1.setEmail("testuser@example.com");
-
-	User testUser2 = new User("randomemail@email.com", "testuser", "password123"); // this makes a new user
-	testUser2.setThemeColor(ThemeColor.DEEP_PURPLE); // works as intended just need to somehow implement that in front end
-
-	testUser1.followUser(testUser2); // works as intended
-	testUser2.followUser(testUser1); // also works as intended
-	testUser1.followUser(testUser1); //doesnt add user to user cus thats dumb so works as intended
-
-	// Create a test song
-	Song testSong = new Song("Test Song", "Test Composer", testUser1);
-	testSong.setComposer("Test Composer");
-	
-	testUser1.addFavoriteSong(testSong);
-	testUser1.addFavoriteSong(testSong);
-
-	testSong.setPickUp(0);
-	songs.add(testSong);
-	users.add(testUser1);
-	users.add(testUser2);
-
-
-	// Save test data using DataWriter
-	try {
-		boolean usersSaved = DataWriter.saveUsers(users);
-		boolean songsSaved = DataWriter.saveSongs(songs);
-
-		if (usersSaved && songsSaved) {
-			System.out.println("Test data saved successfully!");
-		} else {
-			System.out.println("Error saving test data");
-		}
-	} catch (Exception e) {
-		System.err.println("Error during test:");
-		System.err.println(e.getMessage());
-		e.printStackTrace();
-	}
-
-		DataAssembler dataAssembler = new DataAssembler();
-	System.out.println(dataAssembler.getAssembledSongs().getFirst());
+//// Josh's tests for DataWriter
+//	// Create test data
+//	List<User> users = new ArrayList<>();
+//	List<Song> songs = new ArrayList<>();
+//
+//
+//	// Create a test user
+//	User testUser1 = new User(null, "testuser", "password123");
+//	testUser1.setThemeColor(ThemeColor.BLUE);
+//	testUser1.setEmail("testuser@example.com");
+//
+//	User testUser2 = new User("randomemail@email.com", "testuser", "password123"); // this makes a new user
+//	testUser2.setThemeColor(ThemeColor.DEEP_PURPLE); // works as intended just need to somehow implement that in front end
+//
+//	testUser1.followUser(testUser2); // works as intended
+//	testUser2.followUser(testUser1); // also works as intended
+//	testUser1.followUser(testUser1); //doesnt add user to user cus thats dumb so works as intended
+//
+//	// Create a test song
+//	Song testSong = new Song("Test Song", "Test Composer", testUser1);
+//	testSong.setComposer("Test Composer");
+//
+//	testUser1.addFavoriteSong(testSong);
+//	testUser1.addFavoriteSong(testSong);
+//
+//	testSong.setPickUp(0);
+//	songs.add(testSong);
+//	users.add(testUser1);
+//	users.add(testUser2);
+//
+//
+//	// Save test data using DataWriter
+//	try {
+//		boolean usersSaved = DataWriter.saveUsers(users);
+//		boolean songsSaved = DataWriter.saveSongs(songs);
+//
+//		if (usersSaved && songsSaved) {
+//			System.out.println("Test data saved successfully!");
+//		} else {
+//			System.out.println("Error saving test data");
+//		}
+//	} catch (Exception e) {
+//		System.err.println("Error during test:");
+//		System.err.println(e.getMessage());
+//		e.printStackTrace();
+//	}
+//
+//		DataAssembler dataAssembler = new DataAssembler();
+//	System.out.println(dataAssembler.getAssembledSongs().getFirst());
 
          Player player = new Player();
 
@@ -86,8 +86,8 @@ public class MusicPlayer {
      Pattern tuplet = new Pattern("V0 R R R R C*14:1 C*5:4 C*5:4 C*5:4 C*5:4 R R R R Cw");
      Pattern beat = new Pattern("V1 C C C C C C C C R R R R Cw");
      Pattern comparison = new Pattern().add(tuplet).add(beat);
-     player.play("R C C C C Cq*3:2 Cq*3:2 Cq*3:9 C C");
-     player.play(fullSong);
+     //player.play("R C C C C Cq*3:2 Cq*3:2 Cq*3:9 C C");
+     player.play("F4q- F4-h");
 
 
   }
