@@ -7,10 +7,11 @@ module com.frontend.gui {
     requires java.xml.crypto;
     requires junit;
 
-  opens com.frontend.gui to javafx.fxml;
-    exports com.frontend.gui;
-  opens com.service to junit;
-
+    opens com.frontend.gui to javafx.fxml;
     opens com.model to javafx.fxml;
+    opens com.service to junit;
+    opens com.controllers to javafx.fxml;
+
+    exports com.frontend.gui;
     exports com.model;
 }
