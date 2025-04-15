@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
-
+// https://jenkov.com/tutorials/javafx/fxml.html documentation for FXML
 public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
