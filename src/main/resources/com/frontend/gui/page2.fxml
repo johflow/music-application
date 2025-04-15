@@ -13,7 +13,7 @@
     </padding>
 
 
-    <Label fx:id="welcomeText" text="welcomeText"/>
+    <Label fx:id="welcomeText" text="page2"/>
     <Button text="Hello!" onAction="#onHelloButtonClick"/>
 
 </VBox>
