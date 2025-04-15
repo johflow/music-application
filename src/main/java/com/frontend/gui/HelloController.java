@@ -11,6 +11,10 @@ public class HelloController {
     @FXML
     private StackPane contentArea;
 
+    public void loadMain() {
+        loadContent("/com/frontend/gui/main.fxml");
+    }
+
     public void loadPage1() {
         loadContent("/com/frontend/gui/page1.fxml");
     }
