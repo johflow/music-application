@@ -143,6 +143,7 @@ public class MusicAppFacade {
      */
     public void register(String userName, String password, String email) {
         userList.addUser(new User(email, userName, password));
+        save(); // Save after adding new user
     }
 
     /**
@@ -150,9 +151,15 @@ public class MusicAppFacade {
      *
      * @param userName The username of the user.
      * @param password The password of the user.
+     * @return true if login was successful, false otherwise
      */
-    public void login(String userName, String password) {
-        user = userList.getUser(userName, password);
+    public boolean login(String userName, String password) {
+        User user = userList.getUser(userName, password);
+        if (user != null) {
+            this.user = user;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -173,11 +180,20 @@ public class MusicAppFacade {
     }
 
     /**
+     * Returns the currently logged in user.
+     *
+     * @return the current user, or null if no user is logged in
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
      * Logs out the current user.
      */
     public void logout() {
         save();
-        user = null;
+        this.user = null;
     }
 
     /**

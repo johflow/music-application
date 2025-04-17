@@ -32,13 +32,15 @@ public class UserJsonParser extends DataConstants {
    * @throws ParseException if parsing the JSON fails
    */
   public List<ParsedUser> getParsedUsers(String jsonContent) throws ParseException {
-
+    logger.info("Starting to parse users from JSON content");
+    
     if (jsonContent == null || jsonContent.trim().isEmpty()) {
       logger.severe("Invalid JSON file content: cannot be null or empty!");
       return List.of();
     }
 
     JSONArray usersJsonArray = getUsersJSONArray(jsonContent);
+    logger.info("Found " + usersJsonArray.size() + " users in JSON array");
 
     return parseUsers(usersJsonArray);
   }
@@ -55,14 +57,16 @@ public class UserJsonParser extends DataConstants {
 
     try {
       JSONObject jsonObject = (JSONObject) parser.parse(jsonContent);
-      return (JSONArray) jsonObject.get(USER_OBJECT_KEY);
-
+      JSONArray usersArray = (JSONArray) jsonObject.get(USER_OBJECT_KEY);
+      if (usersArray == null) {
+        logger.severe("No 'users' array found in JSON content");
+        return new JSONArray();
+      }
+      return usersArray;
     } catch (ParseException e) {
       logger.log(Level.SEVERE, "Error parsing users JSON for JSONArray!", e);
       return new JSONArray();
     }
-
-
   }
 
   /**
@@ -80,17 +84,27 @@ public class UserJsonParser extends DataConstants {
     }
 
     for (Object userObj : usersJsonArray) {
-      JSONObject userJson = (JSONObject) userObj;
+      try {
+        JSONObject userJson = (JSONObject) userObj;
+        logger.info("Parsing user: " + userJson.get(USER_USERNAME));
 
-      User user = getBaseUser(userJson);
-      if(user == null) continue;
-      List<UUID> followedUserIds = getFollowedUserIds(userJson);
+        User user = getBaseUser(userJson);
+        if (user == null) {
+          logger.warning("Failed to create user from JSON object");
+          continue;
+        }
+        
+        List<UUID> followedUserIds = getFollowedUserIds(userJson);
+        List<UUID> favoritedSongIds = getFavoritedSongs(userJson);
 
-      List<UUID> favoritedSongIds = getFavoritedSongs(userJson);
-
-      parsedUsers.add(new ParsedUser(user, followedUserIds, favoritedSongIds));
+        parsedUsers.add(new ParsedUser(user, followedUserIds, favoritedSongIds));
+        logger.info("Successfully parsed user: " + user.getUsername());
+      } catch (Exception e) {
+        logger.log(Level.SEVERE, "Error parsing user object", e);
+      }
     }
 
+    logger.info("Successfully parsed " + parsedUsers.size() + " users");
     return parsedUsers;
   }
 
@@ -106,9 +120,11 @@ public class UserJsonParser extends DataConstants {
       String email = getValue(userJson, USER_EMAIL, String.class);
       String username = getValue(userJson, USER_USERNAME, String.class);
       String password = getValue(userJson, USER_PASSWORD, String.class);
+      
+      logger.info("Creating user with username: " + username);
       return new User(id, email, username, password);
-
     } catch (IllegalArgumentException e) {
+      logger.log(Level.SEVERE, "Error creating user from JSON: " + e.getMessage(), e);
       return null;
     }
   }

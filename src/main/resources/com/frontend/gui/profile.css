@@ -1,0 +1,45 @@
+/* Basic styles for the profile view 
+   Add your custom styles as needed */
+
+.root {
+    /* Base application styling */
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.logout-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 5px;
+}
+
+.logout-button:hover {
+    -fx-background-color: #d32f2f;
+}
+
+.content-area {
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+}
+
+.profile-info {
+    -fx-spacing: 10px;
+    -fx-padding: 20px;
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 5px;
+}
+
+.profile-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.profile-value {
+    -fx-font-size: 14px;
+}
+
+/* Add more styles as needed */ 

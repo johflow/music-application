@@ -1,1 +1,22 @@
-{"users":[{"followedUsers":["d906605b-f0a0-4bce-a5ad-56f503e6d227"],"password":"password123","themeColor":"BLUE","id":"c5dd241d-d207-4987-9fa6-9615519c53d3","favoritedSongs":["0f4e088d-3c96-438d-9858-b8978f3ce7ba"],"email":"testuser@example.com","username":"testuser"},{"followedUsers":["c5dd241d-d207-4987-9fa6-9615519c53d3"],"password":"password123","themeColor":"DEEP_PURPLE","id":"d906605b-f0a0-4bce-a5ad-56f503e6d227","favoritedSongs":[],"email":"randomemail@email.com","username":"testuser"}]}
+{
+  "users": [
+    {
+      "followedUsers": ["d906605b-f0a0-4bce-a5ad-56f503e6d227"],
+      "password": "password123",
+      "themeColor": "BLUE",
+      "id": "c5dd241d-d207-4987-9fa6-9615519c53d3",
+      "favoritedSongs": ["0f4e088d-3c96-438d-9858-b8978f3ce7ba"],
+      "email": "testuser@example.com",
+      "username": "testuser"
+    },
+    {
+      "followedUsers": ["c5dd241d-d207-4987-9fa6-9615519c53d3"],
+      "password": "password123",
+      "themeColor": "DEEP_PURPLE",
+      "id": "d906605b-f0a0-4bce-a5ad-56f503e6d227",
+      "favoritedSongs": [],
+      "email": "randomemail@email.com",
+      "username": "testuser2"
+    }
+  ]
+}

@@ -2,6 +2,8 @@ package com.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import com.service.DataAssembler;
 import com.service.DataWriter;
@@ -10,6 +12,7 @@ import com.service.DataWriter;
  * Manages a collection of users in the music application
  */
 public class UserList {
+    private static final Logger LOGGER = Logger.getLogger(UserList.class.getName());
     private List<User> users;
     private static UserList instance;
     
@@ -58,11 +61,15 @@ public class UserList {
      * @return The user with the matching username, or null if not found
      */
     public User getUser(String username) {
+        LOGGER.log(Level.INFO, "Searching for user with username: " + username);
         for (User user : users) {
+            LOGGER.log(Level.INFO, "Checking user: " + user.getUsername());
             if (user.getUsername().equals(username)) {
+                LOGGER.log(Level.INFO, "Found user: " + user.getUsername());
                 return user;
             }
         }
+        LOGGER.log(Level.INFO, "No user found with username: " + username);
         return null;
     }
 
@@ -74,10 +81,18 @@ public class UserList {
      * @return The authenticated user, or null if authentication fails
      */
     public User getUser(String username, String password) {
+        LOGGER.log(Level.INFO, "Attempting login for username: " + username);
         User user = getUser(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        if (user != null) {
+            LOGGER.log(Level.INFO, "User found, checking password");
+            if (user.getPassword().equals(password)) {
+                LOGGER.log(Level.INFO, "Password match successful");
+                return user;
+            } else {
+                LOGGER.log(Level.INFO, "Password mismatch");
+            }
         }
+        LOGGER.log(Level.INFO, "Login failed for username: " + username);
         return null;
     }
 
@@ -105,26 +120,26 @@ public class UserList {
     }
 
     /**
-     * Adds a user to the list
+     * Checks if a username is already taken
+     * 
+     * @param username The username to check
+     * @return true if the username is already taken, false otherwise
+     */
+    public boolean isUsernameTaken(String username) {
+        return getUser(username) != null;
+    }
+
+    /**
+     * Adds a new user to the list
      * 
      * @param user The user to add
-     * @return True if the user was added successfully, false otherwise
+     * @return true if the user was added successfully, false if the username is already taken
      */
     public boolean addUser(User user) {
-        if (user == null) {
+        if (user == null || isUsernameTaken(user.getUsername())) {
             return false;
         }
-        
-        // Check if a user with the same username already exists
-        for (User existingUser : users) {
-            if (existingUser.getUsername().equals(user.getUsername())) {
-                System.out.println("Username " + user.getUsername() + " is already taken!");
-                return false;
-            }
-        }
-        
         users.add(user);
-        save(); // Save after adding a user
         return true;
     }
 
@@ -158,16 +173,21 @@ public class UserList {
      */
     public boolean loadUsers() {
         try {
+            LOGGER.log(Level.INFO, "Loading users from storage");
             DataAssembler dataAssembler = new DataAssembler();
             List<User> loadedUsers = dataAssembler.getAssembledUsers();
             if (loadedUsers != null) {
                 this.users = loadedUsers;
+                LOGGER.log(Level.INFO, "Successfully loaded " + users.size() + " users");
+                for (User user : users) {
+                    LOGGER.log(Level.INFO, "Loaded user: " + user.getUsername());
+                }
                 return true;
             }
+            LOGGER.log(Level.SEVERE, "Failed to load users - loadedUsers is null");
             return false;
         } catch (Exception e) {
-            System.err.println("Error loading users: " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading users: " + e.getMessage(), e);
             return false;
         }
     }
@@ -190,3 +210,4 @@ public class UserList {
         return users.toString();
     }
 }
+

@@ -22,28 +22,33 @@ public class FileReaderUtil {
    * @return the content of the file as a String
    * @throws IOException if an I/O error occurs reading from the file or a malformed or unmappable
    *                     byte sequence is read
+   * @throws IllegalArgumentException if the file path is invalid or the file doesn't exist
    */
   public String readFile(String filePath) throws IOException {
+    logger.info("Attempting to read file: " + filePath);
 
     if (filePath == null || filePath.trim().isEmpty()) {
-      logger.severe("Invalid file path: filePath is null or empty");
-      return "";
+      String error = "Invalid file path: filePath is null or empty";
+      logger.severe(error);
+      throw new IllegalArgumentException(error);
     }
 
     Path path = Paths.get(filePath);
 
     if (!Files.exists(path)) {
-      logger.severe("File not found at: " + filePath);
-      return "";
+      String error = "File not found at: " + filePath;
+      logger.severe(error);
+      throw new IllegalArgumentException(error);
     }
 
     try {
       byte[] fileBytes = Files.readAllBytes(path);
-      return new String(fileBytes);
-
+      String content = new String(fileBytes);
+      logger.info("Successfully read file: " + filePath);
+      return content;
     } catch (IOException e) {
       logger.log(Level.SEVERE, "Error reading the file at: " + filePath, e);
-      return "";
+      throw e;
     }
   }
 }

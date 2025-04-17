@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.frontend.gui.CreateController">
+    <Label text="Create Music" styleClass="title" />
+    <!-- This will be populated by the team member handling music creation -->
+</VBox> 

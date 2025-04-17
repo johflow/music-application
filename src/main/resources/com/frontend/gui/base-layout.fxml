@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.frontend.gui.BaseController"
+            stylesheets="@base.css">
+    
+    <top>
+        <HBox alignment="CENTER_RIGHT">
+            <Button fx:id="logoutBtn" text="Logout" onAction="#handleLogout" styleClass="logout-button"/>
+        </HBox>
+    </top>
+    
+    <center>
+        <BorderPane fx:id="contentArea" minWidth="600" minHeight="400"/>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="discoverBtn" text="Discover" onAction="#handleDiscover" styleClass="nav-button"/>
+            <Button fx:id="profileBtn" text="Profile" onAction="#handleProfile" styleClass="nav-button"/>
+            <Button fx:id="createBtn" text="Create Song" onAction="#handleCreateSong" styleClass="nav-button"/>
+            <Button fx:id="settingsBtn" text="Settings" onAction="#handleSettings" styleClass="nav-button"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane> 

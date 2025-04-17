@@ -5,7 +5,6 @@
 
 <BorderPane fx:controller="com.frontend.gui.HelloController"
             xmlns:fx="http://javafx.com/fxml" prefWidth="600" prefHeight="400">
-
     <top>
 		<HBox spacing="10">
 		    <Button text="Main" onAction="#loadMain" />

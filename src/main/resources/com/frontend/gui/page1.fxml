@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml" prefWidth="600" prefHeight="400">
-    <Label text="Welcome to Page 1" layoutX="200" layoutY="180" />
-</AnchorPane>

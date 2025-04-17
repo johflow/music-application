@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.frontend.gui.SettingsController"
+      alignment="CENTER"
+      spacing="10"
+      stylesheets="@settings.css">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <Label fx:id="settingsLabel" text="Settings" styleClass="title"/>
+    
+    <!-- Content will be added later -->
+    
+</VBox> 

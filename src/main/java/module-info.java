@@ -1,17 +1,18 @@
-module com.frontend.gui {
+module music.application {
     requires javafx.controls;
     requires javafx.fxml;
-    requires jfugue;
-    requires java.sql;
+    requires java.desktop;
     requires json.simple;
-    requires java.xml.crypto;
+    requires jfugue;
     requires junit;
-
-    opens com.frontend.gui to javafx.fxml;
-    opens com.model to javafx.fxml;
-    opens com.service to junit;
-    opens com.controllers to javafx.fxml;
-
+    requires java.xml.crypto;
+    requires java.logging;
+    
+    exports com.app;
+    exports com.data;
     exports com.frontend.gui;
     exports com.model;
+    exports com.service;
+    
+    opens com.frontend.gui to javafx.fxml;
 }
