@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Label;
 import java.util.logging.Logger;
+import com.model.AuthResult;
 
 public class SignupController extends BaseController {
     private static final Logger logger = Logger.getLogger(SignupController.class.getName());
@@ -44,20 +45,30 @@ public class SignupController extends BaseController {
         }
         
         try {
+            // Validate email and password through facade before registration
+            facade.validateEmail(email);
+            facade.validatePassword(password);
+            
+            // Register user after validation
             facade.register(username, password, email);
             errorLabel.setVisible(false);
             
             // Login the user automatically after registration
-            if (facade.login(username, password)) {
+            AuthResult loginResult = facade.login(username, password);
+            if (loginResult == AuthResult.SUCCESS) {
                 updateNavigationVisibility();
                 navigateTo(ViewConstants.DISCOVER_VIEW);
             } else {
                 navigateToLogin();
             }
+        } catch (IllegalArgumentException e) {
+            // This will catch validation errors (email, password, username taken)
+            logger.warning("Validation error during registration: " + e.getMessage());
+            showError(e.getMessage());
         } catch (Exception e) {
+            // This will catch any other unexpected errors
             logger.severe("Error during registration: " + e.getMessage());
-            errorLabel.setText("Error during registration: " + e.getMessage());
-            errorLabel.setVisible(true);
+            showError("Error during registration: " + e.getMessage());
         }
     }
     

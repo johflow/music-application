@@ -1,7 +1,10 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Represents a user in the music application
@@ -21,9 +24,14 @@ public class User {
      * @param email User's email
      * @param username User's username
      * @param password User's password
+     * @throws IllegalArgumentException if email or password don't meet requirements
      */
-    public User(String email, String username, String password) {
+    public User(String email, String username, String password) throws IllegalArgumentException {
         this.id = UUID.randomUUID();
+        
+        isEmailValid(email);
+        isPasswordValid(password);
+        
         this.email = email;
         this.username = username;
         this.password = password;
@@ -40,9 +48,14 @@ public class User {
      * @param username User's username
      * @param password User's password
      * @param themeColor User's theme color
+     * @throws IllegalArgumentException if email or password don't meet requirements
      */
-    public User(UUID id, String email, String username, String password, ThemeColor themeColor) {
+    public User(UUID id, String email, String username, String password, ThemeColor themeColor) throws IllegalArgumentException {
         this.id = id;
+        
+        isEmailValid(email);
+        isPasswordValid(password);
+        
         this.email = email;
         this.username = username;
         this.password = password;
@@ -51,14 +64,80 @@ public class User {
         this.themeColor = themeColor;
     }
 
-    public User(UUID id, String email, String username, String password) {
+    public User(UUID id, String email, String username, String password) throws IllegalArgumentException {
         this.id = id;
+        
+        isEmailValid(email);
+        isPasswordValid(password);
+        
         this.email = email;
         this.username = username;
         this.password = password;
         this.themeColor = ThemeColor.getDefault();
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
+    }
+
+    /**
+     * Helper to confirm correct email input.
+     * 
+     * @param email input email
+     * @return True for valid, false for invalid
+     * @throws IllegalArgumentException if email doesn't meet format requirements
+     */
+    public static boolean isEmailValid(String email) {
+        if (email == null) {
+            throw new IllegalArgumentException("Email cannot be null");
+        }
+        
+        // Regular expression to match valid email formats
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    
+        // Compile the regex
+        Pattern p = Pattern.compile(emailRegex);
+      
+        // Check if email matches the pattern
+        if (!p.matcher(email).matches()) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+        
+        return true;
+    }
+
+    /**
+     * Helper to confirm password meets security requirements.
+     * 
+     * @param password input password
+     * @return True for valid, false for invalid
+     * @throws IllegalArgumentException if password doesn't meet requirements, with detailed error message
+     */
+    public static boolean isPasswordValid(String password) throws IllegalArgumentException {
+        if (password == null || password.length() < 8) {
+            throw new IllegalArgumentException("Password must be at least 8 characters long");
+        }
+        
+        // Check for at least one digit
+        if (!Pattern.compile(".*\\d.*").matcher(password).matches()) {
+            throw new IllegalArgumentException("Password must contain at least one digit");
+        }
+        
+        // Check for at least one uppercase letter
+        if (!Pattern.compile(".*[A-Z].*").matcher(password).matches()) {
+            throw new IllegalArgumentException("Password must contain at least one uppercase letter");
+        }
+        
+        // Check for at least one lowercase letter
+        if (!Pattern.compile(".*[a-z].*").matcher(password).matches()) {
+            throw new IllegalArgumentException("Password must contain at least one lowercase letter");
+        }
+        
+        // Check for at least one special character
+        if (!Pattern.compile(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*").matcher(password).matches()) {
+            throw new IllegalArgumentException("Password must contain at least one special character");
+        }
+        
+        return true;
     }
 
   /**
@@ -201,15 +280,84 @@ public class User {
     }
 
     /**
+     * Authenticates a user with the provided credentials
+     * 
+     * @param username The username to check
+     * @param password The password to check
+     * @return AuthResult indicating the result (SUCCESS, INVALID_USERNAME, INVALID_PASSWORD)
+     * @throws IllegalArgumentException if inputs are null
+     */
+    public AuthResult authenticate(String username, String password) throws IllegalArgumentException {
+        // Validate inputs
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+        
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+        
+        // Check if username matches
+        if (!this.username.equals(username)) {
+            return AuthResult.INVALID_USERNAME;
+        }
+        
+        // Check if password matches
+        if (!this.password.equals(password)) {
+            return AuthResult.INVALID_PASSWORD;
+        }
+        
+        return AuthResult.SUCCESS;
+    }
+
+    /**
      * Checks if the provided credentials match this user
      * 
      * @param email The email to check
      * @param username The username to check
      * @param password The password to check
-     * @return True if credentials match, false otherwise
+     * @return AuthResult indicating the result (SUCCESS, INVALID_CREDENTIALS, INVALID_PASSWORD)
+     * @throws IllegalArgumentException if inputs are null
      */
-    public boolean authenticate(String email, String username, String password) {
-        return (this.email.equals(email) || this.username.equals(username)) && this.password.equals(password);
+    public AuthResult authenticate(String email, String username, String password) throws IllegalArgumentException {
+        // Validate inputs
+        if ((email == null || email.isEmpty()) && (username == null || username.isEmpty())) {
+            throw new IllegalArgumentException("Either email or username must be provided");
+        }
+        
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+        
+        // Check if username or email matches
+        boolean usernameOrEmailMatches = (email != null && this.email != null && this.email.equals(email)) || 
+                                        (username != null && this.username.equals(username));
+                                        
+        if (!usernameOrEmailMatches) {
+            return AuthResult.INVALID_CREDENTIALS;
+        }
+        
+        // Check if password matches
+        if (!this.password.equals(password)) {
+            return AuthResult.INVALID_PASSWORD;
+        }
+        
+        return AuthResult.SUCCESS;
+    }
+
+    /**
+     * Helper method to check if a user is null
+     * 
+     * @param user The user to check
+     * @param errorMessage Optional custom error message
+     * @return The user if not null
+     * @throws IllegalArgumentException if the user is null
+     */
+    public static User validateNotNull(User user, String errorMessage) throws IllegalArgumentException {
+        if (user == null) {
+            throw new IllegalArgumentException(errorMessage != null ? errorMessage : "User cannot be null");
+        }
+        return user;
     }
 
     /**

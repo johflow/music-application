@@ -140,10 +140,10 @@ public class MusicAppFacade {
      * @param userName The username of the new user.
      * @param password The password for the new user.
      * @param email    The email of the new user.
+     * @throws IllegalArgumentException if validation fails (email, password) or username is taken
      */
-    public void register(String userName, String password, String email) {
-        userList.addUser(new User(email, userName, password));
-        save(); // Save after adding new user
+    public void register(String userName, String password, String email) throws IllegalArgumentException {
+        userList.register(email, userName, password);
     }
 
     /**
@@ -151,15 +151,17 @@ public class MusicAppFacade {
      *
      * @param userName The username of the user.
      * @param password The password of the user.
-     * @return true if login was successful, false otherwise
+     * @return AuthResult indicating success or specific failure reason
+     * @throws IllegalArgumentException if the username is null/empty or password is null
      */
-    public boolean login(String userName, String password) {
-        User user = userList.getUser(userName, password);
-        if (user != null) {
-            this.user = user;
-            return true;
+    public AuthResult login(String userName, String password) throws IllegalArgumentException {
+        AuthResult result = userList.login(userName, password);
+        
+        if (result == AuthResult.SUCCESS) {
+            this.user = userList.getUser(userName);
         }
-        return false;
+        
+        return result;
     }
 
     /**
@@ -239,5 +241,25 @@ public class MusicAppFacade {
      */
     public boolean save() {
         return userList.save() && songList.save();
+    }
+    
+    /**
+     * Validates if an email is in the correct format.
+     * 
+     * @param email The email to validate
+     * @throws IllegalArgumentException if the email doesn't meet format requirements
+     */
+    public void validateEmail(String email) throws IllegalArgumentException {
+        User.isEmailValid(email);
+    }
+
+    /**
+     * Validates if a password meets security requirements.
+     * 
+     * @param password The password to validate
+     * @throws IllegalArgumentException if the password doesn't meet security requirements
+     */
+    public void validatePassword(String password) throws IllegalArgumentException {
+        User.isPasswordValid(password);
     }
 }
