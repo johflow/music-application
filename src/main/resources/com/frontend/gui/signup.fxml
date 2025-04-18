@@ -20,6 +20,10 @@
     <TextField fx:id="emailField" promptText="Email"/>
     <TextField fx:id="usernameField" promptText="Username"/>
     <PasswordField fx:id="passwordField" promptText="Password"/>
+    
+    <Label fx:id="passwordRequirementsLabel" text="Password must contain at least 8 characters, including uppercase, lowercase, a number, and special character." 
+           styleClass="requirements-label" wrapText="true"/>
+    
     <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password"/>
     
     <Label fx:id="errorLabel" styleClass="error" visible="false"/>

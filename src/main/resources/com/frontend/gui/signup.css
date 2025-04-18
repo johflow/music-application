@@ -8,6 +8,18 @@
     -fx-font-size: 14px;
 }
 
+.valid-input {
+    -fx-text-fill: #4CAF50;
+    -fx-font-size: 12px;
+}
+
+.requirements-label {
+    -fx-text-fill: #555;
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+    -fx-max-width: 300px;
+}
+
 .signup-button {
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;

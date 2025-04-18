@@ -1,9 +1,9 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.service.SongPlayer;
-import java.util.List;
 
 public class MusicAppFacade {
     private User user;
@@ -261,5 +261,15 @@ public class MusicAppFacade {
      */
     public void validatePassword(String password) throws IllegalArgumentException {
         User.isPasswordValid(password);
+    }
+
+    /**
+     * Gets a list of validation errors for a password.
+     * 
+     * @param password The password to validate
+     * @return List of validation error messages, empty if password is valid
+     */
+    public List<String> getPasswordValidationErrors(String password) {
+        return User.getPasswordValidationErrors(password);
     }
 }

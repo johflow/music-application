@@ -106,6 +106,42 @@ public class User {
     }
 
     /**
+     * Helper to confirm password meets regex requirements.
+     * 
+     * @param password input password
+     * @return List of validation errors, empty if password is valid
+     */
+    public static List<String> getPasswordValidationErrors(String password) {
+        List<String> errors = new ArrayList<>();
+        
+        if (password == null || password.length() < 8) {
+            errors.add("Password must be at least 8 characters long");
+        }
+        
+        // Check for at least one digit
+        if (password == null || !Pattern.compile(".*\\d.*").matcher(password).matches()) {
+            errors.add("Password must contain at least one digit");
+        }
+        
+        // Check for at least one uppercase letter
+        if (password == null || !Pattern.compile(".*[A-Z].*").matcher(password).matches()) {
+            errors.add("Password must contain at least one uppercase letter");
+        }
+        
+        // Check for at least one lowercase letter
+        if (password == null || !Pattern.compile(".*[a-z].*").matcher(password).matches()) {
+            errors.add("Password must contain at least one lowercase letter");
+        }
+        
+        // Check for at least one special character
+        if (password == null || !Pattern.compile(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*").matcher(password).matches()) {
+            errors.add("Password must contain at least one special character");
+        }
+        
+        return errors;
+    }
+
+    /**
      * Helper to confirm password meets security requirements.
      * 
      * @param password input password
@@ -113,28 +149,10 @@ public class User {
      * @throws IllegalArgumentException if password doesn't meet requirements, with detailed error message
      */
     public static boolean isPasswordValid(String password) throws IllegalArgumentException {
-        if (password == null || password.length() < 8) {
-            throw new IllegalArgumentException("Password must be at least 8 characters long");
-        }
+        List<String> errors = getPasswordValidationErrors(password);
         
-        // Check for at least one digit
-        if (!Pattern.compile(".*\\d.*").matcher(password).matches()) {
-            throw new IllegalArgumentException("Password must contain at least one digit");
-        }
-        
-        // Check for at least one uppercase letter
-        if (!Pattern.compile(".*[A-Z].*").matcher(password).matches()) {
-            throw new IllegalArgumentException("Password must contain at least one uppercase letter");
-        }
-        
-        // Check for at least one lowercase letter
-        if (!Pattern.compile(".*[a-z].*").matcher(password).matches()) {
-            throw new IllegalArgumentException("Password must contain at least one lowercase letter");
-        }
-        
-        // Check for at least one special character
-        if (!Pattern.compile(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*").matcher(password).matches()) {
-            throw new IllegalArgumentException("Password must contain at least one special character");
+        if (!errors.isEmpty()) {
+            throw new IllegalArgumentException(String.join(". ", errors));
         }
         
         return true;
