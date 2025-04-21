@@ -21,11 +21,14 @@
     </center>
     
     <bottom>
-        <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="discoverBtn" onAction="#handleDiscover" styleClass="nav-button" text="Discover" />
-            <Button fx:id="profileBtn" onAction="#handleProfile" styleClass="nav-button" text="Profile" />
-            <Button fx:id="createBtn" onAction="#handleCreateSong" styleClass="nav-button" text="Create Song" />
-            <Button fx:id="settingsBtn" onAction="#handleSettings" styleClass="nav-button" text="Settings" />
+        <HBox fx:id="navBar" alignment="CENTER" spacing="10" styleClass="nav-bar">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button fx:id="discoverBtn" text="Discover" onAction="#handleDiscover" styleClass="nav-button"/>
+            <Button fx:id="profileBtn" text="Profile" onAction="#handleProfile" styleClass="nav-button"/>
+            <Button fx:id="createBtn" text="Create Song" onAction="#handleCreateSong" styleClass="nav-button"/>
+            <Button fx:id="settingsBtn" text="Settings" onAction="#handleSettings" styleClass="nav-button"/>
         </HBox>
     </bottom>
     

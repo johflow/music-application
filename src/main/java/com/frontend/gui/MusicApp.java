@@ -1,31 +1,54 @@
 package com.frontend.gui;
 
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import com.model.MusicAppFacade;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
-import java.util.logging.Logger;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class MusicApp extends Application {
     private static final Logger logger = Logger.getLogger(MusicApp.class.getName());
     private static BorderPane rootLayout;
     private static BaseController baseController;
+    private static BaseStyleManager styleManager;
     
     @Override
     public void start(Stage primaryStage) {
         try {
-            initRootLayout();
-            showLoginView();
+            // Initialize style manager
+            styleManager = BaseStyleManager.getInstance();
             
+            // Load the root layout
+            initRootLayout();
+            
+            // Add the login view to the root layout
+            showLoginView();
+        
+            // Create scene and apply theme
             Scene scene = new Scene(rootLayout);
-            primaryStage.setTitle("Music Application");
+            
+            // Set theme based on user preference or default
+            MusicAppFacade facade = MusicAppFacade.getInstance();
+            styleManager.setCurrentTheme(facade.getDefaultTheme());
+            
+            // Apply theme to scene
+            styleManager.applyTheme(scene);
+            
+            // Set up the stage
+            primaryStage.setTitle("NoteStack™");
             primaryStage.setScene(scene);
+            primaryStage.setMinWidth(800);
+            primaryStage.setMinHeight(600);
             primaryStage.show();
         } catch (Exception e) {
             logger.severe("Error starting application: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -47,6 +70,7 @@ public class MusicApp extends Application {
             }
         } catch (IOException e) {
             logger.severe("Error loading login view: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -56,6 +80,10 @@ public class MusicApp extends Application {
     
     public static BorderPane getRootLayout() {
         return rootLayout;
+    }
+    
+    public static BaseStyleManager getStyleManager() {
+        return styleManager;
     }
     
     public static void main(String[] args) {

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
@@ -12,46 +13,59 @@
             prefWidth="900" prefHeight="600">
 
     <!-- Left Side: User Info Panel -->
-    <VBox spacing="15" alignment="TOP_CENTER" prefWidth="250" BorderPane.leftAnchor="0.0"
-          styleClass="profile-sidebar" BorderPane.alignment="CENTER_LEFT">
-        <Label text="Account Page" styleClass="title" />
+    <left>
+        <VBox spacing="15" alignment="TOP_CENTER" prefWidth="250"
+              styleClass="profile-sidebar">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <Label text="Account Page" styleClass="title" />
 
-        <!-- Profile Image Placeholder -->
-        <ImageView fx:id="profileImage" fitHeight="100" fitWidth="100" />
+            <!-- Profile Image -->
+            <StackPane>
+                <ImageView fx:id="profileImage" fitHeight="100" fitWidth="100" preserveRatio="true" />
+            </StackPane>
 
         <Label fx:id="usernameLabel" styleClass="profile-username" />
         <Label fx:id="bioLabel" text="I am music" styleClass="profile-bio" />
 
-        <!-- Follower / Following Stats -->
-        <HBox spacing="30" alignment="CENTER">
-            <VBox alignment="CENTER">
-                <Label fx:id="followersCount" text="0" styleClass="stat-count"/>
-                <Label text="Followers" styleClass="stat-label" />
-            </VBox>
-            <VBox alignment="CENTER">
-                <Label fx:id="followingCount" text="0" styleClass="stat-count"/>
-                <Label text="Following" styleClass="stat-label" />
-            </VBox>
-        </HBox>
+            <!-- Follower / Following Stats -->
+            <HBox spacing="30" alignment="CENTER">
+                <VBox alignment="CENTER">
+                    <Label fx:id="followersCount" text="0" styleClass="stat-count"/>
+                    <Label text="Followers" styleClass="stat-label" />
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Label fx:id="followingCount" text="0" styleClass="stat-count"/>
+                    <Label text="Following" styleClass="stat-label" />
+                </VBox>
+            </HBox>
 
-        <Label text="Friends List" styleClass="section-title" />
-        <ListView fx:id="friendsList" prefHeight="150" />
+            <Label text="Friends List" styleClass="section-title" />
+            <ListView fx:id="friendsList" prefHeight="150" />
 
-        <Button text="Add Friend" fx:id="addFriendBtn" />
-    </VBox>
+            <Button text="Add Friend" fx:id="addFriendBtn" />
+        </VBox>
+    </left>
 
     <!-- Center Content: Favorite Songs & Library -->
-    <VBox spacing="30" alignment="TOP_CENTER" BorderPane.centerAnchor="0.0"
-          styleClass="profile-center-content" BorderPane.alignment="CENTER">
+    <center>
+        <VBox spacing="30" alignment="TOP_CENTER"
+              styleClass="profile-center-content">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-        <VBox spacing="10" alignment="TOP_LEFT">
-            <Label text="Favorite Songs" styleClass="section-title" />
-            <ListView fx:id="favoriteSongsList" prefHeight="150" />
-        </VBox>
+            <VBox spacing="10" alignment="TOP_LEFT">
+                <Label text="Favorite Songs" styleClass="section-title" />
+                <ListView fx:id="favoriteSongsList" prefHeight="150" />
+            </VBox>
 
-        <VBox spacing="10" alignment="TOP_LEFT">
-            <Label text="Library" styleClass="section-title" />
-            <ListView fx:id="libraryList" prefHeight="150" />
+            <VBox spacing="10" alignment="TOP_LEFT">
+                <Label text="Library" styleClass="section-title" />
+                <ListView fx:id="libraryList" prefHeight="150" />
+            </VBox>
         </VBox>
-    </VBox>
+    </center>
 </BorderPane>

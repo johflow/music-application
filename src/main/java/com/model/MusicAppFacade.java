@@ -89,7 +89,7 @@ public class MusicAppFacade {
      * @param musicElement The music element to be added.
      */
     public void addMusicElement(MusicElement musicElement) {
-        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures().getFirst().addMusicElement(musicElement);
+        viewedSong.getSheetMusic().get(0).getStaves().get(0).getMeasures().get(0).addMusicElement(musicElement);
     }
 
     /**
@@ -107,7 +107,7 @@ public class MusicAppFacade {
      * @param measure The measure to be added.
      */
     public void addMeasure(Measure measure) {
-        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().addMeasure(measure);
+        viewedSong.getSheetMusic().get(0).getStaves().get(0).addMeasure(measure);
     }
 
     /**
@@ -116,7 +116,7 @@ public class MusicAppFacade {
      * @param staff the staff to be added.
      */
     public void addStaff(Staff staff) {
-        viewedSong.getSheetMusic().getFirst().addStaff(staff);
+        viewedSong.getSheetMusic().get(0).addStaff(staff);
     }
 
     /**
@@ -281,62 +281,178 @@ public class MusicAppFacade {
     }
 
     /**
- * Returns the username of the logged-in user.
- * 
- * @return the username, or empty string if no user
- */
-public String getLoggedInUsername() {
-    return user != null ? user.getUsername() : "";
-}
-
-/**
- * Returns the email of the logged-in user.
- * 
- * @return the email, or empty string if no user
- */
-public String getLoggedInEmail() {
-    return user != null ? user.getEmail() : "";
-}
-
-/**
- * Returns the theme color of the logged-in user as a string.
- * 
- * @return the theme color, or "DEFAULT" if none
- */
-public String getThemeColor() {
-    return user != null && user.getThemeColor() != null
-           ? user.getThemeColor().toString()
-           : "DEFAULT";
-}
-
-/**
- * Returns a list of favorite song titles and composers for display.
- * 
- * @return list of formatted song titles
- */
-public List<String> getFavoriteSongTitles() {
-    List<String> titles = new ArrayList<>();
-    if (user != null) {
-        for (Song song : user.getFavoriteSongs()) {
-            titles.add(song.getTitle() + " - " + song.getComposer());
-        }
+     * Returns the username of the logged-in user.
+     * 
+     * @return the username, or empty string if no user
+     */
+    public String getLoggedInUsername() {
+        return user != null ? user.getUsername() : "";
     }
-    return titles;
-}
 
-/**
- * Returns a list of usernames the user is following.
- * 
- * @return list of followed usernames
- */
-public List<String> getFollowedUsernames() {
-    List<String> usernames = new ArrayList<>();
-    if (user != null) {
-        for (User followed : user.getFollowedUsers()) {
-            usernames.add(followed.getUsername());
-        }
+    /**
+     * Returns the email of the logged-in user.
+     * 
+     * @return the email, or empty string if no user
+     */
+    public String getLoggedInEmail() {
+        return user != null ? user.getEmail() : "";
     }
-    return usernames;
-}
 
+    /**
+     * Returns the theme color of the logged-in user as a string.
+     * 
+     * @return the theme color, or "DEFAULT" if none
+     */
+    public String getThemeColor() {
+        return user != null && user.getThemeColor() != null
+            ? user.getThemeColor().toString()
+            : "DEFAULT";
+    }
+
+    /**
+     * Checks if a user is currently logged in
+     * 
+     * @return true if a user is logged in, false otherwise
+     */
+    public boolean isLoggedIn() {
+        return user != null;
+    }
+    
+    /**
+     * Gets the bio of the currently logged-in user
+     * 
+     * @return the bio, or empty string if no user or no bio
+     */
+    public String getUserBio() {
+        return user != null ? user.getBio() : "";
+    }
+    
+    /**
+     * Gets the profile picture path of the currently logged-in user
+     * 
+     * @return the profile picture path, or empty string if no user
+     */
+    public String getUserProfilePicturePath() {
+        return user != null ? user.getProfilePicturePath() : "";
+    }
+
+    /**
+     * Returns a list of favorite song titles and composers for display.
+     * 
+     * @return list of formatted song titles
+     */
+    public List<String> getFavoriteSongTitles() {
+        List<String> titles = new ArrayList<>();
+        if (user != null) {
+            for (Song song : user.getFavoriteSongs()) {
+                titles.add(song.getTitle() + " - " + song.getComposer());
+            }
+        }
+        return titles;
+    }
+
+    /**
+     * Returns a list of usernames the user is following.
+     * 
+     * @return list of followed usernames
+     */
+    public List<String> getFollowedUsernames() {
+        List<String> usernames = new ArrayList<>();
+        if (user != null) {
+            for (User followed : user.getFollowedUsers()) {
+                usernames.add(followed.getUsername());
+            }
+        }
+        return usernames;
+    }
+
+    /**
+     * Updates the current user's username.
+     * 
+     * @param newUsername The new username
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateUsername(String newUsername) {
+        User.validateNotNull(user);
+        user.setUsername(newUsername);
+        return true;
+    }
+    
+    /**
+     * Updates the current user's password.
+     * 
+     * @param newPassword The new password
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updatePassword(String newPassword) {
+        User.validateNotNull(user);
+        user.setPassword(newPassword);
+        return true;
+    }
+    
+    /**
+     * Updates the current user's email.
+     * 
+     * @param newEmail The new email
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateEmail(String newEmail) {
+        User.validateNotNull(user);
+        user.setEmail(newEmail);
+        return true;
+    }
+    
+    /**
+     * Updates the current user's theme color.
+     * 
+     * @param themeColor The new theme color
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateThemeColor(ThemeColor themeColor) {
+        User.validateNotNull(user);
+        user.setThemeColor(themeColor);
+        return true;
+    }
+    
+    /**
+     * Updates the current user's bio.
+     * 
+     * @param bio The new bio
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateBio(String bio) {
+        User.validateNotNull(user);
+        user.setBio(bio);
+        return true;
+    }
+    
+    /**
+     * Updates the current user's profile picture.
+     * 
+     * @param profilePicturePath The path to the new profile picture
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateProfilePicture(String profilePicturePath) {
+        User.validateNotNull(user);
+        user.setProfilePicturePath(profilePicturePath);
+        return true;
+    }
+    
+    /**
+     * Saves all user settings changes.
+     * 
+     * @return true if the save was successful, false otherwise
+     */
+    public boolean saveUserSettings() {
+        return userList.save();
+    }
+
+    /**
+     * Gets the default theme color for the application
+     * 
+     * @return The default ThemeColor
+     */
+    public ThemeColor getDefaultTheme() {
+        return ThemeColor.getDefault();
+    }
 }
