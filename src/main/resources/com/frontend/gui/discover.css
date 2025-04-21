@@ -1,29 +1,24 @@
-/* Basic styles for the discover view 
-   Add your custom styles as needed */
-
-.root {
-    /* Base application styling */
+/* discover.css — extend as needed */
+.song-cell {
+    -fx-padding: 8px;
 }
 
-.title {
-    -fx-font-size: 24px;
+.song-cell > .label:first-child {
     -fx-font-weight: bold;
+    -fx-font-size: 14px;
 }
 
-.logout-button {
-    -fx-background-color: #f44336;
-    -fx-text-fill: white;
-    -fx-padding: 5px 15px;
-    -fx-background-radius: 5px;
+.song-cell > .label:nth-child(3),
+.song-cell > .label:nth-child(4) {
+    -fx-text-fill: #666;
+    -fx-font-size: 12px;
 }
 
-.logout-button:hover {
-    -fx-background-color: #d32f2f;
+.favorite-button {
+    -fx-font-size: 16px;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
 }
-
-.content-area {
-    -fx-padding: 20px;
-    -fx-spacing: 10px;
+  .favorite-button:selected {
+    /* maybe a little glow or color change when “♥” */
 }
-
-/* Add more styles as needed */ 

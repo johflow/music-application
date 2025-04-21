@@ -185,4 +185,13 @@ public class SongList {
     public boolean save() {
         return DataWriter.saveSongs(this.songs);
     }
+
+    /**
+     * returns the amount of songs in the song list
+     * 
+     * @return The size of the song list
+     */
+    public int size() {
+        return songs.size();
+    }
 }

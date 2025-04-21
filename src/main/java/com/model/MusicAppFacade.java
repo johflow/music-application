@@ -57,6 +57,13 @@ public class MusicAppFacade {
     }
 
     /**
+     * Gets the stored list of songs
+     */
+    public SongList getSongList() {
+        return songList;
+    }
+
+    /**
      * Sets the currently viewed song to a song input
      *
      * @param song the song being set as currently viewed

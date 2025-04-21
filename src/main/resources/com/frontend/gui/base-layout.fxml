@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.frontend.gui.BaseController"
-            stylesheets="@base.css">
+<BorderPane stylesheets="@base.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frontend.gui.BaseController">
     
     <top>
         <HBox alignment="CENTER_RIGHT">
-            <Button fx:id="logoutBtn" text="Logout" onAction="#handleLogout" styleClass="logout-button"/>
+            <Button fx:id="logoutBtn" onAction="#handleLogout" styleClass="logout-button" text="Logout" />
         </HBox>
     </top>
     
     <center>
-        <BorderPane fx:id="contentArea" minWidth="600" minHeight="400"/>
+        <BorderPane fx:id="contentArea" minHeight="400" minWidth="600">
+         <center>
+            <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center></BorderPane>
     </center>
     
     <bottom>
         <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="discoverBtn" text="Discover" onAction="#handleDiscover" styleClass="nav-button"/>
-            <Button fx:id="profileBtn" text="Profile" onAction="#handleProfile" styleClass="nav-button"/>
-            <Button fx:id="createBtn" text="Create Song" onAction="#handleCreateSong" styleClass="nav-button"/>
-            <Button fx:id="settingsBtn" text="Settings" onAction="#handleSettings" styleClass="nav-button"/>
+            <Button fx:id="discoverBtn" onAction="#handleDiscover" styleClass="nav-button" text="Discover" />
+            <Button fx:id="profileBtn" onAction="#handleProfile" styleClass="nav-button" text="Profile" />
+            <Button fx:id="createBtn" onAction="#handleCreateSong" styleClass="nav-button" text="Create Song" />
+            <Button fx:id="settingsBtn" onAction="#handleSettings" styleClass="nav-button" text="Settings" />
         </HBox>
     </bottom>
     
-</BorderPane> 
+</BorderPane>
