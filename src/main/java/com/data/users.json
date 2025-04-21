@@ -1,22 +1,31 @@
 {
   "users": [
     {
-      "followedUsers": ["d906605b-f0a0-4bce-a5ad-56f503e6d227"],
-      "password": "password123",
+      "followedUsers": [],
+      "password": "SecurePassword123!",
       "themeColor": "BLUE",
-      "id": "c5dd241d-d207-4987-9fa6-9615519c53d3",
-      "favoritedSongs": ["0f4e088d-3c96-438d-9858-b8978f3ce7ba"],
-      "email": "testuser@example.com",
-      "username": "testuser"
+      "id": "2493c226-4b5e-4818-95d0-6220db0e46ed",
+      "favoritedSongs": [],
+      "email": "test@email.co",
+      "username": "thisisausername"
     },
     {
-      "followedUsers": ["c5dd241d-d207-4987-9fa6-9615519c53d3"],
-      "password": "password123",
-      "themeColor": "DEEP_PURPLE",
-      "id": "d906605b-f0a0-4bce-a5ad-56f503e6d227",
+      "followedUsers": [],
+      "password": "WoW1234!",
+      "themeColor": "BLUE",
+      "id": "33d41c4c-aae2-4d52-8f43-dc4e8b0355e9",
       "favoritedSongs": [],
-      "email": "randomemail@email.com",
-      "username": "testuser2"
+      "email": "valid@email.maybe",
+      "username": "thank"
+    },
+    {
+      "followedUsers": [],
+      "password": "Password123!",
+      "themeColor": "BLUE",
+      "id": "d10cbbab-dab1-45ea-b40f-3e04b073d2d0",
+      "favoritedSongs": [],
+      "email": "hi@email.com",
+      "username": "user"
     }
   ]
 }

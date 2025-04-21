@@ -24,41 +24,15 @@ public class MusicApp extends Application {
             primaryStage.setTitle("Music Application");
             primaryStage.setScene(scene);
             primaryStage.show();
-            
-            // Ensure navigation buttons are properly initialized
-            if (baseController != null) {
-                baseController.updateNavigationVisibility();
-                logger.info("Navigation buttons visibility updated in start()");
-            } else {
-                logger.severe("BaseController is null in start()");
-            }
         } catch (Exception e) {
             logger.severe("Error starting application: " + e.getMessage());
-            e.printStackTrace();
         }
     }
     
     private void initRootLayout() throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.BASE_LAYOUT_VIEW));
-            rootLayout = loader.load();
-            baseController = loader.getController();
-            logger.info("Base controller initialized: " + (baseController != null));
-            
-            if (baseController == null) {
-                logger.severe("Failed to get BaseController from FXML loader");
-            } else {
-                logger.info("BaseController buttons: " +
-                           "discover=" + (baseController.discoverBtn != null) + 
-                           ", profile=" + (baseController.profileBtn != null) + 
-                           ", create=" + (baseController.createBtn != null) + 
-                           ", settings=" + (baseController.settingsBtn != null));
-            }
-        } catch (Exception e) {
-            logger.severe("Error initializing root layout: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.BASE_LAYOUT_VIEW));
+        rootLayout = loader.load();
+        baseController = loader.getController();
     }
     
     private void showLoginView() {
@@ -68,14 +42,11 @@ public class MusicApp extends Application {
             
             if (baseController != null && baseController.getContentArea() != null) {
                 baseController.getContentArea().setCenter(loginView);
-                logger.info("Login view set in content area");
             } else {
-                logger.warning("BaseController or content area is null, setting login view directly in root layout");
                 rootLayout.setCenter(loginView);
             }
         } catch (IOException e) {
             logger.severe("Error loading login view: " + e.getMessage());
-            e.printStackTrace();
         }
     }
     

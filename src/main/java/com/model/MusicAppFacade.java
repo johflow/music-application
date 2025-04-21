@@ -1,9 +1,9 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.service.SongPlayer;
-import java.util.List;
 
 public class MusicAppFacade {
     private User user;
@@ -147,10 +147,10 @@ public class MusicAppFacade {
      * @param userName The username of the new user.
      * @param password The password for the new user.
      * @param email    The email of the new user.
+     * @throws IllegalArgumentException if validation fails (email, password) or username is taken
      */
-    public void register(String userName, String password, String email) {
-        userList.addUser(new User(email, userName, password));
-        save(); // Save after adding new user
+    public void register(String userName, String password, String email) throws IllegalArgumentException {
+        userList.register(email, userName, password);
     }
 
     /**
@@ -158,15 +158,17 @@ public class MusicAppFacade {
      *
      * @param userName The username of the user.
      * @param password The password of the user.
-     * @return true if login was successful, false otherwise
+     * @return AuthResult indicating success or specific failure reason
+     * @throws IllegalArgumentException if the username is null/empty or password is null
      */
-    public boolean login(String userName, String password) {
-        User user = userList.getUser(userName, password);
-        if (user != null) {
-            this.user = user;
-            return true;
+    public AuthResult login(String userName, String password) throws IllegalArgumentException {
+        AuthResult result = userList.login(userName, password);
+        
+        if (result == AuthResult.SUCCESS) {
+            this.user = userList.getUser(userName);
         }
-        return false;
+        
+        return result;
     }
 
     /**
@@ -247,4 +249,94 @@ public class MusicAppFacade {
     public boolean save() {
         return userList.save() && songList.save();
     }
+    
+    /**
+     * Validates if an email is in the correct format.
+     * 
+     * @param email The email to validate
+     * @throws IllegalArgumentException if the email doesn't meet format requirements
+     */
+    public void validateEmail(String email) throws IllegalArgumentException {
+        User.isEmailValid(email);
+    }
+
+    /**
+     * Validates if a password meets security requirements.
+     * 
+     * @param password The password to validate
+     * @throws IllegalArgumentException if the password doesn't meet security requirements
+     */
+    public void validatePassword(String password) throws IllegalArgumentException {
+        User.isPasswordValid(password);
+    }
+
+    /**
+     * Gets a list of validation errors for a password.
+     * 
+     * @param password The password to validate
+     * @return List of validation error messages, empty if password is valid
+     */
+    public List<String> getPasswordValidationErrors(String password) {
+        return User.getPasswordValidationErrors(password);
+    }
+
+    /**
+ * Returns the username of the logged-in user.
+ * 
+ * @return the username, or empty string if no user
+ */
+public String getLoggedInUsername() {
+    return user != null ? user.getUsername() : "";
+}
+
+/**
+ * Returns the email of the logged-in user.
+ * 
+ * @return the email, or empty string if no user
+ */
+public String getLoggedInEmail() {
+    return user != null ? user.getEmail() : "";
+}
+
+/**
+ * Returns the theme color of the logged-in user as a string.
+ * 
+ * @return the theme color, or "DEFAULT" if none
+ */
+public String getThemeColor() {
+    return user != null && user.getThemeColor() != null
+           ? user.getThemeColor().toString()
+           : "DEFAULT";
+}
+
+/**
+ * Returns a list of favorite song titles and composers for display.
+ * 
+ * @return list of formatted song titles
+ */
+public List<String> getFavoriteSongTitles() {
+    List<String> titles = new ArrayList<>();
+    if (user != null) {
+        for (Song song : user.getFavoriteSongs()) {
+            titles.add(song.getTitle() + " - " + song.getComposer());
+        }
+    }
+    return titles;
+}
+
+/**
+ * Returns a list of usernames the user is following.
+ * 
+ * @return list of followed usernames
+ */
+public List<String> getFollowedUsernames() {
+    List<String> usernames = new ArrayList<>();
+    if (user != null) {
+        for (User followed : user.getFollowedUsers()) {
+            usernames.add(followed.getUsername());
+        }
+    }
+    return usernames;
+}
+
 }
