@@ -1,11 +1,13 @@
 package com.frontend.gui;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Label;
 import java.util.logging.Logger;
+
 import com.model.AuthResult;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 public class LoginController extends BaseController {
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
@@ -18,6 +20,13 @@ public class LoginController extends BaseController {
         super.initialize();
         try {
             errorLabel.setVisible(false);
+                   
+            // Force navbar hidden regardless of login state
+            BaseController baseController = MusicApp.getBaseController();
+            if (baseController != null && baseController.navBar != null) {
+                baseController.navBar.setVisible(false);
+                baseController.navBar.setManaged(false);
+            }
         } catch (Exception e) {
             logger.severe("Error initializing LoginController: " + e.getMessage());
         }

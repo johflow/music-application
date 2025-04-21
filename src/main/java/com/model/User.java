@@ -3,7 +3,6 @@ package com.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -17,6 +16,8 @@ public class User {
     private ArrayList<Song> favoriteSongs;
     private ArrayList<User> followedUsers;
     private ThemeColor themeColor;
+    private String bio;
+    private String profilePicturePath;
 
     /**
      * Constructor for a new User
@@ -38,6 +39,8 @@ public class User {
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
         this.themeColor = ThemeColor.getDefault();
+        this.bio = "";
+        this.profilePicturePath = "default_profile.png";
     }
 
     /**
@@ -62,6 +65,8 @@ public class User {
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
         this.themeColor = themeColor;
+        this.bio = "";
+        this.profilePicturePath = "default_profile.png";
     }
 
     public User(UUID id, String email, String username, String password) throws IllegalArgumentException {
@@ -76,6 +81,8 @@ public class User {
         this.themeColor = ThemeColor.getDefault();
         this.favoriteSongs = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
+        this.bio = "";
+        this.profilePicturePath = "default_profile.png";
     }
 
     /**
@@ -182,6 +189,7 @@ public class User {
      * @param email The new email
      */
     public void setEmail(String email) {
+        isEmailValid(email);
         this.email = email;
     }
 
@@ -198,8 +206,12 @@ public class User {
      * Sets the user's username
      * 
      * @param username The new username
+     * @throws IllegalArgumentException if username is null or empty
      */
     public void setUsername(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
         this.username = username;
     }
 
@@ -218,6 +230,7 @@ public class User {
      * @param password The new password
      */
     public void setPassword(String password) {
+        isPasswordValid(password);
         this.password = password;
     }
 
@@ -294,7 +307,43 @@ public class User {
      * @param themeColor The new theme color
      */
     public void setThemeColor(ThemeColor themeColor) {
-        this.themeColor = themeColor;
+        this.themeColor = themeColor != null ? themeColor : ThemeColor.getDefault();
+    }
+
+    /**
+     * Gets the user's bio
+     *
+     * @return The user's bio
+     */
+    public String getBio() {
+        return bio;
+    }
+
+    /**
+     * Sets the user's bio
+     *
+     * @param bio The new bio
+     */
+    public void setBio(String bio) {
+        this.bio = (bio != null) ? bio : "";
+    }
+
+    /**
+     * Gets the user's profile picture path
+     *
+     * @return The path to the user's profile picture
+     */
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    /**
+     * Sets the user's profile picture path
+     *
+     * @param profilePicturePath The new profile picture path
+     */
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = (profilePicturePath != null && !profilePicturePath.trim().isEmpty()) ? profilePicturePath : "default_profile.png";
     }
 
     /**
@@ -367,13 +416,12 @@ public class User {
      * Helper method to check if a user is null
      * 
      * @param user The user to check
-     * @param errorMessage Optional custom error message
      * @return The user if not null
      * @throws IllegalArgumentException if the user is null
      */
-    public static User validateNotNull(User user, String errorMessage) throws IllegalArgumentException {
+    public static User validateNotNull(User user) throws IllegalArgumentException {
         if (user == null) {
-            throw new IllegalArgumentException(errorMessage != null ? errorMessage : "User cannot be null");
+            throw new IllegalArgumentException("User cannot be null");
         }
         return user;
     }
@@ -409,6 +457,12 @@ public class User {
      */
     @Override
     public String toString() {
-        return this.username;
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", themeColor=" + themeColor +
+                ", bio='" + bio + '\'' +
+                '}';
     }
 }

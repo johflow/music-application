@@ -1,0 +1,448 @@
+/* Light Theme CSS - Overrides for Light Mode */
+
+/* Theme-specific variables */
+.root {
+    /* Primary Colors */
+    -primary-color: #f0f0f0;
+    -primary-hover: #e0e0e0;
+    -primary-light: #fafafa;
+    -primary-dark: #d0d0d0;
+    
+    /* Secondary Colors */
+    -secondary-color: #6c757d;
+    -secondary-hover: #5a6268;
+    
+    /* Background Colors */
+    -background-dark: #f5f5f5;
+    -background-medium: #e9ecef;
+    -background-light: #ffffff;
+    -background-hover: rgba(0, 0, 0, 0.05);
+    
+    /* Text Colors */
+    -text-light: #ffffff;
+    -text-dark: #212529;
+    -text-muted: #6c757d;
+    
+    /* Border Colors */
+    -border-color: #dee2e6;
+    -shadow-color: rgba(0, 0, 0, 0.15);
+    
+    /* Font Settings */
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 13px;
+}
+
+/* Theme Class - applied to everything in light theme */
+.light-theme {
+    -fx-text-fill: #212529 !important;
+    -fx-base: #f5f5f5;
+    -fx-background-color: #ffffff;
+}
+
+/* Base Elements */
+.root, .light-theme .root {
+    -fx-base: #f5f5f5;
+    -fx-background-color: #ffffff !important;
+    -fx-text-fill: #212529;
+}
+
+/* Apply to all major containers to ensure theme is applied */
+.light-theme .border-pane, 
+.light-theme BorderPane, 
+.light-theme Pane, 
+.light-theme VBox, 
+.light-theme HBox, 
+.light-theme AnchorPane, 
+.light-theme StackPane, 
+.light-theme .content-area {
+    -fx-background-color: #ffffff !important;
+}
+
+/* Bottom Navigation Bar - explicit styling */
+.light-theme HBox.nav-bar, 
+.light-theme .nav-bar, 
+.light-theme BorderPane > .bottom, 
+.light-theme HBox[styleClass~="nav-bar"] {
+    -fx-background-color: #f8f9fa !important;
+    -fx-border-color: #dee2e6 !important;
+}
+
+/* Target the actual HBox in the bottom position of BorderPane */
+.light-theme .root > BorderPane > HBox, 
+.light-theme BorderPane > HBox.nav-bar {
+    -fx-background-color: #f8f9fa !important;
+}
+
+/* Buttons - Generic */
+.button, .light-theme .button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #212529;
+    -fx-border-color: #cccccc;
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+.button:hover, .light-theme .button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Navigation Buttons */
+.nav-button, 
+.light-theme .nav-button,
+#discoverBtn, 
+#profileBtn, 
+#createBtn, 
+#settingsBtn,
+.light-theme #discoverBtn, 
+.light-theme #profileBtn, 
+.light-theme #createBtn, 
+.light-theme #settingsBtn,
+.nav-bar > .button.nav-button,
+.nav-bar > #discoverBtn, 
+.nav-bar > #profileBtn, 
+.nav-bar > #createBtn, 
+.nav-bar > #settingsBtn {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #212529;
+    -fx-border-color: transparent;
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.nav-button:hover, 
+.light-theme .nav-button:hover,
+#discoverBtn:hover, 
+#profileBtn:hover, 
+#createBtn:hover, 
+#settingsBtn:hover,
+.light-theme #discoverBtn:hover, 
+.light-theme #profileBtn:hover, 
+.light-theme #createBtn:hover, 
+.light-theme #settingsBtn:hover,
+.nav-bar > .button.nav-button:hover,
+.nav-bar > #discoverBtn:hover, 
+.nav-bar > #profileBtn:hover, 
+.nav-bar > #createBtn:hover, 
+.nav-bar > #settingsBtn:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #212529;
+}
+
+/* Logout Button - Only for Settings page */
+.logout-button,
+.light-theme .logout-button,
+#signOutButton,
+.light-theme #signOutButton,
+.dangerButton,
+.light-theme .dangerButton,
+.footer .dangerButton,
+.footer #signOutButton,
+.light-theme .footer .dangerButton,
+.light-theme .footer #signOutButton {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #212529;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.logout-button:hover,
+.light-theme .logout-button:hover,
+#signOutButton:hover,
+.light-theme #signOutButton:hover,
+.dangerButton:hover,
+.light-theme .dangerButton:hover,
+.footer .dangerButton:hover,
+.footer #signOutButton:hover,
+.light-theme .footer .dangerButton:hover,
+.light-theme .footer #signOutButton:hover {
+    -fx-background-color: #d0d0d0;
+    -fx-text-fill: #212529;
+}
+
+/* Text Field and Text Area */
+.text-field, .text-area, .password-field {
+    -fx-background-color: #ffffff !important;
+    -fx-text-fill: #212529 !important;
+    -fx-control-inner-background: #ffffff !important;
+    -fx-border-color: #cccccc;
+}
+
+.text-field:focused, .text-area:focused, .password-field:focused {
+    -fx-border-color: #b0b0b0;
+    -fx-background-color: #ffffff !important;
+}
+
+.text-field .content, .text-area .content, .password-field .content {
+    -fx-background-color: #ffffff !important;
+}
+
+/* Explicit styling for text areas in settings page */
+#bioTextArea, .text-area {
+    -fx-background-color: #ffffff !important;
+    -fx-control-inner-background: #ffffff !important;
+    -fx-text-fill: #212529 !important;
+}
+
+#bioTextArea .content {
+    -fx-background-color: #ffffff !important;
+}
+
+/* ComboBox - explicit styling */
+.combo-box, #themeComboBox {
+    -fx-background-color: #ffffff !important;
+    -fx-text-fill: #212529 !important;
+    -fx-border-color: #cccccc;
+}
+
+.combo-box .list-cell, #themeComboBox .list-cell {
+    -fx-background-color: #ffffff !important;
+    -fx-text-fill: #212529 !important;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #ffffff !important;
+    -fx-border-color: #cccccc;
+}
+
+/* Lists */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #212529;
+}
+
+.list-view .list-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #212529;
+}
+
+/* Containers */
+.nav-bar {
+    -fx-background-color: #f8f9fa !important;
+    -fx-border-color: #e0e0e0;
+}
+
+.card {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0, 0, 3);
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #212529;
+}
+
+.title {
+    -fx-text-fill: #212529;
+}
+
+.subtitle {
+    -fx-text-fill: #212529;
+}
+
+/* Settings specific styles for light theme */
+.sidebar {
+    -fx-border-color: #dee2e6;
+}
+
+.footer {
+    -fx-border-color: #dee2e6;
+}
+
+.primaryButton {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #212529;
+}
+
+.primaryButton:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.secondaryButton {
+    -fx-background-color: #fdfdfd;
+    -fx-text-fill: #212529;
+    -fx-border-color: #dedede;
+}
+
+.secondaryButton:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.statusLabel {
+    -fx-text-fill: #212529;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #707070;
+}
+
+.save-button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #212529;
+}
+
+.save-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.save-button:pressed {
+    -fx-background-color: #d0d0d0;
+}
+
+.setting-control:focused {
+    -fx-border-color: #b0b0b0;
+}
+
+/* Music Player Specific */
+.player-container {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #e0e0e0;
+}
+
+.play-button, .pause-button, .next-button, .prev-button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #212529;
+}
+
+.progress-bar .track {
+    -fx-background-color: #e0e0e0;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #a0a0a0;
+}
+
+.song-list {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+}
+
+.song-title {
+    -fx-text-fill: #212529;
+    -fx-font-weight: bold;
+}
+
+.volume-slider .thumb {
+    -fx-background-color: #a0a0a0;
+}
+
+/* Apply to specific node types */
+.button, .nav-button, .logout-button {
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+.light-theme {
+    -fx-text-fill: #212529 !important;
+}
+
+.light-theme .label {
+    -fx-text-fill: #212529 !important;
+}
+
+.light-theme .text-field, .light-theme .text-area, .light-theme .password-field {
+    -fx-text-fill: #212529 !important;
+}
+
+/* Universal sidebar styling */
+.light-theme .profile-sidebar,
+.light-theme .sidebar,
+.light-theme BorderPane > .left,
+.light-theme .sidebar-container {
+    -fx-background-color: #f0f0f0 !important;
+    -fx-text-fill: #212529 !important;
+    -fx-border-color: #e0e0e0 !important;
+}
+
+/* Universal section titles */
+.light-theme .title, 
+.light-theme .section-title {
+    -fx-text-fill: #212529 !important;
+    -fx-font-weight: bold;
+}
+
+/* Universal username styling */
+.light-theme .username,
+.light-theme .profile-username,
+.light-theme #usernameLabel {
+    -fx-text-fill: #212529 !important;
+    -fx-font-weight: bold;
+}
+
+/* Universal bio styling */
+.light-theme .bio,
+.light-theme .profile-bio,
+.light-theme #bioLabel {
+    -fx-text-fill: #555555 !important;
+    -fx-font-style: italic;
+}
+
+/* Universal stats styling */
+.light-theme .stat-count {
+    -fx-text-fill: #212529 !important;
+    -fx-font-weight: bold;
+}
+
+.light-theme .stat-label {
+    -fx-text-fill: #555555 !important;
+}
+
+/* Universal center content styling */
+.light-theme .profile-center-content,
+.light-theme BorderPane > .center,
+.light-theme .content-container {
+    -fx-background-color: #ffffff !important;
+    -fx-text-fill: #212529 !important;
+    -fx-border-color: #e0e0e0 !important;
+}
+
+/* Universal ListView styling */
+.light-theme .list-view {
+    -fx-background-color: #ffffff !important;
+    -fx-control-inner-background: #ffffff !important;
+    -fx-border-color: #cccccc !important;
+}
+
+.light-theme .list-view .list-cell {
+    -fx-background-color: #ffffff !important;
+    -fx-text-fill: #212529 !important;
+}
+
+.light-theme .list-view .list-cell:hover {
+    -fx-background-color: #f0f0f0 !important;
+}
+
+.light-theme .list-view .list-cell:selected {
+    -fx-background-color: #e2e2e2 !important;
+    -fx-text-fill: #212529 !important;
+}
+
+/* Profile picture container and stats for light theme */
+.light-theme .profile-sidebar StackPane {
+    -fx-background-color: #f0f0f0 !important;
+}
+
+.light-theme .profile-sidebar HBox {
+    -fx-background-color: #f0f0f0 !important;
+}
+
+/* Target individual follower/following containers */
+.light-theme .profile-sidebar HBox VBox {
+    -fx-background-color: #f0f0f0 !important;
+}
+
+/* Make sure profile image has a border in light mode */
+.light-theme .profile-sidebar ImageView {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+} 

@@ -4,26 +4,8 @@ package com.model;
  * Represents theme colors that users can select for their profile
  */
 public enum ThemeColor {
-    BLUE("#1E88E5", "Blue"),
-    RED("#E53935", "Red"),
-    GREEN("#43A047", "Green"),
-    PURPLE("#8E24AA", "Purple"),
-    ORANGE("#FB8C00", "Orange"),
-    TEAL("#00897B", "Teal"),
-    PINK("#D81B60", "Pink"),
-    INDIGO("#3949AB", "Indigo"),
-    AMBER("#FFB300", "Amber"),
-    CYAN("#00ACC1", "Cyan"),
-    LIME("#7CB342", "Lime"),
-    BROWN("#6D4C41", "Brown"),
-    GRAY("#757575", "Gray"),
-    DEEP_PURPLE("#5E35B1", "Deep Purple"),
-    LIGHT_BLUE("#039BE5", "Light Blue"),
-    DEEP_ORANGE("#F4511E", "Deep Orange"),
-    LIGHT_GREEN("#8BC34A", "Light Green"),
-    YELLOW("#FDD835", "Yellow"),
-    BLUE_GRAY("#607D8B", "Blue Gray"),
-    BLACK("#212121", "Black");
+    LIGHT("#F5F5F5", "Light"),
+    DARK("#212121", "Dark");
     
     private final String hexCode;
     private final String colorName;
@@ -60,10 +42,10 @@ public enum ThemeColor {
     /**
      * Gets the default theme color
      * 
-     * @return The default theme color (BLUE)
+     * @return The default theme color (DARK)
      */
     public static ThemeColor getDefault() {
-        return BLUE;
+        return DARK;
     }
     
     /**
