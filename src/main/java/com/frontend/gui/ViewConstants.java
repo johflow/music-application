@@ -28,7 +28,9 @@ public class ViewConstants {
     
     // Component CSS Files to be loaded with every theme
     public static final String[] COMPONENT_CSS_FILES = {
+        DISCOVER_CSS,
         PROFILE_CSS,
+        CREATE_SONG_CSS,
         SETTINGS_CSS
     };
     

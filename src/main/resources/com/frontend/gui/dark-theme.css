@@ -1,0 +1,345 @@
+/* Dark Theme CSS - Overrides for Dark Mode */
+
+/* Theme-specific variables */
+.root {
+    /* Primary Colors */
+    -primary-color: #2f2f2f;
+    -primary-hover: #3f3f3f;
+    -primary-light: #4f4f4f;
+    -primary-dark: #1f1f1f;
+    
+    /* Secondary Colors */
+    -secondary-color: #6c757d;
+    -secondary-hover: #7d868e;
+    
+    /* Background Colors */
+    -background-dark: #121212;
+    -background-medium: #1e1e1e;
+    -background-light: #2c2c2c;
+    -background-hover: rgba(255, 255, 255, 0.05);
+    
+    /* Text Colors */
+    -text-light: #f0f0f0;
+    -text-dark: #e0e0e0;
+    -text-muted: #9e9e9e;
+    
+    /* Border Colors */
+    -border-color: #424242;
+    -shadow-color: rgba(0, 0, 0, 0.3);
+    
+    /* Font Settings */
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 13px;
+}
+
+/* Theme Class - applied to everything in dark theme */
+.dark-theme {
+    -fx-text-fill: #f0f0f0 !important;
+    -fx-base: #121212;
+    -fx-background-color: #121212;
+}
+
+/* Base Elements */
+.root, .dark-theme .root {
+    -fx-base: #121212;
+    -fx-background-color: #121212;
+    -fx-text-fill: #f0f0f0;
+}
+
+/* Buttons - Generic */
+.button, .dark-theme .button {
+    -fx-background-color: #2f2f2f;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: #4d4d4d;
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+.button:hover, .dark-theme .button:hover {
+    -fx-background-color: #3f3f3f;
+}
+
+/* Navigation Buttons */
+.nav-button, 
+.dark-theme .nav-button,
+#discoverBtn, 
+#profileBtn, 
+#createBtn, 
+#settingsBtn,
+.dark-theme #discoverBtn, 
+.dark-theme #profileBtn, 
+.dark-theme #createBtn, 
+.dark-theme #settingsBtn,
+.nav-bar > .button.nav-button,
+.nav-bar > #discoverBtn, 
+.nav-bar > #profileBtn, 
+.nav-bar > #createBtn, 
+.nav-bar > #settingsBtn {
+    -fx-background-color: #2f2f2f;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: transparent;
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.nav-button:hover, 
+.dark-theme .nav-button:hover,
+#discoverBtn:hover, 
+#profileBtn:hover, 
+#createBtn:hover, 
+#settingsBtn:hover,
+.dark-theme #discoverBtn:hover, 
+.dark-theme #profileBtn:hover, 
+.dark-theme #createBtn:hover, 
+.dark-theme #settingsBtn:hover,
+.nav-bar > .button.nav-button:hover,
+.nav-bar > #discoverBtn:hover, 
+.nav-bar > #profileBtn:hover, 
+.nav-bar > #createBtn:hover, 
+.nav-bar > #settingsBtn:hover {
+    -fx-background-color: #3f3f3f;
+    -fx-text-fill: #f0f0f0;
+}
+
+/* Logout Button - Only for Settings page */
+.logout-button,
+.dark-theme .logout-button,
+#signOutButton,
+.dark-theme #signOutButton,
+.dangerButton,
+.dark-theme .dangerButton,
+.footer .dangerButton,
+.footer #signOutButton,
+.dark-theme .footer .dangerButton,
+.dark-theme .footer #signOutButton {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.logout-button:hover,
+.dark-theme .logout-button:hover,
+#signOutButton:hover,
+.dark-theme #signOutButton:hover,
+.dangerButton:hover,
+.dark-theme .dangerButton:hover,
+.footer .dangerButton:hover,
+.footer #signOutButton:hover,
+.dark-theme .footer .dangerButton:hover,
+.dark-theme .footer #signOutButton:hover {
+    -fx-background-color: #4a4a4a;
+    -fx-text-fill: #f0f0f0;
+}
+
+/* Text Field and Text Area */
+.text-field, .text-area, .password-field, 
+.dark-theme .text-field, .dark-theme .text-area, .dark-theme .password-field {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #f0f0f0;
+    -fx-control-inner-background: #2a2a2a;
+    -fx-border-color: #4d4d4d;
+    -fx-prompt-text-fill: #9e9e9e;
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused, .text-area:focused, .password-field:focused {
+    -fx-border-color: #5f5f5f;
+    -fx-background-color: #333333;
+}
+
+.text-field .content, .text-area .content, .password-field .content {
+    -fx-background-color: #2a2a2a;
+}
+
+/* Ensure text inputs have light text */
+.text-input {
+    -fx-text-fill: #f0f0f0;
+}
+
+/* Lists */
+.list-view {
+    -fx-background-color: #2a2a2a;
+    -fx-border-color: #4d4d4d;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #f0f0f0;
+}
+
+.list-view .list-cell:odd {
+    -fx-background-color: #2d2d2d;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #3f3f3f;
+    -fx-text-fill: #f0f0f0;
+}
+
+/* Combo Box */
+.combo-box {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: #4d4d4d;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #f0f0f0;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #2a2a2a;
+    -fx-border-color: #4d4d4d;
+}
+
+/* Navigation Bar - Enhanced to ensure consistency */
+.nav-bar {
+    -fx-background-color: #1a1a1a !important;
+    -fx-border-color: #333333;
+    -fx-border-width: 1px 0 0 0;
+    -fx-padding: 10px;
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #f0f0f0;
+}
+
+.title {
+    -fx-text-fill: #f0f0f0;
+}
+
+.subtitle {
+    -fx-text-fill: #f0f0f0;
+}
+
+/* Form components */
+.form-label {
+    -fx-text-fill: #f0f0f0;
+}
+
+.form-hint {
+    -fx-text-fill: #9e9e9e;
+}
+
+.error-message {
+    -fx-text-fill: #ff8080;
+}
+
+.success-message {
+    -fx-text-fill: #80ff80;
+}
+
+/* Settings specific styles for dark theme */
+.sidebar {
+    -fx-border-color: #333333;
+}
+
+.footer {
+    -fx-border-color: #333333;
+}
+
+.primaryButton {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: #f0f0f0;
+}
+
+.primaryButton:hover {
+    -fx-background-color: #4a4a4a;
+}
+
+.secondaryButton {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: #3a3a3a;
+}
+
+.secondaryButton:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.statusLabel {
+    -fx-text-fill: #f0f0f0;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #b0b0b0;
+}
+
+.save-button {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: #f0f0f0;
+}
+
+.save-button:hover {
+    -fx-background-color: #4a4a4a;
+}
+
+.save-button:pressed {
+    -fx-background-color: #5a5a5a;
+}
+
+.setting-control:focused {
+    -fx-border-color: #5f5f5f;
+}
+
+/* Music Player Specific */
+.player-container {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #3d3d3d;
+}
+
+.play-button, .pause-button, .next-button, .prev-button {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: #f0f0f0;
+}
+
+.progress-bar .track {
+    -fx-background-color: #333333;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #5a5a5a;
+}
+
+.song-list {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #3d3d3d;
+}
+
+.song-title {
+    -fx-text-fill: #f0f0f0;
+    -fx-font-weight: bold;
+}
+
+.volume-slider .thumb {
+    -fx-background-color: #5a5a5a;
+}
+
+.dark-theme .label {
+    -fx-text-fill: #f0f0f0 !important;
+}
+
+/* Profile picture container and stats for dark theme */
+.dark-theme .profile-sidebar StackPane {
+    -fx-background-color: #1e1e1e !important;
+}
+
+.dark-theme .profile-sidebar HBox {
+    -fx-background-color: #1e1e1e !important;
+}
+
+/* Target individual follower/following containers */
+.dark-theme .profile-sidebar HBox VBox {
+    -fx-background-color: #1e1e1e !important;
+}
+
+/* Make sure profile image has a subtle border in dark mode */
+.dark-theme .profile-sidebar ImageView {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 4, 0, 0, 0);
+} 

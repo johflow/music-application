@@ -118,10 +118,14 @@ public class BaseController {
 
         boolean isLoggedIn = facade.getUser() != null;
         
-        // Hide the entire nav bar if not logged in
+        // Determine if we're on a login/signup page by checking the controller type
+        boolean isLoginOrSignupPage = this instanceof LoginController || this instanceof SignupController;
+        
+        // Hide the entire nav bar if not logged in or on login/signup pages
         if (baseController.navBar != null) {
-            baseController.navBar.setVisible(isLoggedIn);
-            baseController.navBar.setManaged(isLoggedIn); // This ensures the space is not reserved when hidden
+            boolean shouldShowNavBar = isLoggedIn && !isLoginOrSignupPage;
+            baseController.navBar.setVisible(shouldShowNavBar);
+            baseController.navBar.setManaged(shouldShowNavBar); // This ensures the space is not reserved when hidden
         }
         
         // Still update button visibility for controllers that may use them independently
@@ -174,7 +178,13 @@ public class BaseController {
                     styleManager.applyTheme(targetContentArea.getScene());
                 }
                 
-                updateNavigationVisibility();
+                // Get the controller and explicitly force navbar visibility update
+                Object controller = loader.getController();
+                if (controller instanceof BaseController) {
+                    ((BaseController) controller).updateNavigationVisibility();
+                } else {
+                    updateNavigationVisibility();
+                }
                 
             } catch (IOException e) {
                 logger.severe("Error loading FXML file " + fxmlPath + ": " + e.getMessage());

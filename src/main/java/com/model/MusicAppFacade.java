@@ -89,7 +89,7 @@ public class MusicAppFacade {
      * @param musicElement The music element to be added.
      */
     public void addMusicElement(MusicElement musicElement) {
-        viewedSong.getSheetMusic().get(0).getStaves().get(0).getMeasures().get(0).addMusicElement(musicElement);
+        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures().getFirst().addMusicElement(musicElement);
     }
 
     /**
@@ -107,7 +107,7 @@ public class MusicAppFacade {
      * @param measure The measure to be added.
      */
     public void addMeasure(Measure measure) {
-        viewedSong.getSheetMusic().get(0).getStaves().get(0).addMeasure(measure);
+        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().addMeasure(measure);
     }
 
     /**
@@ -116,7 +116,7 @@ public class MusicAppFacade {
      * @param staff the staff to be added.
      */
     public void addStaff(Staff staff) {
-        viewedSong.getSheetMusic().get(0).addStaff(staff);
+        viewedSong.getSheetMusic().getFirst().addStaff(staff);
     }
 
     /**

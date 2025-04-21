@@ -4,14 +4,9 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane stylesheets="@base.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frontend.gui.BaseController">
-    
-    <top>
-        <HBox alignment="CENTER_RIGHT">
-            <Button fx:id="logoutBtn" onAction="#handleLogout" styleClass="logout-button" text="Logout" />
-        </HBox>
-    </top>
     
     <center>
         <BorderPane fx:id="contentArea" minHeight="400" minWidth="600">
