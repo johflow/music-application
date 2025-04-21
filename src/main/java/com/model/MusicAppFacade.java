@@ -272,4 +272,64 @@ public class MusicAppFacade {
     public List<String> getPasswordValidationErrors(String password) {
         return User.getPasswordValidationErrors(password);
     }
+
+    /**
+ * Returns the username of the logged-in user.
+ * 
+ * @return the username, or empty string if no user
+ */
+public String getLoggedInUsername() {
+    return user != null ? user.getUsername() : "";
+}
+
+/**
+ * Returns the email of the logged-in user.
+ * 
+ * @return the email, or empty string if no user
+ */
+public String getLoggedInEmail() {
+    return user != null ? user.getEmail() : "";
+}
+
+/**
+ * Returns the theme color of the logged-in user as a string.
+ * 
+ * @return the theme color, or "DEFAULT" if none
+ */
+public String getThemeColor() {
+    return user != null && user.getThemeColor() != null
+           ? user.getThemeColor().toString()
+           : "DEFAULT";
+}
+
+/**
+ * Returns a list of favorite song titles and composers for display.
+ * 
+ * @return list of formatted song titles
+ */
+public List<String> getFavoriteSongTitles() {
+    List<String> titles = new ArrayList<>();
+    if (user != null) {
+        for (Song song : user.getFavoriteSongs()) {
+            titles.add(song.getTitle() + " - " + song.getComposer());
+        }
+    }
+    return titles;
+}
+
+/**
+ * Returns a list of usernames the user is following.
+ * 
+ * @return list of followed usernames
+ */
+public List<String> getFollowedUsernames() {
+    List<String> usernames = new ArrayList<>();
+    if (user != null) {
+        for (User followed : user.getFollowedUsers()) {
+            usernames.add(followed.getUsername());
+        }
+    }
+    return usernames;
+}
+
 }
