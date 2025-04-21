@@ -7,5 +7,6 @@ public interface DurationElement {
   int getDotted();
   boolean hasTie();
   String getLyric();
+  String getType();
 
 }

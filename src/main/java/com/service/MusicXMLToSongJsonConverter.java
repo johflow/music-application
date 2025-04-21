@@ -1,11 +1,14 @@
 package com.service;
 
+import static java.util.Map.entry;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 import java.io.File;
+import java.util.Map;
 import java.io.FileWriter;
 import java.util.*;
 
@@ -443,84 +446,116 @@ public class MusicXMLToSongJsonConverter {
         return chordList.getLength() > 0;
     }
 
-    // Process a single note element into a JSON object (for note or rest).
-    // Uses the <type> element to determine durationChar.
     private static JSONObject processSingleNote(Element noteElement, int divisions) {
         JSONObject noteJson = new JSONObject();
         NodeList restList = noteElement.getElementsByTagName("rest");
         if (restList.getLength() > 0) {
             noteJson.put("type", "rest");
-            Element restElement = (Element) restList.item(0);
-            String measureAttr = restElement.getAttribute("measure");
-            if ("yes".equalsIgnoreCase(measureAttr)) {
-                noteJson.put("durationChar", "w");
-            } else {
-                noteJson.put("durationChar", "q");
-            }
+            // rest logic...
         } else {
             noteJson.put("type", "note");
         }
+
+        String noteName;
         if (restList.getLength() == 0) {
             Element pitchElement = (Element) noteElement.getElementsByTagName("pitch").item(0);
             if (pitchElement != null) {
-                String step = getElementText(pitchElement, "step");
+                String step   = getElementText(pitchElement, "step");
                 String octave = getElementText(pitchElement, "octave");
-                String alter = getElementText(pitchElement, "alter");
-                String noteName = step;
+                String alter  = getElementText(pitchElement, "alter");
+
+                // build noteName e.g. "C#4" or "Bb3"
+                String accidental = "";
                 if (alter != null) {
                     try {
                         int alt = Integer.parseInt(alter);
-                        if (alt == 1) {
-                            noteName += "#";
-                        } else if (alt == -1) {
-                            noteName += "b";
-                        }
-                    } catch (NumberFormatException e) { }
+                        if (alt == 1)      accidental = "#";
+                        else if (alt == -1) accidental = "b";
+                    } catch (NumberFormatException ignored) {}
                 }
-                if (octave != null) {
-                    noteName += octave;
-                }
-                noteJson.put("noteName", noteName);
+                noteName = step + accidental + octave;
             } else {
-                noteJson.put("noteName", "Unknown");
+                noteName = "C4";   // fallback
             }
-            noteJson.put("midiNumber", 60);
-            noteJson.put("pitch", 0.0);
         } else {
-            noteJson.put("noteName", "");
+            noteName = "";
+        }
+
+        noteJson.put("noteName", noteName);
+
+        // ────────────────────────────────────────────────────────────────────────
+        // compute MIDI number and pitch from noteName
+        // ────────────────────────────────────────────────────────────────────────
+        if (!noteName.isEmpty()) {
+            // map from note letters (with accidentals) to semitone 0–11
+            Map<String,Integer> semitoneMap = Map.ofEntries(
+                entry("C",  0), entry("B#",  0),
+                entry("C#", 1), entry("Db",  1),
+                entry("D",  2),
+                entry("D#", 3), entry("Eb",  3),
+                entry("E",  4), entry("Fb",  4),
+                entry("E#", 5), entry("F",   5),
+                entry("F#", 6), entry("Gb",  6),
+                entry("G",  7),
+                entry("G#", 8), entry("Ab",  8),
+                entry("A",  9),
+                entry("A#",10), entry("Bb", 10),
+                entry("B", 11), entry("Cb", 11)
+            );
+
+            // split noteName into letter+accidental vs. octave
+            int len = noteName.length();
+            // octave is last char (or two, for 10+?), but MusicXML uses single-digit octaves
+            String octaveStr = noteName.substring(len - 1);
+            String letterPart = noteName.substring(0, len - 1);
+
+            int octaveInt = 4; // default
+            try {
+                octaveInt = Integer.parseInt(octaveStr);
+            } catch (NumberFormatException ignored) {}
+
+            int semitoneIndex = semitoneMap.getOrDefault(letterPart, 0);
+            int midiNumber    = (octaveInt + 1) * 12 + semitoneIndex;
+            double pitchHz    = 440.0 * Math.pow(2, (midiNumber - 69) / 12.0);
+
+            noteJson.put("midiNumber", midiNumber);
+            noteJson.put("pitch", pitchHz);
+        } else {
+            // for rests or unknowns
             noteJson.put("midiNumber", 0);
             noteJson.put("pitch", 0.0);
         }
-        // Use the <type> element to set the durationChar.
+        // ────────────────────────────────────────────────────────────────────────
+
+        // durationChar, dotted, tied, lyric, etc.
         String typeText = getElementText(noteElement, "type");
-        if (typeText != null && !typeText.isEmpty()) {
+        if (typeText != null) {
             switch (typeText.toLowerCase()) {
-                case "whole" -> noteJson.put("durationChar", "w");
-                case "half" -> noteJson.put("durationChar", "h");
-                case "quarter" -> noteJson.put("durationChar", "q");
-                case "eighth" -> noteJson.put("durationChar", "i");
-                case "16th" -> noteJson.put("durationChar", "s");
-                case "32nd" -> noteJson.put("durationChar", "t");
-                case "64th" -> noteJson.put("durationChar", "x");
-                default -> noteJson.put("durationChar", "q");
+                case "whole"   -> {noteJson.put("durationChar", "w"); noteJson.put("duration", 1);}
+                case "half"    -> {noteJson.put("durationChar", "h"); noteJson.put("duration", 0.5);}
+                case "quarter" -> {noteJson.put("durationChar", "q"); noteJson.put("duration", 0.25);}
+                case "eighth"  -> {noteJson.put("durationChar", "i"); noteJson.put("duration", 0.125);}
+                case "16th"    -> {noteJson.put("durationChar", "s"); noteJson.put("duration", 0.0625);}
+                case "32nd"    -> {noteJson.put("durationChar", "t"); noteJson.put("duration", 0.03125);}
+                case "64th"    -> {noteJson.put("durationChar", "x"); noteJson.put("duration", 0.015625);}
+                default        -> {noteJson.put("durationChar", "q"); noteJson.put("duration", 0.0078125);}
             }
         }
         NodeList dotList = noteElement.getElementsByTagName("dot");
         noteJson.put("dotted", dotList.getLength());
-        // Instead of marking tied true if any <tie> element is present, check for a tie with type "start"
+
         boolean tied = false;
         NodeList tieList = noteElement.getElementsByTagName("tie");
         for (int i = 0; i < tieList.getLength(); i++) {
-            Element tieElement = (Element) tieList.item(i);
-            String tieType = tieElement.getAttribute("type");
-            if ("start".equalsIgnoreCase(tieType)) {
+            Element tieElem = (Element) tieList.item(i);
+            if ("start".equalsIgnoreCase(tieElem.getAttribute("type"))) {
                 tied = true;
                 break;
             }
         }
         noteJson.put("tied", tied);
         noteJson.put("lyric", getLyric(noteElement));
-        noteJson.put("duration", 0);
+
         return noteJson;
     }
 

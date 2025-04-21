@@ -240,4 +240,16 @@ public class MusicAppFacade {
     public boolean save() {
         return userList.save() && songList.save();
     }
+
+    public boolean loadSongs() {
+        return SongList.getInstance().loadSongs();
+    }
+
+    public Song positionToLoadedSong(int position) {
+       return SongList.getInstance().getSongs().get(position);
+    }
+
+    public Song getViewedSong() {
+        return viewedSong;
+    }
 }

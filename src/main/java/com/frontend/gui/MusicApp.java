@@ -61,7 +61,7 @@ public class MusicApp extends Application {
         }
     }
     
-    private void showLoginView() {
+    private void howLoginView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.LOGIN_VIEW));
             Parent loginView = loader.load();
@@ -75,6 +75,24 @@ public class MusicApp extends Application {
             }
         } catch (IOException e) {
             logger.severe("Error loading login view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void showLoginView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.CREATE_SONG_VIEW));
+            Parent songView = loader.load();
+
+            if (baseController != null && baseController.getContentArea() != null) {
+                baseController.getContentArea().setCenter(songView);
+                logger.info("Song view set in content area");
+            } else {
+                logger.warning("BaseController or content area is null, setting song view directly in root layout");
+                rootLayout.setCenter(songView);
+            }
+        } catch (IOException e) {
+            logger.severe("Error loading song view: " + e.getMessage());
             e.printStackTrace();
         }
     }

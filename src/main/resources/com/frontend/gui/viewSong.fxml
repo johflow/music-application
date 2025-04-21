@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+  fx:controller="com.frontend.gui.SongController">
+
+    <!--  STATIC HUD AT TOP  -->
+    <top>
+        <HBox fx:id="hudBar"
+          spacing="10"
+          style="-fx-background-color: #f0f0f0; -fx-padding: 8;">
+            <Button fx:id="exitSongBtn" text="Exit"/>
+            <Button fx:id="playSongBtn" text=" play"/>
+        </HBox>
+    </top>
+
+    <!--  SCROLLABLE CONTENT IN CENTER  -->
+    <center>
+        <ScrollPane fx:id="scrollPane"
+          fitToWidth="false"
+          fitToHeight="false"
+          pannable="true">
+            <content>
+                <Pane fx:id="contentPane"/>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

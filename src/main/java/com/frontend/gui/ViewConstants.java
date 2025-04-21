@@ -10,7 +10,7 @@ public class ViewConstants {
     public static final String SIGNUP_VIEW = BASE_PATH + "signup.fxml";
     public static final String DISCOVER_VIEW = BASE_PATH + "discover.fxml";
     public static final String PROFILE_VIEW = BASE_PATH + "profile.fxml";
-    public static final String CREATE_SONG_VIEW = BASE_PATH + "createSong.fxml";
+    public static final String CREATE_SONG_VIEW = BASE_PATH + "viewSong.fxml";
     public static final String SETTINGS_VIEW = BASE_PATH + "settings.fxml";
     
     // CSS Files
