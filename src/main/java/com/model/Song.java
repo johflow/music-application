@@ -68,6 +68,7 @@ public class Song {
         this.composer = composer;
         this.pickUp = pickUp;
         this.sheetMusic = sheetMusic;
+        this.genres = new ArrayList<>();
     }
 
     /**
