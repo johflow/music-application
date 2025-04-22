@@ -55,6 +55,7 @@ public class SongJsonParser extends DataConstants {
     String title = getValue(songJSON, SONG_TITLE, String.class);
     String composer = getValue(songJSON, SONG_COMPOSER, String.class);
     UUID publisherID = UUID.fromString(getValue(songJSON, SONG_PUBLISHER, String.class));
+    String genre = getValue(songJSON, SONG_GENRE, String.class);
     int pickUp = getValue(songJSON, SONG_PICK_UP, Number.class).intValue();
     List<SheetMusic> sheetMusic = new ArrayList<>();
 
