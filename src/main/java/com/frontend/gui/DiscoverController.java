@@ -3,6 +3,7 @@ package com.frontend.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ToggleButton;
 import javafx.collections.FXCollections;
@@ -17,18 +18,34 @@ import com.model.MusicAppFacade;
 import com.model.Song;
 
 public class DiscoverController extends BaseController {
+    @FXML private TextField searchField;
     @FXML private ListView<Song> songListView;
+
     private MusicAppFacade facade;
+    private ObservableList<Song> allSongs;
 
     @FXML @Override
     public void initialize() {
         super.initialize();
         facade = MusicAppFacade.getInstance();
 
-        ObservableList<Song> songs =
-            FXCollections.observableArrayList(facade.getSongList().getSongs());
-        songListView.setItems(songs);
+        // 1) grab and wrap the full list
+        allSongs = FXCollections.observableArrayList(facade.getSongList().getSongs());
+        songListView.setItems(allSongs);
         songListView.setCellFactory(lv -> new SongCell());
+
+        // 2) live‑search without mutating facade.songList
+        searchField.textProperty().addListener((obs, oldQ, newQ) -> {
+            if (newQ == null || newQ.isBlank()) {
+                songListView.setItems(allSongs);
+            } else {
+                songListView.setItems(
+                  FXCollections.observableArrayList(
+                    facade.searchForSongs(newQ.trim())
+                  )
+                );
+            }
+        });
     }
 
     private class SongCell extends ListCell<Song> {
@@ -44,29 +61,26 @@ public class DiscoverController extends BaseController {
             spacer         = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            // ❤️/♡ toggle
+            // favorite toggle, off by default
             favBtn = new ToggleButton("♡");
             favBtn.getStyleClass().add("favorite-button");
-
-            // when toggled
-            favBtn.selectedProperty().addListener((obs, wasSel, isNowSel) -> {
+            favBtn.selectedProperty().addListener((obs, was, now) -> {
                 Song song = getItem();
-                if (song != null) {
-                    if (isNowSel) {
-                        facade.addFavoriteSong(song);      // add to facade’s favorites :contentReference[oaicite:6]{index=6}&#8203;:contentReference[oaicite:7]{index=7}
-                        favBtn.setText("♥");
-                    } else {
-                        facade.removeFavoriteSong(song);  // remove from facade’s favorites :contentReference[oaicite:8]{index=8}&#8203;:contentReference[oaicite:9]{index=9}
-                        favBtn.setText("♡");
-                    }
+                if (song == null) return;
+                if (now) {
+                    facade.addFavoriteSong(song);
+                    favBtn.setText("♥");
+                } else {
+                    facade.removeFavoriteSong(song);
+                    favBtn.setText("♡");
                 }
             });
 
-            // double‑click row still opens edit
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, evt -> {
-                if (evt.getClickCount() == 2 && !isEmpty()) {
-                    Song song = getItem();
-                    facade.setViewedSong(song);
+            // double‑click to edit
+            addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                if (e.getClickCount() == 2 && !isEmpty()) {
+                    Song s = getItem();
+                    facade.setViewedSong(s);
                     navigateTo(ViewConstants.CREATE_SONG_VIEW);
                 }
             });
@@ -90,13 +104,11 @@ public class DiscoverController extends BaseController {
                 titleLabel    .setText(song.getTitle());
                 composerLabel .setText("by " + song.getComposer());
                 publisherLabel.setText(
-                    song.getPublisher()!=null
-                      ? "(" + song.getPublisher().getUsername() + ")"
-                      : ""
+                    song.getPublisher()!=null ? "(" + song.getPublisher().getUsername() + ")" : ""
                 );
 
-                // initialize favorite state from current user’s favorites :contentReference[oaicite:10]{index=10}&#8203;:contentReference[oaicite:11]{index=11}
-                boolean isFav = facade.getUser() != null
+                // initialize favorite state
+                boolean isFav = facade.getUser()!=null
                              && facade.getUser().getFavoriteSongs().contains(song);
                 favBtn.setSelected(isFav);
                 favBtn.setText(isFav ? "♥" : "♡");

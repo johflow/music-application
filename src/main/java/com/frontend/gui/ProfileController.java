@@ -1,3 +1,4 @@
+// ProfileController.java
 package com.frontend.gui;
 
 import java.io.File;
@@ -8,10 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 
 public class ProfileController extends BaseController {
     private static final Logger logger = Logger.getLogger(ProfileController.class.getName());
-    
+    private static final double PROFILE_IMG_SIZE = 110;
+
     @FXML private Label usernameLabel;
     @FXML private Label bioLabel;
     @FXML private Label followersCount;
@@ -24,75 +27,66 @@ public class ProfileController extends BaseController {
     @FXML
     public void initialize() {
         super.initialize();
-        
-        // Check if user is logged in through the facade
+
+        profileImage.setFitWidth(PROFILE_IMG_SIZE);
+        profileImage.setFitHeight(PROFILE_IMG_SIZE);
+        profileImage.setPreserveRatio(false);
+
         if (facade.isLoggedIn()) {
-            // Set user info using facade methods
             usernameLabel.setText(facade.getLoggedInUsername());
-            
-            // Use facade to get bio or default
             String bio = facade.getUserBio();
-            bioLabel.setText(bio != null && !bio.isEmpty() ? bio : "I am music");
-            
-            // Follow stats
+            bioLabel.setText((bio != null && !bio.isEmpty()) ? bio : "I am music");
             followingCount.setText(String.valueOf(facade.getFollowedUsernames().size()));
-            followersCount.setText("0"); // Placeholder for future implementation
-            
-            // Load profile picture
+            followersCount.setText("0");
+
             loadProfilePicture(facade.getUserProfilePicturePath());
 
-            // Lists
-            friendsList.getItems().addAll(facade.getFollowedUsernames());
-            favoriteSongsList.getItems().addAll(facade.getFavoriteSongTitles());
-            libraryList.getItems().addAll(facade.getFavoriteSongTitles()); // Placeholder
+            friendsList.getItems().setAll(facade.getFollowedUsernames());
+            favoriteSongsList.getItems().setAll(facade.getFavoriteSongTitles());
+            // ← UPDATED LINE:
+            libraryList.getItems().setAll(facade.getCreatedSongTitles());
         } else {
             logger.warning("No user is logged in. Cannot load user data.");
         }
     }
-    
-    /**
-     * Loads the profile picture from the given path
-     */
+
     private void loadProfilePicture(String picturePath) {
-        // If path is empty or null, use default picture
-        if (picturePath == null || picturePath.isEmpty()) {
-            loadDefaultProfilePicture();
-            return;
-        }
-        
-        try {
-            // Try loading from absolute path
+        Image img = null;
+        // Try user’s image
+        if (picturePath != null && !picturePath.isEmpty()) {
             File file = new File(picturePath);
             if (file.exists()) {
-                profileImage.setImage(new Image(file.toURI().toString()));
-                return;
+                img = new Image(file.toURI().toString());
             }
-            
-            // If that fails, load the default picture
-            loadDefaultProfilePicture();
-        } catch (Exception e) {
-            logger.warning("Error loading profile picture: " + e.getMessage());
-            loadDefaultProfilePicture();
+        }
+        // Fallback to default if needed
+        if (img == null) {
+            img = loadDefaultImage();
+        }
+
+        if (img != null) {
+            profileImage.setImage(img);
+            applyCircularClip();
         }
     }
-    
-    /**
-     * Loads the default profile picture
-     */
-    private void loadDefaultProfilePicture() {
+
+    private Image loadDefaultImage() {
         try {
-            // Try the absolute path directly, which is most reliable
             String defaultPath = "src/main/resources" + ViewConstants.DEFAULT_PROFILE_IMAGE;
-            File defaultProfileFile = new File(defaultPath);
-            if (defaultProfileFile.exists()) {
-                profileImage.setImage(new Image(defaultProfileFile.toURI().toString()));
-                return;
+            File defaultFile = new File(defaultPath);
+            if (defaultFile.exists()) {
+                return new Image(defaultFile.toURI().toString());
             }
-            
-            // If all else fails, log that we couldn't load the default image
-            logger.warning("Could not load default profile picture");
         } catch (Exception e) {
             logger.warning("Error loading default profile picture: " + e.getMessage());
         }
+        return null;
+    }
+
+    // Applies a circular clip so the image appears in a circle
+    private void applyCircularClip() {
+        double radius = PROFILE_IMG_SIZE / 2;
+        Circle clip = new Circle(radius, radius, radius);
+        profileImage.setClip(clip);
     }
 }

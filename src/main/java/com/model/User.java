@@ -14,6 +14,7 @@ public class User {
     private String username;
     private String password;
     private ArrayList<Song> favoriteSongs;
+    private ArrayList<Song> createdSongs;
     private ArrayList<User> followedUsers;
     private ThemeColor themeColor;
     private String bio;
@@ -37,6 +38,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
+        this.createdSongs  = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
         this.themeColor = ThemeColor.getDefault();
         this.bio = "";
@@ -63,6 +65,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
+        this.createdSongs  = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
         this.themeColor = themeColor;
         this.bio = "";
@@ -80,6 +83,7 @@ public class User {
         this.password = password;
         this.themeColor = ThemeColor.getDefault();
         this.favoriteSongs = new ArrayList<>();
+        this.createdSongs  = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
         this.bio = "";
         this.profilePicturePath = "default_profile.png";
@@ -261,6 +265,35 @@ public class User {
      */
     public void removeFavoriteSong(Song song) {
         favoriteSongs.remove(song);
+    }
+
+    /**
+     * Gets the user's created songs
+     * 
+     * @return ArrayList of created songs
+     */
+    public ArrayList<Song> getCreatedSongs() {
+        return createdSongs;
+    }
+
+    /**
+     * Adds a song to the user's created songs
+     * 
+     * @param song The song to add
+     */
+    public void addCreatedSong(Song song) {
+        if (!createdSongs.contains(song)) {
+            createdSongs.add(song);
+        }
+    }
+
+    /**
+     * Removes a song from the user's created songs
+     * 
+     * @param song The song to remove
+     */
+    public void removeCreatedSong(Song song) {
+        createdSongs.remove(song);
     }
 
     /**

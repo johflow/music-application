@@ -63,7 +63,7 @@
             </VBox>
 
             <VBox spacing="10" alignment="TOP_LEFT">
-                <Label text="Library" styleClass="section-title" />
+                <Label text="My Creations" styleClass="section-title" />
                 <ListView fx:id="libraryList" prefHeight="150" />
             </VBox>
         </VBox>

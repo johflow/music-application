@@ -81,6 +81,7 @@ public class MusicAppFacade {
     public void createSong(String title, String composer) {
         Song song = new Song(title, composer, user);
         songList.addSong(song);
+        addCreatedSong(song);
     }
 
     /**
@@ -224,6 +225,24 @@ public class MusicAppFacade {
     }
 
     /**
+     * Adds a song to the user's list of created songs.
+     *
+     * @param song The song to be added to my creations.
+     */
+    public void addCreatedSong(Song song) {
+        user.addCreatedSong(song);
+    }
+
+    /**
+     * Removes a song from the user's list of favorite songs.
+     *
+     * @param song The song to be removed from my creations.
+     */
+    public void removeCreatedSong(Song song) {
+        user.removeCreatedSong(song);
+    }
+
+    /**
      * Follows another user.
      *
      * @param user The user to follow.
@@ -345,6 +364,20 @@ public class MusicAppFacade {
         List<String> titles = new ArrayList<>();
         if (user != null) {
             for (Song song : user.getFavoriteSongs()) {
+                titles.add(song.getTitle() + " - " + song.getComposer());
+            }
+        }
+        return titles;
+    }
+
+    /**
+     * Returns a list of the logged-in user’s created song titles
+     * (formatted as "Title – Composer").
+     */
+    public List<String> getCreatedSongTitles() {
+        List<String> titles = new ArrayList<>();
+        if (user != null) {
+            for (Song song : user.getCreatedSongs()) {
                 titles.add(song.getTitle() + " - " + song.getComposer());
             }
         }

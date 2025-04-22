@@ -83,3 +83,8 @@
 
 .button:hover {
 }
+
+/* Add a subtle shadow around the circular profile image */
+.profile-sidebar StackPane > ImageView {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 8, 0, 0, 2);
+  }
