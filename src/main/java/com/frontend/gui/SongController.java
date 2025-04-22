@@ -1,5 +1,6 @@
 package com.frontend.gui;
 
+import com.model.Chord;
 import com.model.DurationElement;
 import com.model.Measure;
 import com.model.MusicElement;
@@ -32,8 +33,8 @@ public class SongController {
     private Song              currentSong;
     private double width;
     private double height;
-    private int measureLength = 100;
-    private int measureHeight = 30;
+    private double measureLength;
+    private double measureHeight;
 
     @FXML
     public void initialize() {
@@ -74,40 +75,44 @@ public class SongController {
     }
 
     private void redraw() {
-        double w = canvas.getWidth(), h = canvas.getHeight();
-        System.out.println("Redrawing canvas. Width: " + w + ", Height: " + h); // <-- Add this
-        gc.clearRect(0,0,w,h);
+        width = canvas.getWidth();
+        height = canvas.getHeight();
+
+        System.out.println("Redrawing canvas. Width: " + width + ", Height: " + height); // <-- Add this
+        gc.clearRect(0,0,width,height);
 
         // draw grid or sheet music only for currentPage…
-        drawSong(currentSong, gc, w, h);
+        drawSong(currentSong, gc, width, height);
     }
 
     private void drawSong(Song song, GraphicsContext gc, double width, double height) {
-        int x = 30, y = 30;
+        double x = width/10, y = height/10;
+        measureLength = width/6;
+        measureHeight = height/12;
         for (Measure measure : currentSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures()) {
             drawMeasure(x, y, measure);
             x += measureLength + 1;
             if (x > width - measureLength) {
-                x = 30;
+                x = width/10;
                 y += 4 * measureHeight + 1;
             }
         }
     }
 
-    private void drawMeasure(int x, int y, Measure measure) {
+    private void drawMeasure(double x, double y, Measure measure) {
 
         int numOfLines = 5;
         gc.setStroke(Color.BLACK);
         gc.strokeLine(x, y, x, y + measureHeight);
         gc.strokeLine(x + measureLength, y, x + measureLength, y + measureHeight);
-        for (int i = 0; i < 5; ++i) {
-            gc.strokeLine(x, y + ((double) (measureHeight * i) / 4), x + measureLength, y + ((double) (measureHeight * i) / 4) );
+        for (int i = 0; i < numOfLines; ++i) {
+            gc.strokeLine(x, y + ((measureHeight * i) / 4), x + measureLength, y + ( (measureHeight * i) / 4) );
         }
-        double duration = (double) measure.getTimeSignatureNumerator() / measure.getTimeSignatureDenominator();
+        double duration = getTotalMeasureDuration(measure);
         drawMusicElements(x, y, measure.getMusicElements(), duration);
     }
 
-    private void drawMusicElements(int x, int y, List<MusicElement> musicElements, double duration) {
+    private void drawMusicElements(double x, double y, List<MusicElement> musicElements, double duration) {
         for (MusicElement element : musicElements) {
             drawMusicElement(x, y, element);
             x += (int) (((DurationElement) element).getDuration() * measureLength);
@@ -115,25 +120,35 @@ public class SongController {
         }
     }
 
-    private void drawMusicElement(int x, int y, MusicElement musicElement) {
-        drawNote(x, y, (Note) musicElement);
+    private void drawMusicElement(double x, double y, MusicElement musicElement) {
+        switch (musicElement.getType()) {
+            case "note" -> drawNote(x, y, (Note) musicElement);
+            case "chord" -> drawChord(x, y, (Chord) musicElement);
+        }
+
     }
 
-    private void drawNote(int x, int y, Note note) {
-        y += getDurationElementYPos(note, 4);
+    private void drawChord(double x, double y, Chord musicElement) {
+        for (Note note : musicElement.getNotes()) {
+            drawNote(x, y, note);
+        }
+    }
+
+    private void drawNote(double x, double y, Note note) {
+        y += getDurationElementYPos(note, measureHeight/8);
         drawNoteHead(x, y, note);
         drawNoteStem(x, y, note);
     }
 
-    private void drawNoteHead(int x, int y, Note note) {
+    private void drawNoteHead(double x, double y, Note note) {
         if (note.getDuration() < 0.5) {
-            gc.fillOval(x, y, 9, 9);
+            gc.fillOval(x, y - measureHeight/8, 3*measureHeight/8, measureHeight/4);
             return;
         }
         gc.strokeOval(x, y, 9, 9);
     }
 
-    private void drawNoteStem(int x, int y, Note note) {
+    private void drawNoteStem(double x, double y, Note note) {
         if (note.getDuration() == 1.0) {
             return;
         }
@@ -148,11 +163,11 @@ public class SongController {
         return (double) measure.getTimeSignatureDenominator() / measure.getTimeSignatureNumerator();
     }
 
-    private int getDurationElementYPos(DurationElement element, int lineOffset) {
+    private double getDurationElementYPos(DurationElement element, double lineOffset) {
         if (element.getType().equals("rest")) return 0; //TODO offset to B4
         int noteNumber = noteNameToInt.get(((Note) element).getNoteName().charAt(0));
         int octaveNumber = ((Note) element).getNoteName().charAt((((Note) element).getNoteName()).length() - 1) - '0';
-        return ((-1 * noteNumber * lineOffset) + (-1 * (octaveNumber - 4) * (lineOffset * 7))) + 11 * lineOffset; //If errors in octaves check this latter
+        return ((-1 * noteNumber * lineOffset) + (-1 * (octaveNumber - 4) * (lineOffset * 7))) + 10 * lineOffset; //If errors in octaves check this latter
     }
 
     Map<Character, Integer> noteNameToInt = Map.of(
