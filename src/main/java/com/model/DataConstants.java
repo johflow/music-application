@@ -13,6 +13,8 @@ public abstract class DataConstants {
   public static final String USER_FAVORITED_SONGS = "favoritedSongs";
   public static final String USER_FOLLOWED_USERS = "followedUsers";
   public static final String USER_THEME_COLOR = "themeColor";
+  public static final String USER_BIO = "bio";
+  public static final String USER_PROFILE_PICTURE = "profilePicture";
 
   public static final String SONG_FILE_LOCATION = "src/main/java/com/data/songs.json";
   public static final String SONG_OBJECT_KEY = "songs";

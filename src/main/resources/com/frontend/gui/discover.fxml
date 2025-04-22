@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Region?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.frontend.gui.DiscoverController"
-      alignment="CENTER"
-      spacing="10"
-      stylesheets="@discover.css">
-    
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    
-    <Label text="Discover" styleClass="title"/>
-    <Label fx:id="discoverLabel" text="Discover Page"/>
-    
-    <!-- Content will be added later -->
-    
-</VBox> 
+<BorderPane
+    xmlns="http://javafx.com/javafx/8"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.frontend.gui.DiscoverController"
+    stylesheets="@discover.css">
+
+    <!-- Top: search bar + title -->
+    <top>
+      <VBox spacing="10" styleClass="content-area">
+        <!-- Search field -->
+        <TextField fx:id="searchField"
+                   promptText="Search songs..."
+                   prefWidth="600"/>
+
+        <!-- Title row -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+          <Label text="Discover" styleClass="title"/>
+          <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+      </VBox>
+    </top>
+
+    <!-- Main list of songs -->
+    <center>
+      <ListView fx:id="songListView"
+                prefWidth="600"
+                prefHeight="400"
+                styleClass="content-area"/>
+    </center>
+</BorderPane>

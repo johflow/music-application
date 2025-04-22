@@ -1,41 +1,105 @@
-/* Basic styles for the settings view 
-   Add your custom styles as needed */
-
+/* Minimal styles for the settings view */
 .root {
-    /* Base application styling */
+    /* Base styling will be applied programmatically */
 }
 
+/* Basic structure styles */
+.sidebar {
+    -fx-border-width: 0 1 0 0;
+    /* Color will be defined in theme css */
+}
+
+.footer {
+    -fx-border-width: 1 0 0 0;
+}
+
+/* General styles */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* BorderPane - allow theme styling to override */
+BorderPane, .border-pane {
+    /* No background color defined to allow theme to control */
+}
+
+/* Title styles */
 .title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 15 0;
+}
+
+.pageTitle {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
-/* Add more styles as needed */
-
-/* Base styles */
-.root {
-    -fx-font-family: 'Arial', sans-serif;
-    -fx-background-color: #f5f5f5;
+.settingLabel {
+    -fx-font-size: 14px;
 }
 
-/* Title */
-.title {
-    -fx-font-size: 24px;
+/* Form styles */
+.formLabel {
+    -fx-font-size: 14px;
+    -fx-padding: 0 10 0 0;
+}
+
+TextField, PasswordField, TextArea, ComboBox {
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+}
+
+TextField:focused, PasswordField:focused, TextArea:focused, ComboBox:focused {
+    /* Border color will be defined in theme css */
+}
+
+TextArea {
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-cursor: text;
+    -fx-opacity: 1.0;
+}
+
+/* Button styles */
+Button {
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+
+.dangerButton {
+    /* Colors will be defined in theme css */
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;
-    -fx-padding: 10;
+    -fx-border-color: transparent;
+}
+
+.dangerButton:hover {
+    /* Colors will be defined in theme css */
+}
+
+/* Status label */
+.statusLabel {
+    /* Text fill will be defined in theme css */
+    -fx-font-size: 14px;
+}
+
+/* Profile image view */
+ImageView {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
 }
 
 /* Labels */
 .label {
     -fx-font-size: 14px;
-    -fx-text-fill: #333333;
 }
 
 /* ComboBox */
 .combo-box {
-    -fx-background-color: white;
-    -fx-border-color: #cccccc;
     -fx-border-radius: 3;
     -fx-min-width: 200px;
 }
@@ -50,19 +114,16 @@
 }
 
 .check-box .box {
-    -fx-background-color: white;
-    -fx-border-color: #cccccc;
     -fx-border-radius: 3;
 }
 
 .check-box:selected .mark {
-    -fx-background-color: #4CAF50;
+    /* Colors will be defined in theme css */
 }
 
 /* Button */
 .save-button {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
+    /* Colors will be defined in theme css */
     -fx-font-weight: bold;
     -fx-padding: 10 20 10 20;
     -fx-border-radius: 5;
@@ -73,11 +134,11 @@
 }
 
 .save-button:hover {
-    -fx-background-color: #45a049;
+    /* Colors will be defined in theme css */
 }
 
 .save-button:pressed {
-    -fx-background-color: #3d8b40;
+    /* Colors will be defined in theme css */
 }
 
 /* GridPane */
@@ -86,22 +147,19 @@
     -fx-vgap: 10;
     -fx-padding: 20;
     -fx-alignment: center;
-    -fx-background-color: white;
     -fx-background-radius: 5;
-    -fx-border-color: #eeeeee;
     -fx-border-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
 }
 
 .logout-button {
-    -fx-background-color: #f44336;
-    -fx-text-fill: white;
+    /* Colors will be defined in theme css */
     -fx-padding: 5px 15px;
     -fx-background-radius: 5px;
 }
 
 .logout-button:hover {
-    -fx-background-color: #d32f2f;
+    /* Colors will be defined in theme css */
 }
 
 .content-area {
@@ -112,7 +170,6 @@
 .settings-form {
     -fx-spacing: 15px;
     -fx-padding: 20px;
-    -fx-background-color: #f5f5f5;
     -fx-background-radius: 5px;
 }
 
@@ -125,10 +182,29 @@
     -fx-pref-width: 300px;
     -fx-padding: 8px;
     -fx-background-radius: 4px;
-    -fx-border-color: #ccc;
     -fx-border-radius: 4px;
 }
 
 .setting-control:focused {
-    -fx-border-color: #2196F3;
+    /* Colors will be defined in theme css */
+}
+
+/* Sign Out button specific styles */
+#signOutButton {
+    /* Colors will be defined in theme css */
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+}
+
+#signOutButton:hover {
+    /* Colors will be defined in theme css */
+}
+
+/* Make sure we don't override theme styles */
+.footer .dangerButton,
+.footer #signOutButton {
+    /* Colors will be defined in theme css */
+    -fx-font-weight: bold;
 } 

@@ -1,29 +1,131 @@
+/* 
+ * Base CSS - Core layout and typography
+ * This file contains styles that are shared across all themes
+ * Color-specific styles are defined in theme CSS files
+ */
+
+.root {
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Typography */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0 15px 0;
+}
+
+.subtitle {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 0 10px 0;
+}
+
+.text {
+    -fx-font-size: 16px;
+}
+
+.small-text {
+    -fx-font-size: 12px;
+}
+
+/* Common Elements */
+.card {
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+}
+
+.separator {
+    -fx-opacity: 0.8;
+}
+
+/* Layout */
+.container {
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+}
+
+.h-box {
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+.v-box {
+    -fx-spacing: 10px;
+    -fx-alignment: top-center;
+}
+
+/* Utility Classes */
+.margin-top {
+    -fx-margin-top: 10px;
+}
+
+.margin-bottom {
+    -fx-margin-bottom: 10px;
+}
+
+.padding {
+    -fx-padding: 10px;
+}
+
+.center-content {
+    -fx-alignment: center;
+}
+
+.right-align {
+    -fx-alignment: center-right;
+}
+
+.left-align {
+    -fx-alignment: center-left;
+}
+
+.full-width {
+    -fx-max-width: infinity;
+}
+
+/* Media Queries */
+@media (max-width: 800px) {
+    .container {
+        -fx-padding: 10px;
+    }
+}
+
+/* Navigation Components */
 .nav-button {
-    -fx-background-color: #2196F3;
-    -fx-text-fill: white;
-    -fx-padding: 8px 16px;
+    -fx-padding: 10px 15px;
     -fx-background-radius: 4px;
     -fx-min-width: 100px;
-}
-
-.nav-button:hover {
-    -fx-background-color: #0b7dda;
-}
-
-.nav-button.active {
-    -fx-background-color: #1976D2;
     -fx-font-weight: bold;
 }
 
-.logout-button {
-    -fx-background-color: #f44336;
-    -fx-text-fill: white;
-    -fx-padding: 5px 15px;
-    -fx-background-radius: 5px;
+/* Direct navbar button selectors for more specificity */
+.nav-bar > .button, 
+.nav-bar .nav-button, 
+HBox.nav-bar > .button, 
+HBox.nav-bar > .nav-button,
+.nav-bar > #discoverBtn, 
+.nav-bar > #profileBtn, 
+.nav-bar > #createBtn, 
+.nav-bar > #settingsBtn {
+    -fx-background-radius: 4px;
+    -fx-min-width: 100px;
+    -fx-padding: 10px 15px;
+    -fx-font-weight: bold;
 }
 
-.logout-button:hover {
-    -fx-background-color: #d32f2f;
+.nav-button:hover {
+    -fx-opacity: 0.9;
+}
+
+.nav-button:pressed {
+    -fx-font-weight: bold;
+}
+
+.nav-bar {
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-border-width: 0 0 1px 0;
 }
 
 .content-area {

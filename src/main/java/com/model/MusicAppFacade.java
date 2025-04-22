@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.service.SongPlayer;
 import java.util.List;
 
+import com.service.SongPlayer;
+
 public class MusicAppFacade {
     private User user;
     private static MusicAppFacade instance;
@@ -57,6 +59,13 @@ public class MusicAppFacade {
     }
 
     /**
+     * Gets the stored list of songs
+     */
+    public SongList getSongList() {
+        return songList;
+    }
+
+    /**
      * Sets the currently viewed song to a song input
      *
      * @param song the song being set as currently viewed
@@ -74,6 +83,7 @@ public class MusicAppFacade {
     public void createSong(String title, String composer) {
         Song song = new Song(title, composer, user);
         songList.addSong(song);
+        addCreatedSong(song);
     }
 
     /**
@@ -140,10 +150,10 @@ public class MusicAppFacade {
      * @param userName The username of the new user.
      * @param password The password for the new user.
      * @param email    The email of the new user.
+     * @throws IllegalArgumentException if validation fails (email, password) or username is taken
      */
-    public void register(String userName, String password, String email) {
-        userList.addUser(new User(email, userName, password));
-        save(); // Save after adding new user
+    public void register(String userName, String password, String email) throws IllegalArgumentException {
+        userList.register(email, userName, password);
     }
 
     /**
@@ -151,15 +161,17 @@ public class MusicAppFacade {
      *
      * @param userName The username of the user.
      * @param password The password of the user.
-     * @return true if login was successful, false otherwise
+     * @return AuthResult indicating success or specific failure reason
+     * @throws IllegalArgumentException if the username is null/empty or password is null
      */
-    public boolean login(String userName, String password) {
-        User user = userList.getUser(userName, password);
-        if (user != null) {
-            this.user = user;
-            return true;
+    public AuthResult login(String userName, String password) throws IllegalArgumentException {
+        AuthResult result = userList.login(userName, password);
+
+        if (result == AuthResult.SUCCESS) {
+            this.user = userList.getUser(userName);
         }
-        return false;
+
+        return result;
     }
 
     /**
@@ -215,6 +227,24 @@ public class MusicAppFacade {
     }
 
     /**
+     * Adds a song to the user's list of created songs.
+     *
+     * @param song The song to be added to my creations.
+     */
+    public void addCreatedSong(Song song) {
+        user.addCreatedSong(song);
+    }
+
+    /**
+     * Removes a song from the user's list of favorite songs.
+     *
+     * @param song The song to be removed from my creations.
+     */
+    public void removeCreatedSong(Song song) {
+        user.removeCreatedSong(song);
+    }
+
+    /**
      * Follows another user.
      *
      * @param user The user to follow.
@@ -251,5 +281,225 @@ public class MusicAppFacade {
 
     public Song getViewedSong() {
         return viewedSong;
+    }
+
+    /**
+     * Validates if an email is in the correct format.
+     *
+     * @param email The email to validate
+     * @throws IllegalArgumentException if the email doesn't meet format requirements
+     */
+    public void validateEmail(String email) throws IllegalArgumentException {
+        User.isEmailValid(email);
+    }
+
+    /**
+     * Validates if a password meets security requirements.
+     *
+     * @param password The password to validate
+     * @throws IllegalArgumentException if the password doesn't meet security requirements
+     */
+    public void validatePassword(String password) throws IllegalArgumentException {
+        User.isPasswordValid(password);
+    }
+
+    /**
+     * Gets a list of validation errors for a password.
+     *
+     * @param password The password to validate
+     * @return List of validation error messages, empty if password is valid
+     */
+    public List<String> getPasswordValidationErrors(String password) {
+        return User.getPasswordValidationErrors(password);
+    }
+
+    /**
+     * Returns the username of the logged-in user.
+     *
+     * @return the username, or empty string if no user
+     */
+    public String getLoggedInUsername() {
+        return user != null ? user.getUsername() : "";
+    }
+
+    /**
+     * Returns the email of the logged-in user.
+     *
+     * @return the email, or empty string if no user
+     */
+    public String getLoggedInEmail() {
+        return user != null ? user.getEmail() : "";
+    }
+
+    /**
+     * Returns the theme color of the logged-in user as a string.
+     *
+     * @return the theme color, or "DEFAULT" if none
+     */
+    public String getThemeColor() {
+        return user != null && user.getThemeColor() != null
+            ? user.getThemeColor().toString()
+            : "DEFAULT";
+    }
+
+    /**
+     * Checks if a user is currently logged in
+     *
+     * @return true if a user is logged in, false otherwise
+     */
+    public boolean isLoggedIn() {
+        return user != null;
+    }
+
+    /**
+     * Gets the bio of the currently logged-in user
+     *
+     * @return the bio, or empty string if no user or no bio
+     */
+    public String getUserBio() {
+        return user != null ? user.getBio() : "";
+    }
+
+    /**
+     * Gets the profile picture path of the currently logged-in user
+     *
+     * @return the profile picture path, or empty string if no user
+     */
+    public String getUserProfilePicturePath() {
+        return user != null ? user.getProfilePicturePath() : "";
+    }
+
+    /**
+     * Returns a list of favorite song titles and composers for display.
+     *
+     * @return list of formatted song titles
+     */
+    public List<String> getFavoriteSongTitles() {
+        List<String> titles = new ArrayList<>();
+        if (user != null) {
+            for (Song song : user.getFavoriteSongs()) {
+                titles.add(song.getTitle() + " - " + song.getComposer());
+            }
+        }
+        return titles;
+    }
+
+    /**
+     * Returns a list of the logged-in user’s created song titles
+     * (formatted as "Title – Composer").
+     */
+    public List<String> getCreatedSongTitles() {
+        List<String> titles = new ArrayList<>();
+        if (user != null) {
+            for (Song song : user.getCreatedSongs()) {
+                titles.add(song.getTitle() + " - " + song.getComposer());
+            }
+        }
+        return titles;
+    }
+
+    /**
+     * Returns a list of usernames the user is following.
+     *
+     * @return list of followed usernames
+     */
+    public List<String> getFollowedUsernames() {
+        List<String> usernames = new ArrayList<>();
+        if (user != null) {
+            for (User followed : user.getFollowedUsers()) {
+                usernames.add(followed.getUsername());
+            }
+        }
+        return usernames;
+    }
+
+    /**
+     * Updates the current user's username.
+     *
+     * @param newUsername The new username
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateUsername(String newUsername) {
+        User.validateNotNull(user);
+        user.setUsername(newUsername);
+        return true;
+    }
+
+    /**
+     * Updates the current user's password.
+     *
+     * @param newPassword The new password
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updatePassword(String newPassword) {
+        User.validateNotNull(user);
+        user.setPassword(newPassword);
+        return true;
+    }
+
+    /**
+     * Updates the current user's email.
+     *
+     * @param newEmail The new email
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateEmail(String newEmail) {
+        User.validateNotNull(user);
+        user.setEmail(newEmail);
+        return true;
+    }
+
+    /**
+     * Updates the current user's theme color.
+     *
+     * @param themeColor The new theme color
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateThemeColor(ThemeColor themeColor) {
+        User.validateNotNull(user);
+        user.setThemeColor(themeColor);
+        return true;
+    }
+
+    /**
+     * Updates the current user's bio.
+     *
+     * @param bio The new bio
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateBio(String bio) {
+        User.validateNotNull(user);
+        user.setBio(bio);
+        return true;
+    }
+
+    /**
+     * Updates the current user's profile picture.
+     *
+     * @param profilePicturePath The path to the new profile picture
+     * @return true if the update was successful, false otherwise
+     */
+    public boolean updateProfilePicture(String profilePicturePath) {
+        User.validateNotNull(user);
+        user.setProfilePicturePath(profilePicturePath);
+        return true;
+    }
+
+    /**
+     * Saves all user settings changes.
+     *
+     * @return true if the save was successful, false otherwise
+     */
+    public boolean saveUserSettings() {
+        return userList.save();
+    }
+
+    /**
+     * Gets the default theme color for the application
+     *
+     * @return The default ThemeColor
+     */
+    public ThemeColor getDefaultTheme() {
+        return ThemeColor.getDefault();
     }
 }

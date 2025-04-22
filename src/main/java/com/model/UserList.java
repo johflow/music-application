@@ -79,21 +79,44 @@ public class UserList {
      * @param username The username to search for
      * @param password The password to verify
      * @return The authenticated user, or null if authentication fails
+     * @throws IllegalArgumentException if username is null/empty or password is null
+     * @throws AuthException with specific error message based on auth failure reason
      */
-    public User getUser(String username, String password) {
+    public User getUser(String username, String password) throws IllegalArgumentException, AuthException {
+        // Username error handling
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+        
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+        
+        // Gets user
         LOGGER.log(Level.INFO, "Attempting login for username: " + username);
         User user = getUser(username);
-        if (user != null) {
-            LOGGER.log(Level.INFO, "User found, checking password");
-            if (user.getPassword().equals(password)) {
-                LOGGER.log(Level.INFO, "Password match successful");
-                return user;
-            } else {
-                LOGGER.log(Level.INFO, "Password mismatch");
-            }
+        
+        // User not found
+        if (user == null) {
+            LOGGER.log(Level.INFO, "No user found with username: " + username);
+            throw new AuthException("No user found with username: " + username);
         }
-        LOGGER.log(Level.INFO, "Login failed for username: " + username);
-        return null;
+        
+        // Main authentication method
+        LOGGER.log(Level.INFO, "User found, authenticating");
+        AuthResult result = user.authenticate(username, password);
+        
+        switch (result) {
+            case SUCCESS:
+                LOGGER.log(Level.INFO, "Authentication successful");
+                return user;
+            case INVALID_PASSWORD:
+                LOGGER.log(Level.INFO, "Password mismatch");
+                throw new AuthException("Invalid password");
+            default:
+                LOGGER.log(Level.WARNING, "Unexpected authentication result: " + result);
+                throw new AuthException("Authentication failed: " + result);
+        }
     }
 
     /**
@@ -158,6 +181,52 @@ public class UserList {
     }
 
     /**
+     * Registers a new user with the provided credentials
+     *
+     * @param email User's email
+     * @param username User's username
+     * @param password User's password
+     * @return The newly created user
+     * @throws IllegalArgumentException if validation fails (email, password) or username is taken
+     */
+    public User register(String email, String username, String password) throws IllegalArgumentException {
+        // Check if username is already taken before creating User
+        if (isUsernameTaken(username)) {
+            throw new IllegalArgumentException("Username already taken");
+        }
+        
+        User newUser = new User(email, username, password);
+        addUser(newUser);
+        save();
+        return newUser;
+    }
+
+    /**
+     * Handles the login process and returns appropriate AuthResult
+     *
+     * @param username User's username
+     * @param password User's password
+     * @return AuthResult indicating success or the specific failure reason
+     * @throws IllegalArgumentException if username is null/empty or password is null
+     */
+    public AuthResult login(String username, String password) throws IllegalArgumentException {
+        try {
+            // This will throw AuthException if there's an issue
+            getUser(username, password);
+            return AuthResult.SUCCESS;
+        } catch (AuthException e) {
+            // Check the specific error message to determine the type of failure
+            if (e.getMessage().contains("No user found")) {
+                return AuthResult.INVALID_USERNAME;
+            } else if (e.getMessage().contains("Invalid password")) {
+                return AuthResult.INVALID_PASSWORD;
+            } else {
+                return AuthResult.INVALID_CREDENTIALS;
+            }
+        }
+    }
+
+    /**
      * Saves the user list
      * 
      * @return True if the save was successful, false otherwise
@@ -208,6 +277,15 @@ public class UserList {
      */
     public String toString() {
         return users.toString();
+    }
+
+    /**
+     * Custom exception for authentication failures with more detailed messages
+     */
+    public static class AuthException extends RuntimeException {
+        public AuthException(String message) {
+            super(message);
+        }
     }
 }
 

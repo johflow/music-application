@@ -141,6 +141,8 @@ public class DataWriter extends DataConstants {
         userDetails.put(USER_FAVORITED_SONGS, favoriteSongs);
         userDetails.put(USER_FOLLOWED_USERS, followedUsers);
         userDetails.put(USER_THEME_COLOR, user.getThemeColor().name());
+        userDetails.put(USER_BIO, user.getBio());
+        userDetails.put(USER_PROFILE_PICTURE, user.getProfilePicturePath());
 
         return userDetails;
     }

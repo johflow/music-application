@@ -1,7 +1,9 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * Represents a user in the music application
@@ -12,8 +14,11 @@ public class User {
     private String username;
     private String password;
     private ArrayList<Song> favoriteSongs;
+    private ArrayList<Song> createdSongs;
     private ArrayList<User> followedUsers;
     private ThemeColor themeColor;
+    private String bio;
+    private String profilePicturePath;
 
     /**
      * Constructor for a new User
@@ -21,15 +26,23 @@ public class User {
      * @param email User's email
      * @param username User's username
      * @param password User's password
+     * @throws IllegalArgumentException if email or password don't meet requirements
      */
-    public User(String email, String username, String password) {
+    public User(String email, String username, String password) throws IllegalArgumentException {
         this.id = UUID.randomUUID();
+        
+        isEmailValid(email);
+        isPasswordValid(password);
+        
         this.email = email;
         this.username = username;
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
+        this.createdSongs  = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
         this.themeColor = ThemeColor.getDefault();
+        this.bio = "";
+        this.profilePicturePath = "default_profile.png";
     }
 
     /**
@@ -40,25 +53,120 @@ public class User {
      * @param username User's username
      * @param password User's password
      * @param themeColor User's theme color
+     * @throws IllegalArgumentException if email or password don't meet requirements
      */
-    public User(UUID id, String email, String username, String password, ThemeColor themeColor) {
+    public User(UUID id, String email, String username, String password, ThemeColor themeColor) throws IllegalArgumentException {
         this.id = id;
+        
+        isEmailValid(email);
+        isPasswordValid(password);
+        
         this.email = email;
         this.username = username;
         this.password = password;
         this.favoriteSongs = new ArrayList<>();
+        this.createdSongs  = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
         this.themeColor = themeColor;
+        this.bio = "";
+        this.profilePicturePath = "default_profile.png";
     }
 
-    public User(UUID id, String email, String username, String password) {
+    public User(UUID id, String email, String username, String password) throws IllegalArgumentException {
         this.id = id;
+        
+        isEmailValid(email);
+        isPasswordValid(password);
+        
         this.email = email;
         this.username = username;
         this.password = password;
         this.themeColor = ThemeColor.getDefault();
         this.favoriteSongs = new ArrayList<>();
+        this.createdSongs  = new ArrayList<>();
         this.followedUsers = new ArrayList<>();
+        this.bio = "";
+        this.profilePicturePath = "default_profile.png";
+    }
+
+    /**
+     * Helper to confirm correct email input.
+     * 
+     * @param email input email
+     * @return True for valid, false for invalid
+     * @throws IllegalArgumentException if email doesn't meet format requirements
+     */
+    public static boolean isEmailValid(String email) {
+        if (email == null) {
+            throw new IllegalArgumentException("Email cannot be null");
+        }
+        
+        // Regular expression to match valid email formats
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    
+        // Compile the regex
+        Pattern p = Pattern.compile(emailRegex);
+      
+        // Check if email matches the pattern
+        if (!p.matcher(email).matches()) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+        
+        return true;
+    }
+
+    /**
+     * Helper to confirm password meets regex requirements.
+     * 
+     * @param password input password
+     * @return List of validation errors, empty if password is valid
+     */
+    public static List<String> getPasswordValidationErrors(String password) {
+        List<String> errors = new ArrayList<>();
+        
+        if (password == null || password.length() < 8) {
+            errors.add("Password must be at least 8 characters long");
+        }
+        
+        // Check for at least one digit
+        if (password == null || !Pattern.compile(".*\\d.*").matcher(password).matches()) {
+            errors.add("Password must contain at least one digit");
+        }
+        
+        // Check for at least one uppercase letter
+        if (password == null || !Pattern.compile(".*[A-Z].*").matcher(password).matches()) {
+            errors.add("Password must contain at least one uppercase letter");
+        }
+        
+        // Check for at least one lowercase letter
+        if (password == null || !Pattern.compile(".*[a-z].*").matcher(password).matches()) {
+            errors.add("Password must contain at least one lowercase letter");
+        }
+        
+        // Check for at least one special character
+        if (password == null || !Pattern.compile(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*").matcher(password).matches()) {
+            errors.add("Password must contain at least one special character");
+        }
+        
+        return errors;
+    }
+
+    /**
+     * Helper to confirm password meets security requirements.
+     * 
+     * @param password input password
+     * @return True for valid, false for invalid
+     * @throws IllegalArgumentException if password doesn't meet requirements, with detailed error message
+     */
+    public static boolean isPasswordValid(String password) throws IllegalArgumentException {
+        List<String> errors = getPasswordValidationErrors(password);
+        
+        if (!errors.isEmpty()) {
+            throw new IllegalArgumentException(String.join(". ", errors));
+        }
+        
+        return true;
     }
 
   /**
@@ -85,6 +193,7 @@ public class User {
      * @param email The new email
      */
     public void setEmail(String email) {
+        isEmailValid(email);
         this.email = email;
     }
 
@@ -101,8 +210,12 @@ public class User {
      * Sets the user's username
      * 
      * @param username The new username
+     * @throws IllegalArgumentException if username is null or empty
      */
     public void setUsername(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
         this.username = username;
     }
 
@@ -121,6 +234,7 @@ public class User {
      * @param password The new password
      */
     public void setPassword(String password) {
+        isPasswordValid(password);
         this.password = password;
     }
 
@@ -151,6 +265,35 @@ public class User {
      */
     public void removeFavoriteSong(Song song) {
         favoriteSongs.remove(song);
+    }
+
+    /**
+     * Gets the user's created songs
+     * 
+     * @return ArrayList of created songs
+     */
+    public ArrayList<Song> getCreatedSongs() {
+        return createdSongs;
+    }
+
+    /**
+     * Adds a song to the user's created songs
+     * 
+     * @param song The song to add
+     */
+    public void addCreatedSong(Song song) {
+        if (!createdSongs.contains(song)) {
+            createdSongs.add(song);
+        }
+    }
+
+    /**
+     * Removes a song from the user's created songs
+     * 
+     * @param song The song to remove
+     */
+    public void removeCreatedSong(Song song) {
+        createdSongs.remove(song);
     }
 
     /**
@@ -197,7 +340,74 @@ public class User {
      * @param themeColor The new theme color
      */
     public void setThemeColor(ThemeColor themeColor) {
-        this.themeColor = themeColor;
+        this.themeColor = themeColor != null ? themeColor : ThemeColor.getDefault();
+    }
+
+    /**
+     * Gets the user's bio
+     *
+     * @return The user's bio
+     */
+    public String getBio() {
+        return bio;
+    }
+
+    /**
+     * Sets the user's bio
+     *
+     * @param bio The new bio
+     */
+    public void setBio(String bio) {
+        this.bio = (bio != null) ? bio : "";
+    }
+
+    /**
+     * Gets the user's profile picture path
+     *
+     * @return The path to the user's profile picture
+     */
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    /**
+     * Sets the user's profile picture path
+     *
+     * @param profilePicturePath The new profile picture path
+     */
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = (profilePicturePath != null && !profilePicturePath.trim().isEmpty()) ? profilePicturePath : "default_profile.png";
+    }
+
+    /**
+     * Authenticates a user with the provided credentials
+     * 
+     * @param username The username to check
+     * @param password The password to check
+     * @return AuthResult indicating the result (SUCCESS, INVALID_USERNAME, INVALID_PASSWORD)
+     * @throws IllegalArgumentException if inputs are null
+     */
+    public AuthResult authenticate(String username, String password) throws IllegalArgumentException {
+        // Validate inputs
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+        
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+        
+        // Check if username matches
+        if (!this.username.equals(username)) {
+            return AuthResult.INVALID_USERNAME;
+        }
+        
+        // Check if password matches
+        if (!this.password.equals(password)) {
+            return AuthResult.INVALID_PASSWORD;
+        }
+        
+        return AuthResult.SUCCESS;
     }
 
     /**
@@ -206,10 +416,47 @@ public class User {
      * @param email The email to check
      * @param username The username to check
      * @param password The password to check
-     * @return True if credentials match, false otherwise
+     * @return AuthResult indicating the result (SUCCESS, INVALID_CREDENTIALS, INVALID_PASSWORD)
+     * @throws IllegalArgumentException if inputs are null
      */
-    public boolean authenticate(String email, String username, String password) {
-        return (this.email.equals(email) || this.username.equals(username)) && this.password.equals(password);
+    public AuthResult authenticate(String email, String username, String password) throws IllegalArgumentException {
+        // Validate inputs
+        if ((email == null || email.isEmpty()) && (username == null || username.isEmpty())) {
+            throw new IllegalArgumentException("Either email or username must be provided");
+        }
+        
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+        
+        // Check if username or email matches
+        boolean usernameOrEmailMatches = (email != null && this.email != null && this.email.equals(email)) || 
+                                        (username != null && this.username.equals(username));
+                                        
+        if (!usernameOrEmailMatches) {
+            return AuthResult.INVALID_CREDENTIALS;
+        }
+        
+        // Check if password matches
+        if (!this.password.equals(password)) {
+            return AuthResult.INVALID_PASSWORD;
+        }
+        
+        return AuthResult.SUCCESS;
+    }
+
+    /**
+     * Helper method to check if a user is null
+     * 
+     * @param user The user to check
+     * @return The user if not null
+     * @throws IllegalArgumentException if the user is null
+     */
+    public static User validateNotNull(User user) throws IllegalArgumentException {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        return user;
     }
 
     /**
@@ -243,6 +490,12 @@ public class User {
      */
     @Override
     public String toString() {
-        return this.username;
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", themeColor=" + themeColor +
+                ", bio='" + bio + '\'' +
+                '}';
     }
 }

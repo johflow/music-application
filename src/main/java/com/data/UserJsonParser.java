@@ -1,21 +1,20 @@
 package com.data;
 
-import com.model.DataConstants;
-import com.model.ParsedUser;
-import com.model.ThemeColor;
-import com.model.User;
-import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import java.util.ArrayList;
-import java.util.UUID;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.model.DataConstants;
+import com.model.ParsedUser;
+import com.model.ThemeColor;
+import com.model.User;
 
 /**
  * Parser for converting JSON content into ParsedUser objects.
@@ -122,7 +121,12 @@ public class UserJsonParser extends DataConstants {
       String password = getValue(userJson, USER_PASSWORD, String.class);
       
       logger.info("Creating user with username: " + username);
-      return new User(id, email, username, password);
+      User user = new User(id, email, username, password);
+      user.setThemeColor(ThemeColor.valueOf(getValue(userJson, USER_THEME_COLOR, String.class)));
+      user.setBio(getValue(userJson, USER_BIO, String.class));
+      user.setProfilePicturePath(getValue(userJson, USER_PROFILE_PICTURE, String.class));
+
+      return user;
     } catch (IllegalArgumentException e) {
       logger.log(Level.SEVERE, "Error creating user from JSON: " + e.getMessage(), e);
       return null;
