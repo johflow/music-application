@@ -38,9 +38,10 @@ public class Chord implements MusicElement {
      * @param lyric Lyric annotation for the chord (can be empty or null)
      * @param notes List of notes to include in the chord (can be empty or null)
      */
-    public Chord(String lyric, List<Note> notes) {
+    public Chord(String lyric, List<Note> notes, double tempo) {
         this.lyric = (lyric != null) ? lyric : "";
         this.notes = (notes != null) ? notes : new ArrayList<>();
+        this.tempo = tempo;
     }
 
     //Core Methods

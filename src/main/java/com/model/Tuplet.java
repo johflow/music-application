@@ -23,11 +23,12 @@ public class Tuplet implements MusicElement {
      * @param duration the duration of the tuplet
      * @param elements the list of music elements contained in the tuplet
      */
-    public Tuplet(int subdivisions, int impliedDivision, double duration, List<MusicElement> elements) {
+    public Tuplet(int subdivisions, int impliedDivision, double duration, List<MusicElement> elements, double tempo) {
         this.subdivisions = subdivisions;
         this.impliedDivision = impliedDivision;
         this.duration = duration;
         this.elements = elements;
+        this.tempo = tempo;
     }
 
     /**
@@ -45,7 +46,7 @@ public class Tuplet implements MusicElement {
      * @param lyric the lyric associated with the note
      */
     public void addNote(int pitch, double duration, String lyric) {
-        Note note = new Note(pitch, 0, "", duration, ' ', 0, false, lyric);
+        Note note = new Note(pitch, 0, "", duration, ' ', 0, false, lyric, 60);
         elements.add(note);
     }
 

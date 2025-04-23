@@ -17,7 +17,7 @@ public class Note implements MusicElement, DurationElement {
     double tempo;
     private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
-    public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
+    public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric, double tempo) {
         this.pitch = pitch;
         this.midiNumber = midiNumber;
         this.noteName = noteName;
@@ -26,6 +26,7 @@ public class Note implements MusicElement, DurationElement {
         this.dotted = dotted;
         this.tied = tied;
         this.lyric = lyric;
+        this.tempo = tempo;
     }
 
     /**

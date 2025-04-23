@@ -34,7 +34,7 @@ public abstract class DataConstants {
   public static final String SONG_MEASURES_KEY_SIGNATURE = "keySignature";
   public static final String SONG_MEASURES_TIME_SIGNATURE_NUMERATOR = "timeSignatureNumerator";
   public static final String SONG_MEASURES_TIME_SIGNATURE_DENOMINATOR = "timeSignatureDenominator";
-  public static final String SONG_MEASURES_TEMPO = "tempo";
+  public static final String SONG_MUSIC_ELEMENT_TEMPO = "tempo";
   public static final String SONG_MUSIC_ELEMENTS = "musicElements";
   public static final String SONG_MUSIC_ELEMENT_REST = "rest";
   public static final String SONG_MUSIC_ELEMENT_TUPLET = "tuplet";

@@ -58,12 +58,10 @@ public class SongJsonParser extends DataConstants {
     int pickUp = getValue(songJSON, SONG_PICK_UP, Number.class).intValue();
 
     List<String> genre = new ArrayList<>();
-    try {
-      JSONArray genreJSONArray = getValue(songJSON, SONG_GENRE, JSONArray.class);
-      for (Object genreObject : genreJSONArray) {
-        genre.add(getGenres(genreObject));
-      }
-    } catch (IllegalArgumentException e) {}
+    JSONArray genreJSONArray = getValue(songJSON, SONG_GENRE, JSONArray.class);
+    for (Object genreObject : genreJSONArray) {
+      genre.add(getGenres(genreObject));
+    }
 
     List<SheetMusic> sheetMusic = new ArrayList<>();
     JSONArray sheetMusicJSONArray = getValue(songJSON, SONG_SHEET_MUSIC, JSONArray.class);
@@ -138,13 +136,12 @@ public class SongJsonParser extends DataConstants {
     int keySignature = getValue(measureJSON, SONG_MEASURES_KEY_SIGNATURE, Number.class).intValue();
     int timeSignatureNumerator = getValue(measureJSON, SONG_MEASURES_TIME_SIGNATURE_NUMERATOR, Number.class).intValue();
     int timeSignatureDenominator = getValue(measureJSON, SONG_MEASURES_TIME_SIGNATURE_DENOMINATOR, Number.class).intValue();
-    int tempo = getValue(measureJSON, SONG_MEASURES_TEMPO, Number.class).intValue();
     List<MusicElement> musicElements = new ArrayList<>();
     JSONArray musicElementsJSON = getValue(measureJSON, SONG_MUSIC_ELEMENTS, JSONArray.class);
     for (Object musicElementObject : musicElementsJSON) {
       musicElements.add(getMusicElement(musicElementObject));
     }
-    return new Measure(keySignature, timeSignatureNumerator, timeSignatureDenominator, tempo, musicElements);
+    return new Measure(keySignature, timeSignatureNumerator, timeSignatureDenominator, musicElements);
   }
 
   /**
@@ -177,7 +174,8 @@ public class SongJsonParser extends DataConstants {
     int dotted = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_DOTTED, Number.class).intValue();
     boolean tied = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TIED, Boolean.class);
     String lyric = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_LYRIC, String.class);
-    return new Rest(duration, durationChar, dotted, tied, lyric);
+    double tempo = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TEMPO, Number.class).intValue();
+    return new Rest(duration, durationChar, dotted, tied, lyric, tempo);
   }
 
   /**
@@ -195,7 +193,8 @@ public class SongJsonParser extends DataConstants {
     for (Object musicElementObject : tupletElementsJSON) {
       elements.add(getMusicElement(musicElementObject));
     }
-    return new Tuplet(subdivisions, impliedDivision, duration, elements);
+    double tempo = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TEMPO, Number.class).intValue();
+    return new Tuplet(subdivisions, impliedDivision, duration, elements, tempo);
   }
 
   /**
@@ -213,7 +212,8 @@ public class SongJsonParser extends DataConstants {
     int dotted = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_DOTTED, Number.class).intValue();
     boolean tied = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TIED, Boolean.class);
     String lyric = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_LYRIC, String.class);
-    return new Note(pitch, midiNumber, noteName, duration, durationChar, dotted, tied, lyric);
+    double tempo = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TEMPO, Number.class).intValue();
+    return new Note(pitch, midiNumber, noteName, duration, durationChar, dotted, tied, lyric, tempo);
   }
 
   /**
@@ -230,7 +230,8 @@ public class SongJsonParser extends DataConstants {
       JSONObject chordNoteJSON = (JSONObject) noteObject;
       notes.add(getNote(chordNoteJSON));
     }
-    return new Chord(chordLyric, notes);
+    double tempo = getValue(musicElementJSON, SONG_MUSIC_ELEMENT_TEMPO, Number.class).intValue();
+    return new Chord(chordLyric, notes, tempo);
   }
 
   /**

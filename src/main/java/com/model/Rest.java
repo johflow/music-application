@@ -11,12 +11,13 @@ public class Rest implements MusicElement, DurationElement {
   private String lyric;
   private double tempo;
 
-  public Rest(double duration, char durationChar, int dotted, boolean tied, String lyric) {
+  public Rest(double duration, char durationChar, int dotted, boolean tied, String lyric, double tempo) {
     this.duration = duration;
     this.durationChar = durationChar;
     this.dotted = dotted;
     this.tied = tied;
     this.lyric = lyric;
+    this.tempo = tempo;
   }
 
   public void play() {
