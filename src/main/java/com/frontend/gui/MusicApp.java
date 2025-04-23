@@ -17,7 +17,7 @@ public class MusicApp extends Application {
     private static BorderPane rootLayout;
     private static BaseController baseController;
     private static BaseStyleManager styleManager;
-    
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -91,7 +91,7 @@ public class MusicApp extends Application {
             e.printStackTrace();
         }
     }
-    
+
     public static BaseController getBaseController() {
         return baseController;
     }

@@ -92,7 +92,7 @@ public class MusicAppFacade {
      * @param musicElement The music element to be added.
      */
     public void addMusicElement(MusicElement musicElement) {
-        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures().getFirst().addMusicElement(musicElement);
+        viewedSong.getSheetMusic().get(0).getStaves().get(0).getMeasures().get(0).addMusicElement(musicElement);
     }
 
     /**
@@ -110,7 +110,7 @@ public class MusicAppFacade {
      * @param measure The measure to be added.
      */
     public void addMeasure(Measure measure) {
-        viewedSong.getSheetMusic().getFirst().getStaves().getFirst().addMeasure(measure);
+        viewedSong.getSheetMusic().get(0).getStaves().get(0).addMeasure(measure);
     }
 
     /**
@@ -119,7 +119,7 @@ public class MusicAppFacade {
      * @param staff the staff to be added.
      */
     public void addStaff(Staff staff) {
-        viewedSong.getSheetMusic().getFirst().addStaff(staff);
+        viewedSong.getSheetMusic().get(0).addStaff(staff);
     }
 
     /**
@@ -276,7 +276,7 @@ public class MusicAppFacade {
     }
 
     public Song positionToLoadedSong(int position) {
-       return SongList.getInstance().getSongs().get(position);
+        return SongList.getInstance().getSongs().get(position);
     }
 
     public Song getViewedSong() {

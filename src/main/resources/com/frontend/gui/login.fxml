@@ -1,30 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.frontend.gui.LoginController"
-      alignment="CENTER"
-      spacing="10"
-      stylesheets="@login.css">
-    
+<VBox alignment="CENTER" spacing="10" stylesheets="@login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frontend.gui.LoginController">
+
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
-    
-    <Label text="Login" styleClass="title"/>
-    
-    <TextField fx:id="usernameField" promptText="Username"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
-    
-    <Label fx:id="errorLabel" styleClass="error" visible="false"/>
-    
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Login" onAction="#handleLogin" styleClass="login-button"/>
-        <Button text="Sign Up" onAction="#handleSignup" styleClass="signup-button"/>
+   <ImageView fitHeight="197.0" fitWidth="211.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../images/logo.png" />
+      </image>
+   </ImageView>
+
+    <Label styleClass="title" text="Login" />
+
+    <HBox alignment="CENTER" maxWidth="300" prefWidth="300" spacing="5">
+        <TextField fx:id="usernameField" maxHeight="35" maxWidth="250" prefHeight="35" prefWidth="250" promptText="Username" />
+        <Region prefHeight="35" prefWidth="45" />
     </HBox>
-    
-</VBox> 
+
+    <HBox alignment="CENTER" maxWidth="300" prefWidth="300" spacing="5">
+    <StackPane>
+        <TextField fx:id="visiblePasswordField" managed="false" prefHeight="35" prefWidth="250" promptText="Password" visible="false" />
+        <PasswordField fx:id="passwordField" prefHeight="35" prefWidth="250" promptText="Password" />
+    </StackPane>
+        <Button fx:id="togglePasswordBtn" onAction="#togglePasswordVisibility" prefHeight="35" prefWidth="45">
+            <graphic>
+                <ImageView fx:id="eyeIcon" fitHeight="20" fitWidth="20">
+                    <image>
+                        <Image url="@images/eye-unshow.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
+
+
+    <Label fx:id="errorLabel" styleClass="error" visible="false" />
+
+    <HBox alignment="CENTER" spacing="10">
+        <Button onAction="#handleLogin" styleClass="login-button" text="Login" />
+        <Button onAction="#handleSignup" styleClass="signup-button" text="Sign Up" />
+    </HBox>
+
+</VBox>
