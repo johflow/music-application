@@ -206,7 +206,6 @@ public class DataWriter extends DataConstants {
                     measureJSON.put(SONG_MEASURES_KEY_SIGNATURE, measure.getKeySignature());
                     measureJSON.put(SONG_MEASURES_TIME_SIGNATURE_NUMERATOR, measure.getTimeSignatureNumerator());
                     measureJSON.put(SONG_MEASURES_TIME_SIGNATURE_DENOMINATOR, measure.getTimeSignatureDenominator());
-                    measureJSON.put(SONG_MEASURES_TEMPO, measure.getTempo());
                     
                     // Process music elements
                     JSONArray musicElementsArray = new JSONArray();
@@ -243,6 +242,7 @@ public class DataWriter extends DataConstants {
         noteJSON.put(SONG_MUSIC_ELEMENT_DOTTED, note.getDotted());
         noteJSON.put(SONG_MUSIC_ELEMENT_TIED, note.hasTie());
         noteJSON.put(SONG_MUSIC_ELEMENT_LYRIC, note.getLyric());
+        noteJSON.put(SONG_MUSIC_ELEMENT_TEMPO, note.getTempo());
         return noteJSON;
     }
 
@@ -261,6 +261,7 @@ public class DataWriter extends DataConstants {
         restJSON.put(SONG_MUSIC_ELEMENT_DOTTED, rest.getDotted());
         restJSON.put(SONG_MUSIC_ELEMENT_TIED, rest.hasTie());
         restJSON.put(SONG_MUSIC_ELEMENT_LYRIC, rest.getLyric());
+        restJSON.put(SONG_MUSIC_ELEMENT_TEMPO, rest.getTempo());
         return restJSON;
     }
 
@@ -290,6 +291,7 @@ public class DataWriter extends DataConstants {
             notesJSON.add(noteJSON);
         }
         chordJSON.put(SONG_MUSIC_ELEMENT_CHORD_NOTES, notesJSON);
+        chordJSON.put(SONG_MUSIC_ELEMENT_TEMPO, chord.getTempo());
         return chordJSON;
     }
 
@@ -313,6 +315,7 @@ public class DataWriter extends DataConstants {
             elementsJSON.add(tupletElementJSON);
         }
         tupletJSON.put(SONG_MUSIC_ELEMENTS, elementsJSON);
+        tupletJSON.put(SONG_MUSIC_ELEMENT_TEMPO, tuplet.getTempo());
         return tupletJSON;
     }
 
