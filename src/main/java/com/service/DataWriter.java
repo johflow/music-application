@@ -160,6 +160,7 @@ public class DataWriter extends DataConstants {
         songDetails.put(SONG_ID, song.getId().toString());
         songDetails.put(SONG_TITLE, song.getTitle());
         songDetails.put(SONG_COMPOSER, song.getComposer());
+        songDetails.put(SONG_GENRE, song.getGenres());
         songDetails.put(SONG_PUBLISHER, song.getPublisher().getId().toString());
         songDetails.put(SONG_PICK_UP, song.getPickUp());
 

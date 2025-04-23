@@ -17,6 +17,7 @@ public class Song {
     private User publisher;
     private List<SheetMusic> sheetMusic;
     private int pickUp;
+    private List<String> genres;
 
      /**
      * Constructor for a Song
@@ -67,6 +68,7 @@ public class Song {
         this.composer = composer;
         this.pickUp = pickUp;
         this.sheetMusic = sheetMusic;
+        this.genres = new ArrayList<>();
     }
 
     /**
@@ -115,6 +117,42 @@ public class Song {
     public boolean save() {
         //TODO
         return true;
+    }
+
+    /**
+     * Adds a genre to the list of genres
+     * 
+     * @param genre
+     */
+    public void addGenre(String genre) {
+        genres.add(genre);
+    }
+
+    /**
+     * Removes genre from the list of genres
+     * 
+     * @param genre
+     */
+    public void removeGenre(String genre) {
+        genres.remove(genre);
+    }
+
+    /** 
+     * Sets the song's genres to a list of genres
+     * 
+     * @param genres the list of genres being set
+     */
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    /**
+     * gets the list of the song's genres
+     * 
+     * @return the list of the song's genres
+     */
+    public List<String> getGenres() {
+        return genres;
     }
 
     /**

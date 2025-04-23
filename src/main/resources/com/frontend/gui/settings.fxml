@@ -78,13 +78,13 @@
         </VBox>
     </center>
     
-    <bottom>
+    <top>
         <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="footer">
             <padding>
                 <Insets top="10" right="20" bottom="10" left="20"/>
             </padding>
             <Button fx:id="signOutButton" text="Sign Out" onAction="#handleLogout" styleClass="dangerButton"/>
         </HBox>
-    </bottom>
+    </top>
     
 </BorderPane> 

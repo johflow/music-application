@@ -56,16 +56,34 @@ public class SongJsonParser extends DataConstants {
     String composer = getValue(songJSON, SONG_COMPOSER, String.class);
     UUID publisherID = UUID.fromString(getValue(songJSON, SONG_PUBLISHER, String.class));
     int pickUp = getValue(songJSON, SONG_PICK_UP, Number.class).intValue();
-    List<SheetMusic> sheetMusic = new ArrayList<>();
 
+    List<String> genre = new ArrayList<>();
+    try {
+      JSONArray genreJSONArray = getValue(songJSON, SONG_GENRE, JSONArray.class);
+      for (Object genreObject : genreJSONArray) {
+        genre.add(getGenres(genreObject));
+      }
+    } catch (IllegalArgumentException e) {}
+
+    List<SheetMusic> sheetMusic = new ArrayList<>();
     JSONArray sheetMusicJSONArray = getValue(songJSON, SONG_SHEET_MUSIC, JSONArray.class);
     for (Object sheetMusicObject : sheetMusicJSONArray) {
       sheetMusic.add(getSheetMusic(sheetMusicObject));
     }
     Song song = new Song(id, title, composer, pickUp, sheetMusic);
+    song.setGenres(genre);
     return new ParsedSong(song, publisherID);
   }
 
+  private String getGenres(Object genres) {
+    if (genres instanceof String) {
+      return (String) genres;
+    } else {
+      JSONObject genreJSON = (JSONObject) genres;
+      return getValue(genreJSON, "name", String.class);
+    }
+  }
+  
   /**
    * Parses a JSON object representing sheet music and returns a SheetMusic object.
    *

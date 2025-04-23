@@ -23,6 +23,7 @@ public abstract class DataConstants {
   public static final String SONG_COMPOSER = "composer";
   public static final String SONG_PUBLISHER = "publisher";
   public static final String SONG_PICK_UP = "pickUp";
+  public static final String SONG_GENRE = "genre";
   public static final String SONG_SHEET_MUSIC = "sheetMusic";
   public static final String SONG_INSTRUMENT = "instrument";
   public static final String SONG_INSTRUMENT_NAME = "instrumentName";

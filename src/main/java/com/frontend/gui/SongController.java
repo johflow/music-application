@@ -90,7 +90,7 @@ public class SongController {
         double x = width/10, y = height/10;
         measureLength = width/6;
         measureHeight = height/12;
-        for (Measure measure : currentSong.getSheetMusic().getFirst().getStaves().getFirst().getMeasures()) {
+        for (Measure measure : currentSong.getSheetMusic().get(0).getStaves().get(0).getMeasures()) {
             drawMeasure(x, y, measure);
             x += measureLength + 1;
             if (x > width - measureLength) {
