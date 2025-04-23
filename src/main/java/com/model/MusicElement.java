@@ -6,7 +6,7 @@ package com.model;
  * themselves to JFugue string notation for playback.
  */
 public interface MusicElement {
-    
+
     /**
      * Gets the type of music element (e.g., "Note", "Rest", "Chord", "Tuplet")
      * 

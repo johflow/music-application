@@ -7,6 +7,7 @@ import com.model.MusicElement;
 import com.model.Note;
 import com.model.Song;
 import com.model.MusicAppFacade;
+import com.model.Tuplet;
 import java.util.List;
 import java.util.Map;
 import javafx.application.Platform;
@@ -109,15 +110,33 @@ public class SongController {
             gc.strokeLine(x, y + ((measureHeight * i) / 4), x + measureLength, y + ( (measureHeight * i) / 4) );
         }
         double duration = getTotalMeasureDuration(measure);
-        drawMusicElements(x, y, measure.getMusicElements(), duration);
+        drawMusicElements(x, y, measure.getMusicElements(), duration, measure);
     }
 
-    private void drawMusicElements(double x, double y, List<MusicElement> musicElements, double duration) {
+    private void drawMusicElements(double x, double y, List<MusicElement> musicElements, double duration, Measure measure) {
         for (MusicElement element : musicElements) {
             drawMusicElement(x, y, element);
-            x += (int) (((DurationElement) element).getDuration() * measureLength);
-            duration -= ((DurationElement) element).getDuration();
+            x += getXIncrement(element, measureLength, measure) * measureLength;
         }
+    }
+
+    private double getXIncrement(MusicElement element, double measureLength, Measure measure) {
+        double duration = 0;
+        if (element.getType().equals("chord")) {
+            for (Note note : ((Chord) element).getNotes()) {
+                if (note.getDuration() > duration) {
+                    duration = note.getDuration();
+                }
+            }
+        } else if (element.getType().equals("tuplet")) {
+            for (MusicElement element1 : ((Tuplet) element).getElements()) {
+                duration += getXIncrement(element1, measureLength, measure);
+            }
+        } else {
+            duration = ((DurationElement) element).getDuration();
+        }
+        double test = duration / ((double) measure.getTimeSignatureNumerator() / measure.getTimeSignatureDenominator());
+        return test;
     }
 
     private void drawMusicElement(double x, double y, MusicElement musicElement) {
@@ -145,7 +164,7 @@ public class SongController {
             gc.fillOval(x, y - measureHeight/8, 3*measureHeight/8, measureHeight/4);
             return;
         }
-        gc.strokeOval(x, y, 9, 9);
+        gc.strokeOval(x, y - measureHeight/8, 3*measureHeight/8, measureHeight/4);
     }
 
     private void drawNoteStem(double x, double y, Note note) {
@@ -153,10 +172,10 @@ public class SongController {
             return;
         }
         if (note.getMidiNumber() > 69) {
-            gc.strokeLine(x, y + 3, x, y + 20);
+            gc.strokeLine(x, y + 3, x, y + measureHeight * 3/4);
             return;
         }
-        gc.strokeLine(x + 9, y + 3, x + 9, y - 20);
+        gc.strokeLine(x + 3*measureHeight/8, y + 3, x + 3*measureHeight/8, y - measureHeight * 3/4);
     }
 
     private double getTotalMeasureDuration(Measure measure) {
