@@ -12,6 +12,7 @@ public class Chord implements MusicElement {
     private final String type = "chord";
     private String lyric;
     private List<Note> notes;
+    private double tempo;
 
     //Constructors
 
@@ -111,6 +112,11 @@ public class Chord implements MusicElement {
         }
         jfugue.append("]");
         return jfugue.toString();
+    }
+
+    @Override
+    public double getTempo() {
+        return tempo;
     }
 
     /**

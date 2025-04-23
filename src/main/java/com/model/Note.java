@@ -14,6 +14,7 @@ public class Note implements MusicElement, DurationElement {
     private int dotted;
     private boolean tied;
     private String lyric;
+    double tempo;
     private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
     public Note(double pitch, int midiNumber, String noteName, double duration, char durationChar, int dotted, boolean tied, String lyric) {
@@ -105,6 +106,11 @@ public class Note implements MusicElement, DurationElement {
     public String toJfugueString() {
         String jFugueString = noteName + durationChar;
         return jFugueString;
+    }
+
+    @Override
+    public double getTempo() {
+        return tempo;
     }
 
     /**

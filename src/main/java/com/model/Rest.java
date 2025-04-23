@@ -9,6 +9,7 @@ public class Rest implements MusicElement, DurationElement {
   private int dotted;
   private boolean tied;
   private String lyric;
+  private double tempo;
 
   public Rest(double duration, char durationChar, int dotted, boolean tied, String lyric) {
     this.duration = duration;
@@ -28,6 +29,11 @@ public class Rest implements MusicElement, DurationElement {
     public String toJfugueString() {
       String jFugueString = "Rest" + durationChar;
       return jFugueString;
+  }
+
+  @Override
+  public double getTempo() {
+    return tempo;
   }
 
   /**

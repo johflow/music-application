@@ -13,6 +13,7 @@ public class Tuplet implements MusicElement {
     private int impliedDivision;
     private double duration;
     private List<MusicElement> elements;
+    private double tempo;
 
     /**
      * Constructs a {@code Tuplet} with the specified parameters.
@@ -71,6 +72,11 @@ public class Tuplet implements MusicElement {
             jfugueString.append(element.toJfugueString()).append(" ");
         }
         return jfugueString.toString().trim();
+    }
+
+    @Override
+    public double getTempo() {
+        return tempo;
     }
 
     /**

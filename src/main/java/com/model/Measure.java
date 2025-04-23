@@ -9,7 +9,6 @@ public class Measure {
     private int keySignature;
     private int timeSignatureNumerator;
     private int timeSignatureDenominator;
-    private double tempo;
     private List<MusicElement> musicElements;
     
     /**
@@ -18,14 +17,12 @@ public class Measure {
      * @param keySignature Key signature for this measure
      * @param timeSignatureNumerator Top number of the time signature
      * @param timeSignatureDenominator Bottom number of the time signature
-     * @param tempo Tempo marking for this measure
      * @param musicElements List of musical elements contained in this measure
      */
-    public Measure(int keySignature, int timeSignatureNumerator, int timeSignatureDenominator, double tempo, List<MusicElement> musicElements) {
+    public Measure(int keySignature, int timeSignatureNumerator, int timeSignatureDenominator, List<MusicElement> musicElements) {
         this.keySignature = keySignature;
         this.timeSignatureNumerator = timeSignatureNumerator;
         this.timeSignatureDenominator = timeSignatureDenominator;
-        this.tempo = tempo;
         this.musicElements = musicElements;
     }
     
@@ -90,24 +87,6 @@ public class Measure {
      */
     public void setTimeSignatureDenominator(int timeSignatureDenominator) {
         this.timeSignatureDenominator = timeSignatureDenominator;
-    }
-    
-    /**
-     * Gets the tempo of the measure
-     * 
-     * @return The tempo value
-     */
-    public double getTempo() {
-        return tempo;
-    }
-    
-    /**
-     * Sets the tempo of the measure
-     * 
-     * @param tempo The tempo value to set
-     */
-    public void setTempo(double tempo) {
-        this.tempo = tempo;
     }
     
     /**

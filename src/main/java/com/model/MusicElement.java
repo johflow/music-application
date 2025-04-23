@@ -21,4 +21,6 @@ public interface MusicElement {
      * @return A string in JFugue notation format
      */
     String toJfugueString();
+
+    double getTempo();
 }
