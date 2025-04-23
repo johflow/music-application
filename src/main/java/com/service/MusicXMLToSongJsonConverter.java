@@ -16,7 +16,7 @@ public class MusicXMLToSongJsonConverter {
 
     public static void main(String[] args) {
 
-        String inputXml = "Untitled.musicxml";
+        String inputXml = "button.musicxml";
         String outputJson = "src/main/java/com/data/songs.json";
 
         try {
