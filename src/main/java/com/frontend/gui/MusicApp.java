@@ -73,7 +73,7 @@ public class MusicApp extends Application {
             e.printStackTrace();
         }
     }
-
+    
     private void howLoginView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.CREATE_SONG_VIEW));

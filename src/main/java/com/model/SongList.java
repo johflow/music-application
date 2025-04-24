@@ -138,6 +138,22 @@ public class SongList {
         
         return results.get(0);
     }
+    
+    /**
+     * Filters songs by genre
+     * 
+     * @param genre the genre being filtered by
+     * @return an ArrayList of filtered songs
+     */
+    public ArrayList<Song> filterByGenre(String genre) {
+        ArrayList<Song> filteredSongs = new ArrayList<>();
+        for (Song s : songs) {
+            if (s.getGenres().contains(genre)) {
+                filteredSongs.add(s);
+            }
+        }
+        return filteredSongs;
+    }
 
     /**
      * Sorts the songs by criteria
