@@ -78,7 +78,7 @@ public class SongPlayer extends DataConstants {
       ProcessedMusicElement processed = processMusicElement(current, previousTiedElements, next);
       previousTiedElements.clear();
       previousTiedElements.addAll(processed.tiedElements());
-      pattern.add("T" + elements.get(i).getTempo() + " " + processed.elementJFugueString());
+      pattern.add("T" + (int) Math.round(elements.get(i).getTempo()) + " " + processed.elementJFugueString());
     }
   }
 
