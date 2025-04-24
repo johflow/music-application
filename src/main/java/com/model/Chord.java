@@ -14,24 +14,6 @@ public class Chord implements MusicElement {
     private List<Note> notes;
     private double tempo;
 
-    //Constructors
-
-    /**
-     * Creates an empty chord with no lyric.
-     */
-    public Chord() {
-        this("", new ArrayList<>());
-    }
-
-    /**
-     * Creates a chord with a given lyric and no initial notes.
-     *
-     * @param lyric Lyric annotation for the chord (can be empty or null)
-     */
-    public Chord(String lyric) {
-        this(lyric, new ArrayList<>());
-    }
-
     /**
      * Creates a chord with a given lyric and a list of initial notes.
      *

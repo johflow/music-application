@@ -78,7 +78,7 @@ public class SongPlayer extends DataConstants {
       ProcessedMusicElement processed = processMusicElement(current, previousTiedElements, next);
       previousTiedElements.clear();
       previousTiedElements.addAll(processed.tiedElements());
-      pattern.add(processed.elementJFugueString());
+      pattern.add("T" + elements.get(i).getTempo() + " " + processed.elementJFugueString());
     }
   }
 
@@ -92,18 +92,17 @@ public class SongPlayer extends DataConstants {
    * @return A {@link ProcessedMusicElement} containing the JFugue string and any tied elements.
    */
   private ProcessedMusicElement processMusicElement(MusicElement musicElement, List<MusicElement> previousTiedElements, MusicElement nextElement) {
-    switch (musicElement.getType()) {
-      case SONG_MUSIC_ELEMENT_NOTE:
-        return noteToJFugueString(musicElement, previousTiedElements, nextElement);
-      case SONG_MUSIC_ELEMENT_CHORD:
-        return chordToJFugueString(musicElement, previousTiedElements, nextElement);
-      case SONG_MUSIC_ELEMENT_REST:
-        return restToJFugueString(musicElement, previousTiedElements, nextElement);
-      case SONG_MUSIC_ELEMENT_TUPLET:
-        return tupletToJFugueString(musicElement, previousTiedElements, nextElement);
-      default:
-        throw new IllegalArgumentException("Music element does not have a valid type!");
-    }
+    return switch (musicElement.getType()) {
+      case SONG_MUSIC_ELEMENT_NOTE ->
+          noteToJFugueString(musicElement, previousTiedElements, nextElement);
+      case SONG_MUSIC_ELEMENT_CHORD ->
+          chordToJFugueString(musicElement, previousTiedElements, nextElement);
+      case SONG_MUSIC_ELEMENT_REST ->
+          restToJFugueString(musicElement, previousTiedElements, nextElement);
+      case SONG_MUSIC_ELEMENT_TUPLET ->
+          tupletToJFugueString(musicElement, previousTiedElements, nextElement);
+      default -> throw new IllegalArgumentException("Music element does not have a valid type!");
+    };
   }
 
   /**
