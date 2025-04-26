@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 public class SheetController implements Initializable {
   @FXML private Canvas canvas;
+  BaseStyleManager styles = BaseStyleManager.getInstance();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -25,7 +26,7 @@ public class SheetController implements Initializable {
   }
 
   private void drawStaff(GraphicsContext gc, double startX, double startY, double width) {
-    gc.setStroke(Color.BLACK);
+    gc.setStroke(Color.WHITE);
     gc.setLineWidth(1);
     for (int i = 0; i < 5; i++) {
       double y = startY + i * 10;
@@ -34,9 +35,9 @@ public class SheetController implements Initializable {
   }
 
   private void drawQuarterNote(GraphicsContext gc, double x, double y) {
-    gc.setFill(Color.BLACK);
+    gc.setFill(Color.WHITE);
     gc.fillOval(x, y - 5, 10, 10);            // note head
-    gc.setStroke(Color.BLACK);
+    gc.setStroke(Color.WHITE);
     gc.setLineWidth(2);
     gc.strokeLine(x + 10, y, x + 10, y - 30);  // stem
   }

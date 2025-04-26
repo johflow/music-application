@@ -30,7 +30,6 @@ public class ViewConstants {
     public static final String[] COMPONENT_CSS_FILES = {
         DISCOVER_CSS,
         PROFILE_CSS,
-        CREATE_SONG_CSS,
         SETTINGS_CSS
     };
     

@@ -24,7 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class SongController {
-
+    BaseStyleManager styles = BaseStyleManager.getInstance();
     @FXML private HBox        hudBar;
     @FXML private Button      exitSongBtn;
     @FXML private Button      playSongBtn;
@@ -62,10 +62,12 @@ public class SongController {
     public void initialize() {
         // 1) Prepare the canvas & put it in the scrollPane
         canvas = new Canvas();
-        scrollPane.setContent(canvas);
-        scrollPane.setPannable(true);
+        contentPane.getChildren().add(canvas);
+        scrollPane.setContent(contentPane);
+        scrollPane.pannableProperty().set(true);
         gc = canvas.getGraphicsContext2D();
-
+        gc.setStroke(styles.isDark() ? Color.WHITE : Color.BLACK);
+        gc.setFill(styles.isDark() ? Color.WHITE : Color.BLACK);
         // 2) Load your song & figure out page count
         MusicAppFacade facade = MusicAppFacade.getInstance();
         facade.loadSongs();
@@ -73,8 +75,7 @@ public class SongController {
         currentSong = facade.getViewedSong();
 
         // 3) Wire up HUD buttons
-        exitSongBtn.setOnAction(e -> { handleStop(); });
-        playSongBtn.setOnAction(e -> { handlePlay(); });
+        playSongBtn.setOnAction(e -> { facade.playViewedSong(); });
 
         // 4) When the ScrollPane viewport appears, size & draw
         scrollPane.viewportBoundsProperty().addListener((obs,oldB,newB) -> {
@@ -90,10 +91,6 @@ public class SongController {
             canvas.setHeight(vp.getHeight());
             redraw();
         });
-    }
-
-    private void exitSong() {
-        //TODO
     }
 
     private void redraw() {
@@ -146,7 +143,6 @@ public class SongController {
     private void drawMeasure(double x, double y, Measure measure) {
 
         int numOfLines = 5;
-        gc.setStroke(Color.BLACK);
         gc.strokeLine(x, y, x, y + measureHeight);
         gc.strokeLine(x + measureLength, y, x + measureLength, y + measureHeight);
         for (int i = 0; i < numOfLines; ++i) {
