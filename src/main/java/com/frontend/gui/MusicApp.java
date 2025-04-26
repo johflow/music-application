@@ -58,7 +58,7 @@ public class MusicApp extends Application {
         baseController = loader.getController();
     }
     
-    private void howLoginView() {
+    private void showLoginView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.LOGIN_VIEW));
             Parent loginView = loader.load();
@@ -73,8 +73,8 @@ public class MusicApp extends Application {
             e.printStackTrace();
         }
     }
-
-    private void showLoginView() {
+    
+    private void howLoginView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.CREATE_SONG_VIEW));
             Parent songView = loader.load();

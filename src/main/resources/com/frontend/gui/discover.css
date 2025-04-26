@@ -1,4 +1,32 @@
-/* discover.css — extend as needed */
+/* Basic styles for the discover view 
+   Add your custom styles as needed */
+
+   .root {
+    /* Base application styling */
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.logout-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 5px;
+}
+
+.logout-button:hover {
+    -fx-background-color: #d32f2f;
+}
+
+.content-area {
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+}
+
+/* Song cell styling */
 .song-cell {
     -fx-padding: 8px;
 }
@@ -14,11 +42,28 @@
     -fx-font-size: 12px;
 }
 
+/* Favorite button styling */
 .favorite-button {
     -fx-font-size: 16px;
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
-  .favorite-button:selected {
-    /* maybe a little glow or color change when “♥” */
+.favorite-button:selected {
+    /* optional selected styling */
+}
+
+/* Genre toggle styling */
+.genre-toggle {
+    -fx-background-color: transparent;
+    -fx-border-color: #2196F3;
+    -fx-text-fill: #2196F3;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px 8px;
+}
+
+.genre-toggle:selected {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
 }

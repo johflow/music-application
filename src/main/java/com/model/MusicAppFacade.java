@@ -58,6 +58,10 @@ public class MusicAppFacade {
         return songList.searchSongs(searchQuery); 
     }
 
+    public ArrayList<Song> filterByGenre(String genre) {
+        return songList.filterByGenre(genre);
+    }
+
     /**
      * Gets the stored list of songs
      */
