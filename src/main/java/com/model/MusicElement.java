@@ -23,4 +23,6 @@ public interface MusicElement {
     String toJfugueString();
 
     double getTempo();
+
+    //int getVoice();
 }

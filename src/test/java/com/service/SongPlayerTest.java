@@ -22,7 +22,7 @@ public class SongPlayerTest {
     private Pattern capturedPattern;
 
     @Override
-    public void play(Song song) {
+    public Pattern play(Song song) {
 
       List<Staff> staves = new java.util.ArrayList<>();
       Pattern fullSong = new Pattern();

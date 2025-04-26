@@ -8,6 +8,8 @@ import com.model.Note;
 import com.model.Song;
 import com.model.MusicAppFacade;
 import com.model.Tuplet;
+import com.service.PlaybackTask;
+import com.service.SongPlayer;
 import java.util.List;
 import java.util.Map;
 import javafx.application.Platform;
@@ -37,6 +39,25 @@ public class SongController {
     private double measureLength;
     private double measureHeight;
 
+    private PlaybackTask currentTask;
+
+    @FXML private void handlePlay() {
+        SongPlayer songPlayer = new SongPlayer();
+        if (currentTask == null || !currentTask.isRunning()) {
+            currentTask = new PlaybackTask(songPlayer.play(currentSong));
+            Thread t = new Thread(currentTask, "JFugue-Playback");
+            t.setDaemon(true);             // JVM can exit even if music is still playing
+            t.start();
+        }
+    }
+
+    @FXML private void handleStop() {       // Pause is similar: call player.pause()
+        if (currentTask != null){
+            currentTask.stopPlayback();
+            System.out.println("Attempted stop");
+        }
+    }
+
     @FXML
     public void initialize() {
         // 1) Prepare the canvas & put it in the scrollPane
@@ -52,8 +73,8 @@ public class SongController {
         currentSong = facade.getViewedSong();
 
         // 3) Wire up HUD buttons
-        exitSongBtn.setOnAction(e -> { exitSong(); });
-        playSongBtn.setOnAction(e -> { facade.playViewedSong(); });
+        exitSongBtn.setOnAction(e -> { handleStop(); });
+        playSongBtn.setOnAction(e -> { handlePlay(); });
 
         // 4) When the ScrollPane viewport appears, size & draw
         scrollPane.viewportBoundsProperty().addListener((obs,oldB,newB) -> {
@@ -76,6 +97,19 @@ public class SongController {
     }
 
     private void redraw() {
+
+        int measures    = currentSong.getSheetMusic().get(0)
+            .getStaves().get(0)
+            .getMeasures().size();
+        int perLine     = 4;                       // whatever you want
+        int lines       = (int) Math.ceil(measures / (double) perLine);
+
+        measureLength   = canvas.getWidth() / 6;   // keep your ratio
+        measureHeight   = canvas.getHeight() / 12;
+
+        double neededH  = measureHeight * 4 * lines + 2 * (height / 10);
+
+        canvas.setHeight(neededH);
         width = canvas.getWidth();
         height = canvas.getHeight();
 
@@ -83,19 +117,28 @@ public class SongController {
         gc.clearRect(0,0,width,height);
 
         // draw grid or sheet music only for currentPage…
-        drawSong(currentSong, gc, width, height);
+        drawSong(currentSong, gc, width, neededH);
     }
 
     private void drawSong(Song song, GraphicsContext gc, double width, double height) {
-        double x = width/10, y = height/10;
-        measureLength = width/6;
-        measureHeight = height/12;
+        double x = width/10, y = 100;
+
         for (Measure measure : currentSong.getSheetMusic().get(0).getStaves().get(0).getMeasures()) {
             drawMeasure(x, y, measure);
             x += measureLength + 1;
             if (x > width - measureLength) {
                 x = width/10;
-                y += 4 * measureHeight + 1;
+                y += 6 * measureHeight + 1;
+            }
+        }
+
+        y = 100 + measureHeight*2;
+        for (Measure measure : currentSong.getSheetMusic().get(0).getStaves().get(3).getMeasures()) {
+            drawMeasure(x, y, measure);
+            x += measureLength + 1;
+            if (x > width - measureLength) {
+                x = width/10;
+                y += 6 * measureHeight + 1;
             }
         }
     }

@@ -1,15 +1,1 @@
-{
-  "users": [
-    {
-      "followedUsers": [],
-      "profilePicture": "default_profile.png",
-      "password": "Password#1",
-      "themeColor": "LIGHT",
-      "bio": "i love rock",
-      "id": "7cf9ab7e-e478-41d2-a3c5-f290d819549a",
-      "favoritedSongs": [],
-      "email": "test@gmail.com",
-      "username": "testuser"
-    }
-  ]
-}
+{"users":[{"followedUsers":[],"profilePicture":"default_profile.png","password":"Password#1","themeColor":"LIGHT","bio":"i love rock","id":"7cf9ab7e-e478-41d2-a3c5-f290d819549a","favoritedSongs":[],"email":"test@gmail.com","username":"testuser"}]}

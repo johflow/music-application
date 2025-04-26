@@ -32,10 +32,9 @@ public class SongPlayer extends DataConstants {
    *
    * @param song The song to be played.
    */
-  public void play(Song song) {
+  public Pattern play(Song song) {
     List<Staff> staves = new ArrayList<>();
     Pattern fullSong = new Pattern();
-    Player player = new Player();
 
     for (SheetMusic sheetMusic : song.getSheetMusic()) {
       staves.addAll(sheetMusic.getStaves());
@@ -44,7 +43,7 @@ public class SongPlayer extends DataConstants {
       Pattern pattern = new Pattern("V" + i + " R " + staffToJFuguePattern(staves.get(i)));
       fullSong.add(pattern);
     }
-    player.play(fullSong);
+    return fullSong;
   }
 
   /**

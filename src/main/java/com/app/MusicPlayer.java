@@ -87,7 +87,7 @@ public class MusicPlayer {
      Pattern beat = new Pattern("V1 C C C C C C C C R R R R Cw");
      Pattern comparison = new Pattern().add(tuplet).add(beat);
      //player.play("R C C C C Cq*3:2 Cq*3:2 Cq*3:9 C C");
-     player.play("");
+     player.play("V0 C V1 E V3 G");
 
 
   }
