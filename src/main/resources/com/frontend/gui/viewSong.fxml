@@ -17,6 +17,7 @@
           style="-fx-padding: 8"
           maxWidth="400">
             <Button fx:id="playSongBtn" text="Play"/>
+            <Button fx:id="importMusicXMLBtn" text="Import MusicXML"/>
         </HBox>
       </Pane>
     </bottom>

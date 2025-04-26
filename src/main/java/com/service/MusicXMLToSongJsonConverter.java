@@ -1,17 +1,39 @@
-
 package com.service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import static java.util.Map.entry;
+import java.util.Set;
+import java.util.UUID;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.*;
-import java.io.File;
-import java.util.Map;
-import java.io.FileWriter;
-import java.util.*;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.model.Chord;
+import com.model.Instrument;
+import com.model.Measure;
+import com.model.MusicElement;
+import com.model.Note;
+import com.model.Rest;
+import com.model.SheetMusic;
+import com.model.Song;
+import com.model.Staff;
+import com.model.Tuplet;
 
 /**
  * MusicXMLToSongJsonConverter
@@ -45,28 +67,98 @@ public class MusicXMLToSongJsonConverter {
         NoteWithTempo(Element n, int t) { this.note = n; this.tempo = t; }
     }
 
+    // Default output JSON file path
+    private static final String DEFAULT_OUTPUT_JSON = "src/main/java/com/data/songs.json";
+
+    /**
+     * Main method that runs the converter as a standalone application.
+     * For integration with the UI, use the convertMusicXMLToSong method instead.
+     */
     public static void main(String[] args) {
-
-        String inputXml  = "roaring.musicxml";
-        String outputJson = "src/main/java/com/data/songs.json";
-
+        String inputXml = "everlong.musicxml";
+        // Changed to false to preserve existing songs when run from main
+        convertMusicXMLToSong(inputXml, DEFAULT_OUTPUT_JSON, false);
+    }
+    
+    /**
+     * Converts a MusicXML file to a Song object and adds it to the existing songs.json file.
+     * This method can be called from the UI when a user uploads a MusicXML file.
+     * 
+     * @param musicXmlFilePath Path to the MusicXML file to convert
+     * @return The UUID of the newly created song, or null if conversion failed
+     */
+    public static UUID convertMusicXMLToSong(String musicXmlFilePath) {
+        return convertMusicXMLToSong(musicXmlFilePath, DEFAULT_OUTPUT_JSON, false, "Unknown");
+    }
+    
+    /**
+     * Converts a MusicXML file to a Song object and adds it to the json file.
+     * 
+     * @param musicXmlFilePath Path to the MusicXML file to convert
+     * @param outputJsonFilePath Path to the output JSON file
+     * @param replaceExisting If true, replaces the existing JSON file; if false, adds to it
+     * @return The UUID of the newly created song, or null if conversion failed
+     */
+    public static UUID convertMusicXMLToSong(String musicXmlFilePath, String outputJsonFilePath, boolean replaceExisting) {
+        return convertMusicXMLToSong(musicXmlFilePath, outputJsonFilePath, replaceExisting, "Unknown");
+    }
+    
+    /**
+     * Converts a MusicXML file to a Song object and adds it to the json file.
+     * 
+     * @param musicXmlFilePath Path to the MusicXML file to convert
+     * @param outputJsonFilePath Path to the output JSON file
+     * @param replaceExisting If true, replaces the existing JSON file; if false, adds to it
+     * @param composerName The name to use as composer if none found in the file
+     * @return The UUID of the newly created song, or null if conversion failed
+     */
+    public static UUID convertMusicXMLToSong(String musicXmlFilePath, String outputJsonFilePath, boolean replaceExisting, String composerName) {
+        UUID songId = null;
+        
         try {
+            System.out.println("Starting conversion of: " + musicXmlFilePath);
+            
             // ──────────────────────────────────────────────────
             // XML parse – disable DTD loading.
             // ──────────────────────────────────────────────────
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-            factory.setFeature("http://xml.org/sax/features/validation",       false);
+            factory.setFeature("http://xml.org/sax/features/validation", false);
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(new File(inputXml));
+            
+            File inputFile = new File(musicXmlFilePath);
+            Document doc = builder.parse(inputFile);
             doc.getDocumentElement().normalize();
 
             // ──────────────────────────────────────────────────
             // Metadata
             // ──────────────────────────────────────────────────
-            String title    = extractTitle(doc);
+            String title = extractTitle(doc);
+            
+            // If no title found in the MusicXML file, use the filename (without extension)
+            if (title == null || title.trim().isEmpty()) {
+                String fileName = inputFile.getName();
+                // Remove the file extension
+                int lastDotPos = fileName.lastIndexOf('.');
+                if (lastDotPos > 0) {
+                    fileName = fileName.substring(0, lastDotPos);
+                }
+                // Convert file name to title case (e.g., "my_song.musicxml" -> "My Song")
+                title = convertFileNameToTitle(fileName);
+                System.out.println("No title found in MusicXML. Using filename as title: " + title);
+            } else {
+                System.out.println("Found title in MusicXML: " + title);
+            }
+            
             String composer = extractComposer(doc);
-            JSONArray genres = new JSONArray();
+            if (composer == null || composer.trim().isEmpty()) {
+                composer = composerName;
+                System.out.println("No composer found in MusicXML. Using provided composer: " + composer);
+            } else {
+                System.out.println("Found composer in MusicXML: " + composer);
+            }
+            
+            List<String> genres = new ArrayList<>();
             genres.add("None");
 
             Map<String,String> partIdToName = extractPartList(doc);
@@ -74,7 +166,7 @@ public class MusicXMLToSongJsonConverter {
             // ──────────────────────────────────────────────────
             // Process each <part>
             // ──────────────────────────────────────────────────
-            JSONArray stavesArray = new JSONArray();
+            List<Staff> staves = new ArrayList<>();
             NodeList partNodes = doc.getElementsByTagName("part");
 
             for (int p = 0; p < partNodes.getLength(); p++) {
@@ -89,7 +181,7 @@ public class MusicXMLToSongJsonConverter {
                 if (globalVoices.isEmpty()) globalVoices.add("1");
 
                 // Voice → list<measureJson>
-                Map<String,List<JSONObject>> voiceMeasuresMap = new HashMap<>();
+                Map<String, List<Measure>> voiceMeasuresMap = new HashMap<>();
 
                 // Tempo that will apply to *first* element of the first measure
                 int currentTempo = 120;
@@ -126,7 +218,7 @@ public class MusicXMLToSongJsonConverter {
                     // ──────────────────────────────────────────────
                     // Pass 2: build music elements grouped by voice
                     // ──────────────────────────────────────────────
-                    Map<String,JSONArray> measureVoiceElements = new HashMap<>();
+                    Map<String, List<MusicElement>> measureVoiceElements = new HashMap<>();
 
                     int k = 0;
                     while (k < orderedNotes.size()) {
@@ -146,12 +238,10 @@ public class MusicXMLToSongJsonConverter {
                                 if (hasTupletStop(next.note)) { k++; break; }
                                 k++;
                             }
-                            JSONArray tupletElems = new JSONArray();
+                            List<MusicElement> tupletElements = new ArrayList<>();
                             for (NoteWithTempo ntp : tupletGroup) {
-                                tupletElems.add(processSingleNote(ntp.note, divisions, ntp.tempo));
+                                tupletElements.add(processSingleNote(ntp.note, divisions, ntp.tempo));
                             }
-                            JSONObject tupletJson = new JSONObject();
-                            tupletJson.put("type", "tuplet");
                             // Grab time‑modification from first note
                             Element timeMod = getChildElement(tupletGroup.get(0).note,"time-modification");
                             int act = 1, norm = 1;
@@ -162,15 +252,13 @@ public class MusicXMLToSongJsonConverter {
                                 nType = getElementText(timeMod,"normal-type");
                             }
                             double normalVal = getNoteDurationValue(nType);
-                            tupletJson.put("subdivisions", act);
-                            tupletJson.put("impliedDivision", norm);
-                            tupletJson.put("duration", normalVal * act);
-                            tupletJson.put("tempo", tempoOfNote);
-                            tupletJson.put("elements", tupletElems);
-
+                            
+                            // Create a Tuplet using the constructor
+                            Tuplet tuplet = new Tuplet(act, norm, normalVal * act, tupletElements, tempoOfNote);
+                            
                             measureVoiceElements
-                                .computeIfAbsent(voice, v -> new JSONArray())
-                                .add(tupletJson);
+                                .computeIfAbsent(voice, v -> new ArrayList<>())
+                                .add(tuplet);
                         }
 
                         // Chord grouping
@@ -185,22 +273,23 @@ public class MusicXMLToSongJsonConverter {
                             }
                             k++; // advance beyond group
 
-                            JSONArray arr = measureVoiceElements
-                                .computeIfAbsent(voice, v -> new JSONArray());
+                            List<MusicElement> voiceElements = measureVoiceElements
+                                .computeIfAbsent(voice, v -> new ArrayList<>());
 
                             if (chordGroup.size() == 1) {
-                                arr.add( processSingleNote(noteElement, divisions, tempoOfNote) );
+                                voiceElements.add(processSingleNote(noteElement, divisions, tempoOfNote));
                             } else {
-                                JSONObject chordJson = new JSONObject();
-                                chordJson.put("type", "chord");
-                                chordJson.put("tempo", tempoOfNote);
-                                JSONArray chordNotes = new JSONArray();
+                                List<Note> chordNotes = new ArrayList<>();
                                 for (NoteWithTempo nwp : chordGroup) {
-                                    chordNotes.add(processSingleNote(nwp.note, divisions, nwp.tempo));
+                                    MusicElement element = processSingleNote(nwp.note, divisions, nwp.tempo);
+                                    if (element instanceof Note) {
+                                        chordNotes.add((Note) element);
+                                    }
                                 }
-                                chordJson.put("notes", chordNotes);
-                                chordJson.put("lyric", getLyric(chordGroup.get(0).note));
-                                arr.add(chordJson);
+                                
+                                // Create a Chord using the constructor
+                                Chord chord = new Chord(getLyric(chordGroup.get(0).note), chordNotes, tempoOfNote);
+                                voiceElements.add(chord);
                             }
                         }
 
@@ -213,41 +302,37 @@ public class MusicXMLToSongJsonConverter {
                     // ──────────────────────────────────────────────
                     for (String v : globalVoices) {
                         if (!measureVoiceElements.containsKey(v)) {
-                            JSONObject rest = new JSONObject();
-                            rest.put("type", "rest");
                             DurationSymbol ds = fullMeasureRestSymbol(timeNum, timeDen);
+                            Rest rest;
+                            
+                            // Our improved fullMeasureRestSymbol shouldn't return null,
+                            // but keeping this check for robustness
                             if (ds != null) {
-                                rest.put("durationChar", ds.durationChar);
-                                rest.put("dotted", ds.dots);
-                                double test = DURATION_CHAR_TO_DURATION.get(ds.durationChar);
-                                rest.put("duration", DURATION_CHAR_TO_DURATION.get(ds.durationChar));
+                                double duration = DURATION_CHAR_TO_DURATION.get(ds.durationChar);
+                                rest = new Rest(duration, ds.durationChar.charAt(0), ds.dots, false, "", (double)measureStartTempo);
                             } else {
-                                // fallback: build a string of eighth rests, or whatever you prefer
-                                rest.put("durationChar", "q");  // default
-                                rest.put("dotted", 0);
-                                rest.put("duration", .25);
+                                // fallback to quarter rest
+                                System.err.println("Could not determine full-measure rest for time signature " + 
+                                                  timeNum + "/" + timeDen + ". Using quarter rest.");
+                                rest = new Rest(0.25, 'q', 0, false, "", (double)measureStartTempo);
                             }
-                            rest.put("tied", false);
-                            rest.put("lyric", "");
-                            rest.put("tempo", measureStartTempo);
-                            JSONArray arr = new JSONArray(); arr.add(rest);
-                            measureVoiceElements.put(v, arr);
+                            
+                            List<MusicElement> restElements = new ArrayList<>();
+                            restElements.add(rest);
+                            measureVoiceElements.put(v, restElements);
                         }
                     }
 
                     // ──────────────────────────────────────────────
-                    // Pack into measure JSON and stash by voice
+                    // Pack into measure objects and stash by voice
                     // ──────────────────────────────────────────────
-                    for (Map.Entry<String,JSONArray> e : measureVoiceElements.entrySet()) {
-                        JSONObject measureJson = new JSONObject();
-                        measureJson.put("keySignature",            keySignature);
-                        measureJson.put("timeSignatureNumerator",  timeNum);
-                        measureJson.put("timeSignatureDenominator",timeDen);
-                        measureJson.put("musicElements", e.getValue());
-
+                    for (Map.Entry<String, List<MusicElement>> e : measureVoiceElements.entrySet()) {
+                        // Create Measure using the constructor
+                        Measure measure = new Measure(keySignature, timeNum, timeDen, e.getValue());
+                        
                         voiceMeasuresMap
                             .computeIfAbsent(e.getKey(), vv -> new ArrayList<>())
-                            .add(measureJson);
+                            .add(measure);
                     }
                 } // end measure loop
 
@@ -258,12 +343,10 @@ public class MusicXMLToSongJsonConverter {
                     // shouldn't happen now, but keep fallback
                     continue;
                 }
-                for (Map.Entry<String,List<JSONObject>> e : voiceMeasuresMap.entrySet()) {
-                    JSONObject staffJson = new JSONObject();
-                    staffJson.put("clefType","treble");
-                    staffJson.put("measures", e.getValue());
-                    staffJson.put("voice", e.getKey());
-                    stavesArray.add(staffJson);
+                for (Map.Entry<String, List<Measure>> e : voiceMeasuresMap.entrySet()) {
+                    // Create Staff using the constructor
+                    Staff staff = new Staff("treble", e.getValue());
+                    staves.add(staff);
                 }
             } // end part loop
 
@@ -272,38 +355,247 @@ public class MusicXMLToSongJsonConverter {
             // ──────────────────────────────────────────────────
             String firstInstrument = partIdToName.isEmpty()
                 ? "Unknown" : partIdToName.values().iterator().next();
-            JSONObject instrumentJson = new JSONObject();
-            instrumentJson.put("instrumentName", firstInstrument);
-            JSONArray clefTypes = new JSONArray(); clefTypes.add("treble");
-            instrumentJson.put("clefTypes", clefTypes);
+            
+            // Create Instrument using the constructor
+            List<String> clefTypes = new ArrayList<>();
+            clefTypes.add("treble");
+            Instrument instrument = new Instrument(clefTypes, firstInstrument);
 
-            JSONObject sheetMusicJson = new JSONObject();
-            sheetMusicJson.put("instrument", instrumentJson);
-            sheetMusicJson.put("staves", stavesArray);
+            // Create SheetMusic using the constructor
+            SheetMusic sheetMusic = new SheetMusic(instrument, staves);
+            
+            List<SheetMusic> sheetMusicList = new ArrayList<>();
+            sheetMusicList.add(sheetMusic);
 
-            JSONObject songJson = new JSONObject();
-            songJson.put("id", UUID.randomUUID().toString());
-            songJson.put("genre", genres);
-            songJson.put("title",    title != null ? title    : "Converted Song");
-            songJson.put("composer", composer != null ? composer : "Unknown");
-            songJson.put("publisher", UUID.randomUUID().toString());
-            songJson.put("pickUp", 0);
-            JSONArray sheetArr = new JSONArray(); sheetArr.add(sheetMusicJson);
-            songJson.put("sheetMusic", sheetArr);
+            // Create Song using the constructor
+            songId = UUID.randomUUID();
+            System.out.println("Generated UUID for new song: " + songId);
+            
+            Song song = new Song(songId, 
+                                 title != null ? title : "Converted Song", 
+                                 composer != null ? composer : "Unknown", 
+                                 0, sheetMusicList);
+            song.setGenres(genres);
 
-            JSONObject output = new JSONObject();
-            JSONArray songsArr = new JSONArray(); songsArr.add(songJson);
-            output.put("songs", songsArr);
-
-            try (FileWriter w = new FileWriter(outputJson)) {
-                w.write(output.toJSONString());
-            }
-            System.out.println("Conversion successful → " + outputJson);
+            // Add the new song to the JSON file
+            addSongToJsonFile(song, outputJsonFilePath, replaceExisting);
+            
+            System.out.println("Conversion successful → " + outputJsonFilePath);
+            return songId;
 
         } catch (Exception ex) {
+            System.err.println("Error converting MusicXML file: " + ex.getMessage());
             ex.printStackTrace();
+            return null;
         }
-    } // end main
+    }
+    
+    /**
+     * Adds a Song to the specified JSON file, either by replacing the existing content
+     * or appending to it.
+     * 
+     * @param song The Song to add
+     * @param jsonFilePath Path to the JSON file
+     * @param replaceExisting If true, replaces existing content; if false, adds to it
+     * @throws Exception If an error occurs during the file operation
+     */
+    private static void addSongToJsonFile(Song song, String jsonFilePath, boolean replaceExisting) throws Exception {
+        // Convert the new song to JSON
+        JSONObject newSongJson = convertSongToJsonObject(song);
+        
+        // Initialize variables for JSON handling
+        JSONObject fullJson = new JSONObject();
+        JSONArray songsArray = new JSONArray();
+        
+        // Read existing file if it exists and we're not replacing
+        File jsonFile = new File(jsonFilePath);
+        if (jsonFile.exists() && !replaceExisting) {
+            try {
+                // Use a buffered reader for better performance with larger files
+                StringBuilder content = new StringBuilder();
+                try (BufferedReader reader = new BufferedReader(new FileReader(jsonFile))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        content.append(line);
+                    }
+                }
+                
+                // Parse the content as JSON
+                JSONParser parser = new JSONParser();
+                Object parsedObj = parser.parse(content.toString());
+                
+                if (parsedObj instanceof JSONObject) {
+                    fullJson = (JSONObject) parsedObj;
+                    Object songsObj = fullJson.get("songs");
+                    
+                    if (songsObj instanceof JSONArray) {
+                        // Copy existing songs to our new array
+                        JSONArray existingSongs = (JSONArray) songsObj;
+                        System.out.println("Found " + existingSongs.size() + " existing songs");
+                        
+                        for (Object songObj : existingSongs) {
+                            songsArray.add(songObj);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Error reading existing JSON, starting fresh: " + e.getMessage());
+                // Continue with empty arrays/objects
+            }
+        }
+        
+        // Add the new song to the array
+        songsArray.add(newSongJson);
+        System.out.println("Added new song. Total songs now: " + songsArray.size());
+        
+        // Put the songs array in the full JSON object
+        fullJson.put("songs", songsArray);
+        
+        // Make sure parent directory exists
+        if (jsonFile.getParentFile() != null) {
+            jsonFile.getParentFile().mkdirs();
+        }
+        
+        // Write the JSON to the file
+        try (FileWriter writer = new FileWriter(jsonFile)) {
+            writer.write(fullJson.toJSONString());
+            System.out.println("Successfully wrote " + songsArray.size() + " songs to " + jsonFilePath);
+        }
+    }
+
+    // Helper method to convert our Song model to a JSONObject for saving
+    private static JSONObject convertSongToJsonObject(Song song) {
+        JSONObject songJson = new JSONObject();
+        songJson.put("id", song.getId().toString());
+        
+        JSONArray genreArray = new JSONArray();
+        for (String genre : song.getGenres()) {
+            genreArray.add(genre);
+        }
+        songJson.put("genre", genreArray);
+        
+        songJson.put("title", song.getTitle());
+        songJson.put("composer", song.getComposer());
+        songJson.put("publisher", song.getPublisher() != null ? 
+            song.getPublisher().getId().toString() : UUID.randomUUID().toString());
+        songJson.put("pickUp", song.getPickUp());
+        
+        JSONArray sheetMusicArray = new JSONArray();
+        for (SheetMusic sheet : song.getSheetMusic()) {
+            JSONObject sheetJson = convertSheetMusicToJsonObject(sheet);
+            sheetMusicArray.add(sheetJson);
+        }
+        songJson.put("sheetMusic", sheetMusicArray);
+        
+        return songJson;
+    }
+
+    // Helper method to convert SheetMusic to JSONObject
+    private static JSONObject convertSheetMusicToJsonObject(SheetMusic sheetMusic) {
+        JSONObject sheetJson = new JSONObject();
+        
+        // Instrument
+        JSONObject instrumentJson = new JSONObject();
+        instrumentJson.put("instrumentName", sheetMusic.getInstrument().getInstrumentName());
+        
+        JSONArray clefTypesArray = new JSONArray();
+        for (String clefType : sheetMusic.getInstrument().getClefTypes()) {
+            clefTypesArray.add(clefType);
+        }
+        instrumentJson.put("clefTypes", clefTypesArray);
+        sheetJson.put("instrument", instrumentJson);
+        
+        // Staves
+        JSONArray stavesArray = new JSONArray();
+        for (Staff staff : sheetMusic.getStaves()) {
+            JSONObject staffJson = convertStaffToJsonObject(staff);
+            stavesArray.add(staffJson);
+        }
+        sheetJson.put("staves", stavesArray);
+        
+        return sheetJson;
+    }
+
+    // Helper method to convert Staff to JSONObject
+    private static JSONObject convertStaffToJsonObject(Staff staff) {
+        JSONObject staffJson = new JSONObject();
+        staffJson.put("clefType", staff.getClefType());
+        
+        JSONArray measuresArray = new JSONArray();
+        for (Measure measure : staff.getMeasures()) {
+            JSONObject measureJson = convertMeasureToJsonObject(measure);
+            measuresArray.add(measureJson);
+        }
+        staffJson.put("measures", measuresArray);
+        
+        return staffJson;
+    }
+
+    // Helper method to convert Measure to JSONObject
+    private static JSONObject convertMeasureToJsonObject(Measure measure) {
+        JSONObject measureJson = new JSONObject();
+        measureJson.put("keySignature", measure.getKeySignature());
+        measureJson.put("timeSignatureNumerator", measure.getTimeSignatureNumerator());
+        measureJson.put("timeSignatureDenominator", measure.getTimeSignatureDenominator());
+        
+        JSONArray elementsArray = new JSONArray();
+        for (MusicElement element : measure.getMusicElements()) {
+            JSONObject elementJson = convertMusicElementToJsonObject(element);
+            elementsArray.add(elementJson);
+        }
+        measureJson.put("musicElements", elementsArray);
+        
+        return measureJson;
+    }
+
+    // Helper method to convert MusicElement to JSONObject
+    private static JSONObject convertMusicElementToJsonObject(MusicElement element) {
+        JSONObject elementJson = new JSONObject();
+        elementJson.put("type", element.getType());
+        elementJson.put("tempo", element.getTempo());
+        
+        if (element instanceof Note note) {
+            elementJson.put("noteName", note.getNoteName());
+            elementJson.put("midiNumber", note.getMidiNumber());
+            elementJson.put("pitch", note.getPitch());
+            elementJson.put("duration", note.getDuration());
+            elementJson.put("durationChar", String.valueOf(note.getDurationChar()));
+            elementJson.put("dotted", note.getDotted());
+            elementJson.put("tied", note.hasTie());
+            elementJson.put("lyric", note.getLyric());
+        } 
+        else if (element instanceof Rest rest) {
+            elementJson.put("duration", rest.getDuration());
+            elementJson.put("durationChar", String.valueOf(rest.getDurationChar()));
+            elementJson.put("dotted", rest.getDotted());
+            elementJson.put("tied", rest.hasTie());
+            elementJson.put("lyric", rest.getLyric());
+        } 
+        else if (element instanceof Chord chord) {
+            elementJson.put("lyric", chord.getLyric());
+            
+            JSONArray notesArray = new JSONArray();
+            for (Note note : chord.getNotes()) {
+                JSONObject noteJson = convertMusicElementToJsonObject(note);
+                notesArray.add(noteJson);
+            }
+            elementJson.put("notes", notesArray);
+        } 
+        else if (element instanceof Tuplet tuplet) {
+            elementJson.put("subdivisions", tuplet.getSubdivisions());
+            elementJson.put("impliedDivision", tuplet.getImpliedDivision());
+            elementJson.put("duration", tuplet.getDuration());
+            
+            JSONArray elementsArray = new JSONArray();
+            for (MusicElement tupletElement : tuplet.getElements()) {
+                JSONObject tupletElementJson = convertMusicElementToJsonObject(tupletElement);
+                elementsArray.add(tupletElementJson);
+            }
+            elementJson.put("elements", elementsArray);
+        }
+        
+        return elementJson;
+    }
 
     // ──────────────────────────────────────────────────────────────
     //  Unmodified helper methods
@@ -311,10 +603,45 @@ public class MusicXMLToSongJsonConverter {
     // ──────────────────────────────────────────────────────────────
 
     private static String extractTitle(Document doc) {
+        // Try standard MusicXML title tags in order of preference
+        // 1. First check for the <work> element's <work-title>
         NodeList workList = doc.getElementsByTagName("work-title");
-        if (workList.getLength() > 0) return workList.item(0).getTextContent();
-        NodeList movList  = doc.getElementsByTagName("movement-title");
-        if (movList.getLength() > 0) return movList.item(0).getTextContent();
+        if (workList.getLength() > 0 && !workList.item(0).getTextContent().trim().isEmpty()) {
+            return workList.item(0).getTextContent().trim();
+        }
+        
+        // 2. Then check for the <movement-title> element
+        NodeList movList = doc.getElementsByTagName("movement-title");
+        if (movList.getLength() > 0 && !movList.item(0).getTextContent().trim().isEmpty()) {
+            return movList.item(0).getTextContent().trim();
+        }
+        
+        // 3. Try the <credit> elements with type="title"
+        NodeList creditList = doc.getElementsByTagName("credit");
+        for (int i = 0; i < creditList.getLength(); i++) {
+            Element credit = (Element) creditList.item(i);
+            String type = credit.getAttribute("type");
+            if ("title".equalsIgnoreCase(type)) {
+                NodeList creditWords = credit.getElementsByTagName("credit-words");
+                if (creditWords.getLength() > 0 && !creditWords.item(0).getTextContent().trim().isEmpty()) {
+                    return creditWords.item(0).getTextContent().trim();
+                }
+            }
+        }
+        
+        // 4. Try any <credit> element's <credit-words> as a fallback
+        for (int i = 0; i < creditList.getLength(); i++) {
+            Element credit = (Element) creditList.item(i);
+            NodeList creditWords = credit.getElementsByTagName("credit-words");
+            if (creditWords.getLength() > 0) {
+                String text = creditWords.item(0).getTextContent().trim();
+                if (!text.isEmpty() && text.length() < 100) { // Reasonable length for a title
+                    return text;
+                }
+            }
+        }
+        
+        // No title found in the document
         return null;
     }
 
@@ -348,7 +675,25 @@ public class MusicXMLToSongJsonConverter {
 
     /** Returns the symbol (char + dots) for a full-measure rest, or null if none fits */
     private static DurationSymbol fullMeasureRestSymbol(int num, int den) {
-        double f = (double) num / den;                // fraction of a whole note
+        // Handle common cases first
+        if (num == 4 && den == 4) return new DurationSymbol("w", 0); // 4/4 time
+        if (num == 3 && den == 4) return new DurationSymbol("h", 1); // 3/4 time
+        if (num == 2 && den == 4) return new DurationSymbol("h", 0); // 2/4 time
+        if (num == 6 && den == 8) return new DurationSymbol("h", 1); // 6/8 time
+        if (num == 9 && den == 8) return new DurationSymbol("h", 1); // 9/8 time
+        if (num == 12 && den == 8) return new DurationSymbol("w", 1); // 12/8 time
+        
+        // For other cases, calculate the fraction of a whole note
+        double f = (double) num / den;  // fraction of a whole note
+        
+        // Safety check for extreme values
+        if (f > 4.0) {
+            System.out.println("Very large time signature detected: " + num + "/" + den + 
+                               " (" + f + " beats). Using whole note.");
+            return new DurationSymbol("w", 0);
+        }
+        
+        // Try to find an exact match with standard note durations
         for (int n = 0; n <= 6; n++) {                // up to 64th-notes
             double pow = 1.0 / (1 << n);              // 2⁻ⁿ
             if (Math.abs(f - pow) < 1e-9) {           // exact power of two
@@ -359,7 +704,31 @@ public class MusicXMLToSongJsonConverter {
                 return new DurationSymbol(DUR_CHAR.get(n), 1);
             }
         }
-        return null;                                  // nothing matched
+        
+        // If no exact match, find the closest standard duration
+        int closestN = 0;
+        double closestDiff = Double.MAX_VALUE;
+        boolean needsDot = false;
+        
+        for (int n = 0; n <= 6; n++) {
+            double pow = 1.0 / (1 << n);
+            double diff = Math.abs(f - pow);
+            if (diff < closestDiff) {
+                closestDiff = diff;
+                closestN = n;
+                needsDot = false;
+            }
+            
+            double dotted = pow + pow / 2;
+            diff = Math.abs(f - dotted);
+            if (diff < closestDiff) {
+                closestDiff = diff;
+                closestN = n;
+                needsDot = true;
+            }
+        }
+        
+        return new DurationSymbol(DUR_CHAR.get(closestN), needsDot ? 1 : 0);
     }
 
 
@@ -454,8 +823,15 @@ public class MusicXMLToSongJsonConverter {
      * Convert a beat-length (e.g., 1.0, 0.75, 0.5) into a DurationSymbol.
      * Returns null if the value cannot be written as either a plain power-of-two
      * note (1, 1/2, 1/4 …) or a single-dotted power-of-two (3/4, 3/8 …).
+     * For very large durations (>4 beats), defaults to whole note.
      */
-    private static DurationSymbol beatsToSymbol(double beats) { // This shit doesn't work nor find what I think it needs to find
+    private static DurationSymbol beatsToSymbol(double beats) {
+        // Handle extremely large durations by returning a whole note
+        if (beats > 4.0) {
+            System.out.println("Large duration value (" + beats + " beats) - defaulting to whole note.");
+            return new DurationSymbol("w", 0);
+        }
+        
         final double EPS = 1e-9;                       // floating-point tolerance
         for (int n = 0; n <= 6; n++) {                 // up to 64th-notes
             double pow   = 1.0 / (1 << n);             // 2⁻ⁿ
@@ -468,45 +844,63 @@ public class MusicXMLToSongJsonConverter {
                 return new DurationSymbol(DUR_CHAR.get(n), 1);
             }
         }
-        return null;                                   // no symbol matches
+        
+        // If no standard symbol matches but duration is reasonable,
+        // find the closest basic duration and use that
+        if (beats <= 4.0 && beats > 0) {
+            // Find the closest power of 2 duration
+            int closestN = 0;
+            double closestDiff = Double.MAX_VALUE;
+            
+            for (int n = 0; n <= 6; n++) {
+                double pow = 1.0 / (1 << n);
+                double diff = Math.abs(beats - pow);
+                if (diff < closestDiff) {
+                    closestDiff = diff;
+                    closestN = n;
+                }
+            }
+            
+            return new DurationSymbol(DUR_CHAR.get(closestN), 0);
+        }
+        
+        return null;                                   // nothing matched
     }
 
 
-    // ───────────────── music element helpers (unchanged, but add tempo param) ─────────────────
-    private static JSONObject processSingleNote(Element noteElement,
+    // ───────────────── music element helpers (updated to use constructors) ─────────────────
+    private static MusicElement processSingleNote(Element noteElement,
         int divisions, // e.g., divisions=2 means 2 division units per QUARTER note
         int tempo) {
-        JSONObject noteJson = new JSONObject();
-        noteJson.put("tempo", tempo);
-
+        
         boolean isRest = noteElement.getElementsByTagName("rest").getLength() > 0;
         boolean durationSet = false; // Flag to track if duration/char have been set
+        
+        double duration = 0.25; // Default duration (quarter note)
+        char durationChar = 'q'; // Default duration character
+        int dotted = 0; // Default dots
+        boolean tied = false;
+        String lyric = getLyric(noteElement);
 
         if (isRest) {
-            noteJson.put("type", "rest");
-            // Rests don't have pitch information
-            noteJson.put("noteName", "");
-            noteJson.put("midiNumber", 0);
-            noteJson.put("pitch", 0.0);
-
             // --- Try using <type> tag first ---
             String typeText = getElementText(noteElement, "type");
             if (typeText != null) {
                 // Use the switch to set duration/char based on typeText
                 switch (typeText.toLowerCase()) {
-                    case "whole":   noteJson.put("durationChar", "w"); noteJson.put("duration", 1.0);    durationSet = true; break;
-                    case "half":    noteJson.put("durationChar", "h"); noteJson.put("duration", 0.5);    durationSet = true; break;
-                    case "quarter": noteJson.put("durationChar", "q"); noteJson.put("duration", 0.25);   durationSet = true; break;
-                    case "eighth":  noteJson.put("durationChar", "i"); noteJson.put("duration", 0.125);  durationSet = true; break;
-                    case "16th":    noteJson.put("durationChar", "s"); noteJson.put("duration", 0.0625); durationSet = true; break;
-                    case "32nd":    noteJson.put("durationChar", "t"); noteJson.put("duration", 0.03125);durationSet = true; break;
-                    case "64th":    noteJson.put("durationChar", "x"); noteJson.put("duration", 0.015625);durationSet = true; break;
+                    case "whole":   durationChar = 'w'; duration = 1.0;    durationSet = true; break;
+                    case "half":    durationChar = 'h'; duration = 0.5;    durationSet = true; break;
+                    case "quarter": durationChar = 'q'; duration = 0.25;   durationSet = true; break;
+                    case "eighth":  durationChar = 'i'; duration = 0.125;  durationSet = true; break;
+                    case "16th":    durationChar = 's'; duration = 0.0625; durationSet = true; break;
+                    case "32nd":    durationChar = 't'; duration = 0.03125;durationSet = true; break;
+                    case "64th":    durationChar = 'x'; duration = 0.015625;durationSet = true; break;
                     // Add other MusicXML types like 'breve', 'longa', '128th' etc. if needed
                     default:
                         System.err.println("Warning: Unrecognized rest type '" + typeText + "'. Using fallback duration.");
                         // Set a fallback if type is unknown but present
-                        noteJson.put("durationChar", "w");
-                        noteJson.put("duration", 0.25); // Default to quarter? Or use duration tag below?
+                        durationChar = 'w';
+                        duration = 0.25; // Default to quarter? Or use duration tag below?
                         // Consider letting it fall through to duration tag logic if type is weird
                         // For now, setting a default based on unknown type.
                         durationSet = true; // Mark duration as set, even if fallback
@@ -514,22 +908,20 @@ public class MusicXMLToSongJsonConverter {
 
                 }
                 // If type was recognized (or fallback applied), also handle explicit <dot> elements
-                if (durationSet && noteJson.containsKey("duration")) { // Check if duration was actually set
+                if (durationSet) { // Check if duration was actually set
                     NodeList dotList = noteElement.getElementsByTagName("dot");
-                    int dots = dotList.getLength();
-                    noteJson.put("dotted", dots);
-                    if (dots > 0) {
+                    dotted = dotList.getLength();
+                    if (dotted > 0) {
                         // Adjust duration based on the number of dots
-                        double currentDuration = (double) noteJson.get("duration");
                         // Formula for multiple dots: duration * (2 - (1 / 2^dots))
                         // e.g., 1 dot: * (2 - 0.5) = *1.5
                         // e.g., 2 dots: * (2 - 0.25) = *1.75
-                        noteJson.put("duration", currentDuration * (2.0 - Math.pow(0.5, dots)));
+                        duration = duration * (2.0 - Math.pow(0.5, dotted));
                     }
                 } else if (durationSet) {
                     // Handle case where duration wasn't set by switch (e.g. weird type default didn't set it)
                     NodeList dotList = noteElement.getElementsByTagName("dot");
-                    noteJson.put("dotted", dotList.getLength()); // Still record dots if present
+                    dotted = dotList.getLength(); // Still record dots if present
                 }
             }
 
@@ -543,23 +935,31 @@ public class MusicXMLToSongJsonConverter {
                         // Calculate duration relative to a WHOLE note:
                         // (duration / divisions) gives quarter notes. Divide by 4 for whole notes.
                         double beatsRelativeToWhole = durationInDivisions / divisions / 4.0;
+                        
+                        // Handle extremely large values by capping them
+                        if (beatsRelativeToWhole > 50.0) {
+                            System.out.println("Extremely large rest duration detected: " + beatsRelativeToWhole + 
+                                " beats. Capping at 1 measure (4 beats).");
+                            beatsRelativeToWhole = 4.0; // Cap at a maximum of a 4/4 measure
+                        }
 
                         DurationSymbol ds = beatsToSymbol(beatsRelativeToWhole);
                         if (ds != null) {
                             // Found a matching standard symbol (e.g., dotted eighth -> beats=0.1875)
-                            noteJson.put("durationChar", ds.durationChar);
+                            durationChar = ds.durationChar.charAt(0);
                             // Use the calculated beats value, which already accounts for the dot effect if ds found one
-                            noteJson.put("duration", beatsRelativeToWhole);
-                            noteJson.put("dotted", ds.dots);
+                            duration = beatsRelativeToWhole;
+                            dotted = ds.dots;
                             durationSet = true;
                         } else {
-                            // No simple symbol found (e.g., duration was 5 divisions, divisions=2 -> 5/2/4 = 0.625)
-                            // Use the calculated numeric duration and a fallback char.
-                            System.err.println("Warning: Could not find standard symbol for rest duration " + durStr + " (divisions=" + divisions + ", beatsRelWhole=" + beatsRelativeToWhole + "). Using calculated duration.");
-                            noteJson.put("durationChar", "w"); // Indicate non-standard symbol representation
-                            noteJson.put("duration", beatsRelativeToWhole);
+                            // No simple symbol found - this should be less common with our improved beatsToSymbol
+                            System.err.println("Warning: Unusual rest duration " + durStr + 
+                                " (divisions=" + divisions + ", beatsRelWhole=" + beatsRelativeToWhole + 
+                                "). Using whole note with calculated duration.");
+                            durationChar = 'w'; // Indicate non-standard symbol representation
+                            duration = Math.min(beatsRelativeToWhole, 4.0); // Cap at a whole note
                             // We can't easily determine dots from an arbitrary fraction, assume 0 for the symbol representation.
-                            noteJson.put("dotted", 0);
+                            dotted = 0;
                             durationSet = true;
                         }
                     } catch (NumberFormatException | ArithmeticException e) {
@@ -572,19 +972,20 @@ public class MusicXMLToSongJsonConverter {
             // --- Final fallback if NO duration info was found or parsed ---
             if (!durationSet) {
                 System.err.println("Error: Could not determine duration for rest element. Using fallback q=0.25.");
-                noteJson.put("durationChar", "q");
-                noteJson.put("duration", 0.25);
-                noteJson.put("dotted", 0);
+                durationChar = 'q';
+                duration = 0.25;
+                dotted = 0;
                 // durationSet = true; // Implicitly set now
             }
+            
+            // Create and return a Rest object
+            return new Rest(duration, durationChar, dotted, tied, lyric, tempo);
 
         } else { // It's a Note (Not a Rest)
-            noteJson.put("type", "note");
-
             // --- Process Pitch ---
-            String noteName = null; // Use null to indicate if pitch was found
-            int midiNumber = 0;
-            double pitchHz = 0.0;
+            String noteName = "C4"; // Default if not found
+            int midiNumber = 60; // Default (C4)
+            double pitchHz = 261.63; // Default (C4)
 
             Element pitchElement = getChildElement(noteElement, "pitch");
             if (pitchElement != null) {
@@ -638,25 +1039,19 @@ public class MusicXMLToSongJsonConverter {
                 }
             }
 
-            // Store pitch info (use defaults if pitchElement was null or parsing failed)
-            noteJson.put("noteName", (noteName != null) ? noteName : "C4"); // Default if null
-            noteJson.put("midiNumber", midiNumber);
-            noteJson.put("pitch", pitchHz);
-
-
             // --- Set Note Duration (Must have type or duration) ---
             // Similar logic as rests: try type, then duration, then fallback
             String typeText = getElementText(noteElement, "type");
             if (typeText != null) {
                 // Use switch based on typeText...
                 switch (typeText.toLowerCase()) {
-                    case "whole":   noteJson.put("durationChar", "w"); noteJson.put("duration", 1.0);    durationSet = true; break;
-                    case "half":    noteJson.put("durationChar", "h"); noteJson.put("duration", 0.5);    durationSet = true; break;
-                    case "quarter": noteJson.put("durationChar", "q"); noteJson.put("duration", 0.25);   durationSet = true; break;
-                    case "eighth":  noteJson.put("durationChar", "i"); noteJson.put("duration", 0.125);  durationSet = true; break;
-                    case "16th":    noteJson.put("durationChar", "s"); noteJson.put("duration", 0.0625); durationSet = true; break;
-                    case "32nd":    noteJson.put("durationChar", "t"); noteJson.put("duration", 0.03125);durationSet = true; break;
-                    case "64th":    noteJson.put("durationChar", "x"); noteJson.put("duration", 0.015625);durationSet = true; break;
+                    case "whole":   durationChar = 'w'; duration = 1.0;    durationSet = true; break;
+                    case "half":    durationChar = 'h'; duration = 0.5;    durationSet = true; break;
+                    case "quarter": durationChar = 'q'; duration = 0.25;   durationSet = true; break;
+                    case "eighth":  durationChar = 'i'; duration = 0.125;  durationSet = true; break;
+                    case "16th":    durationChar = 's'; duration = 0.0625; durationSet = true; break;
+                    case "32nd":    durationChar = 't'; duration = 0.03125;durationSet = true; break;
+                    case "64th":    durationChar = 'x'; duration = 0.015625;durationSet = true; break;
                     default:
                         System.err.println("Warning: Unrecognized note type '" + typeText + "'.");
                         // Fall through to try <duration> tag? Or set default? Let's try falling through.
@@ -665,11 +1060,10 @@ public class MusicXMLToSongJsonConverter {
                 // Handle dots ONLY if duration was set by the type
                 if (durationSet) {
                     NodeList dotList = noteElement.getElementsByTagName("dot");
-                    int dots = dotList.getLength();
-                    noteJson.put("dotted", dots);
-                    if (dots > 0) {
-                        double currentDuration = (double) noteJson.get("duration");
-                        noteJson.put("duration", currentDuration * (2.0 - Math.pow(0.5, dots)));
+                    dotted = dotList.getLength();
+                    if (dotted > 0) {
+                        double currentDuration = duration;
+                        duration = currentDuration * (2.0 - Math.pow(0.5, dotted));
                     }
                 }
             }
@@ -681,19 +1075,29 @@ public class MusicXMLToSongJsonConverter {
                     try {
                         double durationInDivisions = Double.parseDouble(durStr);
                         double beatsRelativeToWhole = durationInDivisions / divisions / 4.0;
+                        
+                        // Handle extremely large values by capping them
+                        if (beatsRelativeToWhole > 50.0) {
+                            System.out.println("Extremely large note duration detected: " + beatsRelativeToWhole + 
+                                " beats. Capping at 1 measure (4 beats).");
+                            beatsRelativeToWhole = 4.0; // Cap at a maximum of a 4/4 measure
+                        }
+                        
                         DurationSymbol ds = beatsToSymbol(beatsRelativeToWhole);
                         if (ds != null) {
                             // Set duration based on symbol found from <duration> tag
-                            noteJson.put("durationChar", ds.durationChar);
-                            noteJson.put("duration", beatsRelativeToWhole);
-                            noteJson.put("dotted", ds.dots);
+                            durationChar = ds.durationChar.charAt(0);
+                            duration = beatsRelativeToWhole;
+                            dotted = ds.dots;
                             durationSet = true;
                         } else {
                             // Set duration based on calculated value from <duration> tag
-                            System.err.println("Warning: Could not find standard symbol for note duration " + durStr + " (divisions=" + divisions + ", beatsRelWhole=" + beatsRelativeToWhole + "). Using calculated duration.");
-                            noteJson.put("durationChar", "w");
-                            noteJson.put("duration", beatsRelativeToWhole);
-                            noteJson.put("dotted", 0);
+                            System.err.println("Warning: Unusual note duration " + durStr + 
+                                " (divisions=" + divisions + ", beatsRelWhole=" + beatsRelativeToWhole + 
+                                "). Using whole note with calculated duration.");
+                            durationChar = 'w';
+                            duration = Math.min(beatsRelativeToWhole, 4.0); // Cap at a whole note
+                            dotted = 0;
                             durationSet = true;
                         }
                     } catch (NumberFormatException | ArithmeticException e) {
@@ -706,27 +1110,25 @@ public class MusicXMLToSongJsonConverter {
             // Final fallback for notes if all else fails (should be rare for valid notes)
             if (!durationSet) {
                 System.err.println("Error: Could not determine duration for note element. Using fallback q=0.25.");
-                noteJson.put("durationChar", "q");
-                noteJson.put("duration", 0.25);
-                noteJson.put("dotted", 0);
+                durationChar = 'q';
+                duration = 0.25;
+                dotted = 0;
             }
+            
+            // Process tie information
+            NodeList tieList = noteElement.getElementsByTagName("tie");
+            for (int i = 0; i < tieList.getLength(); i++) {
+                Element t = (Element) tieList.item(i);
+                // Check specifically for the 'start' type tie indicator
+                if ("start".equalsIgnoreCase(t.getAttribute("type"))) {
+                    tied = true;
+                    break;
+                }
+            }
+            
+            // Create and return a Note object
+            return new Note(pitchHz, midiNumber, noteName, duration, durationChar, dotted, tied, lyric, tempo);
         } // End if/else isRest
-
-        // --- Common Attributes (Tie, Lyric) --- Applies to both notes and rests
-        boolean tied = false;
-        NodeList tieList = noteElement.getElementsByTagName("tie");
-        for (int i = 0; i < tieList.getLength(); i++) {
-            Element t = (Element) tieList.item(i);
-            // Check specifically for the 'start' type tie indicator
-            if ("start".equalsIgnoreCase(t.getAttribute("type"))) {
-                tied = true;
-                break;
-            }
-        }
-        noteJson.put("tied", tied);
-        noteJson.put("lyric", getLyric(noteElement)); // getLyric handles missing lyric tag gracefully
-
-        return noteJson;
     }
 
 
@@ -805,5 +1207,116 @@ public class MusicXMLToSongJsonConverter {
             return sb.toString();
         }
         return "q";
+    }
+
+    /**
+     * Converts a filename to a title-case string.
+     * Example: "my_song_file" -> "My Song File"
+     */
+    private static String convertFileNameToTitle(String fileName) {
+        // Replace common separators with spaces
+        String title = fileName.replaceAll("[_-]", " ");
+        
+        // Split into words
+        String[] words = title.split("\\s+");
+        StringBuilder result = new StringBuilder();
+        
+        // Capitalize first letter of each word
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                // Capitalize first letter, lowercase the rest
+                result.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) {
+                    result.append(word.substring(1).toLowerCase());
+                }
+                result.append(" ");
+            }
+        }
+        
+        return result.toString().trim();
+    }
+
+    /**
+     * Handles the user action of selecting a MusicXML file.
+     * Converts the file to a Song object and adds it to the JSON database.
+     * 
+     * @param musicXmlFile The MusicXML file selected by the user
+     * @return A map containing the result of the conversion,
+     *         with "success" (true/false) and "message" (string) entries
+     */
+    public static Map<String, String> handleMusicXMLFileSelected(File musicXmlFile) {
+        return handleMusicXMLFileSelected(musicXmlFile, "Unknown");
+    }
+    
+    /**
+     * Handles the user action of selecting a MusicXML file.
+     * Converts the file to a Song object and adds it to the JSON database.
+     * Uses the provided username as the composer if none is found in the MusicXML file.
+     * 
+     * @param musicXmlFile The MusicXML file selected by the user
+     * @param username The username to use as composer if none is found in the file
+     * @return A map containing the result of the conversion,
+     *         with "success" (true/false) and "message" (string) entries
+     */
+    public static Map<String, String> handleMusicXMLFileSelected(File musicXmlFile, String username) {
+        Map<String, String> result = new HashMap<>();
+        
+        try {
+            if (musicXmlFile == null) {
+                result.put("success", "false");
+                result.put("message", "No file selected");
+                return result;
+            }
+            
+            String filePath = musicXmlFile.getAbsolutePath();
+            UUID songId = convertMusicXMLToSong(filePath, DEFAULT_OUTPUT_JSON, false, username);
+            
+            if (songId != null) {
+                // Read the title and other metadata from the file to return to the UI
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+                factory.setFeature("http://xml.org/sax/features/validation", false);
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document doc = builder.parse(musicXmlFile);
+                doc.getDocumentElement().normalize();
+                
+                String title = extractTitle(doc);
+                if (title == null || title.trim().isEmpty()) {
+                    String fileName = musicXmlFile.getName();
+                    int lastDotPos = fileName.lastIndexOf('.');
+                    if (lastDotPos > 0) {
+                        fileName = fileName.substring(0, lastDotPos);
+                    }
+                    title = convertFileNameToTitle(fileName);
+                }
+                
+                String composer = extractComposer(doc);
+                if (composer == null || composer.trim().isEmpty()) {
+                    composer = username; // Use the logged-in username instead of "Unknown"
+                    System.out.println("No composer found in MusicXML. Using provided composer: " + composer);
+                } else {
+                    System.out.println("Found composer in MusicXML: " + composer);
+                }
+                
+                // Create a map with song information to return to the UI
+                Map<String, String> songInfo = new HashMap<>();
+                songInfo.put("id", songId.toString());
+                songInfo.put("title", title);
+                songInfo.put("composer", composer);
+                
+                result.put("success", "true");
+                result.put("message", "Song conversion successful");
+                result.putAll(songInfo);
+            } else {
+                result.put("success", "false");
+                result.put("message", "Song conversion failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("success", "false");
+            result.put("message", "An error occurred: " + e.getMessage());
+        }
+        
+        return result;
     }
 }

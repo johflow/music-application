@@ -3,14 +3,29 @@
     /* Base styling will be applied programmatically */
 }
 
-/* Basic structure styles */
+/* Basic structure styles - keep this minimal to avoid overrides */
 .sidebar {
-    -fx-border-width: 0 1 0 0;
-    /* Color will be defined in theme css */
+    -fx-padding: 20;
+    /* Colors, borders and backgrounds defined in theme files */
 }
 
-.footer {
-    -fx-border-width: 1 0 0 0;
+/* Make sure all sidebar elements and descendants share the parent styling */
+.sidebar > *, 
+.sidebar > * > * {
+    /* Background color inherited from theme */
+}
+
+/* Styling for the image container */
+.sidebar VBox[alignment="CENTER"] {
+    /* Background color inherited from theme */
+}
+
+/* Button for changing photo - structure only */
+#changePhotoButton {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-transition: all 0.2s ease;
+    /* Colors will be defined in theme css */
 }
 
 /* General styles */
@@ -69,19 +84,6 @@ Button {
     -fx-cursor: hand;
 }
 
-
-.dangerButton {
-    /* Colors will be defined in theme css */
-    -fx-padding: 8px 20px;
-    -fx-background-radius: 5px;
-    -fx-font-weight: bold;
-    -fx-border-color: transparent;
-}
-
-.dangerButton:hover {
-    /* Colors will be defined in theme css */
-}
-
 /* Status label */
 .statusLabel {
     /* Text fill will be defined in theme css */
@@ -108,37 +110,23 @@ ImageView {
     -fx-padding: 5 10 5 10;
 }
 
-/* CheckBox */
-.check-box {
-    -fx-font-size: 14px;
-}
-
-.check-box .box {
-    -fx-border-radius: 3;
-}
-
-.check-box:selected .mark {
-    /* Colors will be defined in theme css */
-}
-
-/* Button */
-.save-button {
-    /* Colors will be defined in theme css */
+/* Primary button for Save */
+.primaryButton {
     -fx-font-weight: bold;
-    -fx-padding: 10 20 10 20;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-cursor: hand;
+    /* Colors will be defined in theme css */
+}
+
+/* Sign Out button specific styles */
+.signOutButton {
+    -fx-padding: 8px 15px;
+    -fx-background-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
     -fx-min-width: 150px;
-    -fx-margin-top: 20px;
-}
-
-.save-button:hover {
-    /* Colors will be defined in theme css */
-}
-
-.save-button:pressed {
-    /* Colors will be defined in theme css */
+    -fx-max-width: 150px;
+    -fx-pref-width: 150px;
 }
 
 /* GridPane */
@@ -189,22 +177,18 @@ ImageView {
     /* Colors will be defined in theme css */
 }
 
-/* Sign Out button specific styles */
-#signOutButton {
-    /* Colors will be defined in theme css */
-    -fx-padding: 8px 20px;
-    -fx-background-radius: 5px;
-    -fx-font-weight: bold;
-    -fx-border-color: transparent;
-}
-
-#signOutButton:hover {
-    /* Colors will be defined in theme css */
-}
-
 /* Make sure we don't override theme styles */
 .footer .dangerButton,
 .footer #signOutButton {
     /* Colors will be defined in theme css */
     -fx-font-weight: bold;
+}
+
+/* Define header style (used to be footer) */
+.header {
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: center-right;
+    -fx-padding: 5px 10px;
+    -fx-min-height: 30px;
+    -fx-max-height: 40px;
 } 

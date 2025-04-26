@@ -52,11 +52,18 @@ public class ProfileController extends BaseController {
 
     private void loadProfilePicture(String picturePath) {
         Image img = null;
-        // Try user’s image
+        // Try user's image
         if (picturePath != null && !picturePath.isEmpty()) {
             File file = new File(picturePath);
             if (file.exists()) {
                 img = new Image(file.toURI().toString());
+            } else {
+                // If the file doesn't exist at the provided path, try looking in the profiles directory
+                String baseName = new File(picturePath).getName();
+                File internalFile = new File(ViewConstants.USER_PROFILE_IMAGES_DIR + baseName);
+                if (internalFile.exists()) {
+                    img = new Image(internalFile.toURI().toString());
+                }
             }
         }
         // Fallback to default if needed

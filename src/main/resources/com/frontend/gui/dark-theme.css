@@ -103,17 +103,21 @@
     -fx-text-fill: #f0f0f0;
 }
 
-/* Logout Button - Only for Settings page */
+/* Logout Button - Updated with signOutButton */
 .logout-button,
 .dark-theme .logout-button,
 #signOutButton,
 .dark-theme #signOutButton,
+.signOutButton,
+.dark-theme .signOutButton,
 .dangerButton,
 .dark-theme .dangerButton,
 .footer .dangerButton,
 .footer #signOutButton,
 .dark-theme .footer .dangerButton,
-.dark-theme .footer #signOutButton {
+.dark-theme .footer #signOutButton,
+.header .signOutButton,
+.dark-theme .header .signOutButton {
     -fx-background-color: #3a3a3a;
     -fx-text-fill: #f0f0f0;
     -fx-border-color: transparent;
@@ -124,12 +128,16 @@
 .dark-theme .logout-button:hover,
 #signOutButton:hover,
 .dark-theme #signOutButton:hover,
+.signOutButton:hover,
+.dark-theme .signOutButton:hover,
 .dangerButton:hover,
 .dark-theme .dangerButton:hover,
 .footer .dangerButton:hover,
 .footer #signOutButton:hover,
 .dark-theme .footer .dangerButton:hover,
-.dark-theme .footer #signOutButton:hover {
+.dark-theme .footer #signOutButton:hover,
+.header .signOutButton:hover,
+.dark-theme .header .signOutButton:hover {
     -fx-background-color: #4a4a4a;
     -fx-text-fill: #f0f0f0;
 }
@@ -237,7 +245,16 @@
 
 /* Settings specific styles for dark theme */
 .sidebar {
-    -fx-border-color: #333333;
+    -fx-background-color: #1e1e1e;
+    -fx-background-insets: 0;
+    -fx-padding: 20;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+/* Apply dark theme background to BorderPane */
+BorderPane {
+    -fx-background-color: #121212;
 }
 
 .footer {
@@ -342,4 +359,89 @@
 /* Make sure profile image has a subtle border in dark mode */
 .dark-theme .profile-sidebar ImageView {
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 4, 0, 0, 0);
+}
+
+/* Additional selectors to ensure consistent profile sidebar background in dark mode */
+.dark-theme .profile-sidebar,
+.dark-theme .profile-sidebar > *,
+.dark-theme .profile-sidebar VBox,
+.dark-theme .profile-sidebar StackPane,
+.dark-theme .profile-sidebar Label,
+.dark-theme .profile-sidebar Pane {
+    -fx-background-color: #1e1e1e !important;
+}
+
+/* Change Photo button styling for dark theme */
+.dark-theme #changePhotoButton {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: #333333 !important;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.dark-theme #changePhotoButton:hover {
+    -fx-background-color: #3a3a3a;
+    -fx-cursor: hand;
+}
+
+/* Sign Out button styling for dark theme */
+.dark-theme .sidebar .signOutButton,
+.dark-theme .sidebar #signOutButton {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: #333333 !important;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.dark-theme .sidebar .signOutButton:hover,
+.dark-theme .sidebar #signOutButton:hover {
+    -fx-background-color: #3a3a3a;
+    -fx-cursor: hand;
+}
+
+/* Dark theme sidebar elements */
+.dark-theme .sidebar,
+.dark-theme .sidebar > * {
+    -fx-background-color: #1e1e1e;
+}
+
+.dark-theme .sidebar VBox,
+.dark-theme .sidebar HBox,
+.dark-theme .sidebar Pane,
+.dark-theme .sidebar Label {
+    -fx-background-color: #1e1e1e;
+}
+
+/* Universal sidebar styling for dark theme */
+.dark-theme .profile-sidebar,
+.dark-theme .sidebar,
+.dark-theme BorderPane > .left,
+.dark-theme .sidebar-container {
+    -fx-background-color: #1e1e1e !important;
+    -fx-text-fill: #f0f0f0 !important;
+    -fx-border-color: transparent !important;
+}
+
+/* Genre toggle buttons styling for dark theme */
+.dark-theme .genre-toggle {
+    -fx-background-color: transparent;
+    -fx-border-color: #4d4d4d;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px 8px;
+}
+
+.dark-theme .genre-toggle:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-border-color: #5f5f5f;
+}
+
+.dark-theme .genre-toggle:selected {
+    -fx-background-color: #3f3f3f;
+    -fx-border-color: #5f5f5f;
+    -fx-text-fill: #f0f0f0;
+    -fx-font-weight: bold;
 } 

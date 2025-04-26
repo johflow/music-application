@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import com.model.MusicAppFacade;
 import com.model.ThemeColor;
 import com.model.User;
+import com.model.Song;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -208,7 +209,35 @@ public class BaseController {
     
     @FXML
     protected void handleCreateSong() {
-        navigateTo(ViewConstants.CREATE_SONG_VIEW);
+        try {
+            // Create a new song with the current user as composer
+            String title = "New Song";
+            String composer = "Unknown";
+            
+            User currentUser = facade.getUser();
+            if (currentUser != null) {
+                composer = currentUser.getUsername();
+            }
+            
+            // Create a new song
+            Song newSong = new Song(title, composer);
+            
+            // Set the publisher to the current user
+            if (currentUser != null) {
+                newSong.setPublisher(currentUser);
+            }
+            
+            // Set as viewed song
+            facade.setViewedSong(newSong);
+            
+            // Navigate to create song view
+            navigateTo(ViewConstants.CREATE_SONG_VIEW);
+        } catch (Exception e) {
+            logger.severe("Error creating new song: " + e.getMessage());
+            
+            // Still navigate to the view even if there was an error
+            navigateTo(ViewConstants.CREATE_SONG_VIEW);
+        }
     }
     
     @FXML

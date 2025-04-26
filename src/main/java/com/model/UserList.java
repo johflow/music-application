@@ -254,9 +254,17 @@ public class UserList {
                 return true;
             }
             LOGGER.log(Level.SEVERE, "Failed to load users - loadedUsers is null");
+            // Initialize with empty list to prevent NPEs
+            if (this.users == null) {
+                this.users = new ArrayList<>();
+            }
             return false;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error loading users: " + e.getMessage(), e);
+            // Initialize with empty list to prevent NPEs
+            if (this.users == null) {
+                this.users = new ArrayList<>();
+            }
             return false;
         }
     }

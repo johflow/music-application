@@ -284,22 +284,58 @@ public class SettingsController extends BaseController {
         // Update profile picture if changed
         if (tempProfilePicturePath != null) {
             try {
-                // Create user profiles directory if it doesn't exist
-                File userProfilesDir = new File(ViewConstants.USER_PROFILE_IMAGES_DIR);
-                if (!userProfilesDir.exists()) {
-                    userProfilesDir.mkdirs();
+                // Create profile images directory if it doesn't exist
+                File profileImagesDir = new File(ViewConstants.USER_PROFILE_IMAGES_DIR);
+                if (!profileImagesDir.exists()) {
+                    profileImagesDir.mkdirs();
                 }
                 
-                // Copy the selected file to the user profiles directory
+                // Get the source file
                 File tempFile = new File(tempProfilePicturePath);
                 if (!tempFile.exists()) {
                     statusLabel.setText("Source profile picture file no longer exists.");
                     return;
                 }
                 
-                // Create a simple filename based on the username and timestamp
-                String fileName = facade.getUser().getUsername() + "_" + System.currentTimeMillis() + ".jpg";
-                File targetFile = new File(ViewConstants.USER_PROFILE_IMAGES_DIR + fileName);
+                // Get file extension
+                String fileName = tempFile.getName();
+                String extension = fileName.substring(fileName.lastIndexOf('.'));
+                
+                // Create filename with username and sequential numbering
+                String username = facade.getUser().getUsername();
+                
+                // Get the profile pic count for this user (to determine next number)
+                int profilePicNumber = 1; // Start with 1 if no existing pics
+                
+                // Scan for existing profile pictures with the same username prefix
+                File[] existingProfilePics = profileImagesDir.listFiles((dir, name) -> 
+                    name.startsWith(username + "_") && (name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png")));
+                
+                if (existingProfilePics != null && existingProfilePics.length > 0) {
+                    // Find the highest number used
+                    for (File pic : existingProfilePics) {
+                        String picName = pic.getName();
+                        try {
+                            // Extract number from username_X.ext format
+                            int underscoreIndex = picName.indexOf('_');
+                            int dotIndex = picName.lastIndexOf('.');
+                            if (underscoreIndex != -1 && dotIndex != -1) {
+                                String numberStr = picName.substring(underscoreIndex + 1, dotIndex);
+                                int number = Integer.parseInt(numberStr);
+                                if (number >= profilePicNumber) {
+                                    profilePicNumber = number + 1;
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+                            // If format is invalid, just continue
+                            logger.warning("Invalid profile picture filename format: " + picName);
+                        }
+                    }
+                }
+                
+                // Create the new profile picture filename
+                String newFileName = username + "_" + profilePicNumber + extension;
+                File targetFile = new File(ViewConstants.USER_PROFILE_IMAGES_DIR + newFileName);
                 
                 // Copy the file
                 Files.copy(tempFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -314,6 +350,7 @@ public class SettingsController extends BaseController {
                     return;
                 }
             } catch (Exception e) {
+                logger.log(Level.SEVERE, "Error saving profile picture", e);
                 statusLabel.setText("Error saving profile picture: " + e.getMessage());
                 return;
             }

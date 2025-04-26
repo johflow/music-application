@@ -189,6 +189,10 @@ public class SongList {
         } catch (Exception e) {
             System.err.println("Error loading songs: " + e.getMessage());
             e.printStackTrace();
+            // Ensure we have at least an empty list to prevent NPEs
+            if (this.songs == null) {
+                this.songs = new ArrayList<>();
+            }
             return false;
         }
     }
