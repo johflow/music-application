@@ -101,7 +101,22 @@ public class SettingsController extends BaseController {
                 return;
             }
             
-            // Simple attempt to load from absolute path first
+            // Try to load from relative path first if it's a path in our expected format
+            if (picturePath.startsWith(ViewConstants.PROFILE_IMAGES_PATH)) {
+                try {
+                    String relativePath = "src/main/resources" + picturePath;
+                    File file = new File(relativePath);
+                    if (file.exists()) {
+                        Image image = new Image(file.toURI().toString());
+                        profileImageView.setImage(image);
+                        return;
+                    }
+                } catch (Exception e) {
+                    logger.fine("Could not load image from relative path");
+                }
+            }
+            
+            // Simple attempt to load from absolute path
             try {
                 File file = new File(picturePath);
                 if (file.exists()) {
@@ -340,9 +355,10 @@ public class SettingsController extends BaseController {
                 // Copy the file
                 Files.copy(tempFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 
-                // Update the user's profile picture path
-                if (facade.updateProfilePicture(targetFile.getAbsolutePath())) {
-                    currentProfilePicturePath = targetFile.getAbsolutePath();
+                // Update the user's profile picture path with a relative path
+                String relativePath = ViewConstants.PROFILE_IMAGES_PATH + newFileName;
+                if (facade.updateProfilePicture(relativePath)) {
+                    currentProfilePicturePath = relativePath;
                     tempProfilePicturePath = null;
                     anyChanges = true;
                 } else {

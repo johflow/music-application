@@ -54,15 +54,25 @@ public class ProfileController extends BaseController {
         Image img = null;
         // Try user's image
         if (picturePath != null && !picturePath.isEmpty()) {
-            File file = new File(picturePath);
-            if (file.exists()) {
-                img = new Image(file.toURI().toString());
+            // Try to load from relative path first
+            if (picturePath.startsWith(ViewConstants.PROFILE_IMAGES_PATH)) {
+                String relativePath = "src/main/resources" + picturePath;
+                File file = new File(relativePath);
+                if (file.exists()) {
+                    img = new Image(file.toURI().toString());
+                }
             } else {
-                // If the file doesn't exist at the provided path, try looking in the profiles directory
-                String baseName = new File(picturePath).getName();
-                File internalFile = new File(ViewConstants.USER_PROFILE_IMAGES_DIR + baseName);
-                if (internalFile.exists()) {
-                    img = new Image(internalFile.toURI().toString());
+                // Try as absolute path
+                File file = new File(picturePath);
+                if (file.exists()) {
+                    img = new Image(file.toURI().toString());
+                } else {
+                    // If the file doesn't exist at the provided path, try looking in the profiles directory
+                    String baseName = new File(picturePath).getName();
+                    File internalFile = new File(ViewConstants.USER_PROFILE_IMAGES_DIR + baseName);
+                    if (internalFile.exists()) {
+                        img = new Image(internalFile.toURI().toString());
+                    }
                 }
             }
         }
