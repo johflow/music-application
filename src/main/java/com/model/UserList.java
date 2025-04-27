@@ -74,6 +74,27 @@ public class UserList {
     }
 
     /**
+     * Returns a list of usernames who follwo the given target
+     * @param targetUser the user whose followers to find
+     * @return list of follower usernames
+     */
+    public List<String> getFollowers(User targetUser) {
+        List<String> followers = new ArrayList<>();
+        if (targetUser == null) {
+            return followers;
+        }
+        for (User user : getAllUsers()) {
+            if (user.getFollowedUsers().contains(targetUser)) {
+                followers.add(user.getUsername());
+            }
+        }
+        return followers;
+    }
+
+
+
+
+    /**
      * Gets a user by username and password (for authentication)
      * 
      * @param username The username to search for
