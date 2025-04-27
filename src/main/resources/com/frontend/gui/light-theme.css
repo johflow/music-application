@@ -130,20 +130,24 @@
     -fx-text-fill: #212529;
 }
 
-/* Logout Button - Only for Settings page */
+/* Logout Button - Updated with signOutButton */
 .logout-button,
 .light-theme .logout-button,
 #signOutButton,
 .light-theme #signOutButton,
+.signOutButton,
+.light-theme .signOutButton,
 .dangerButton,
 .light-theme .dangerButton,
 .footer .dangerButton,
 .footer #signOutButton,
 .light-theme .footer .dangerButton,
-.light-theme .footer #signOutButton {
-    -fx-background-color: #e0e0e0;
+.light-theme .footer #signOutButton,
+.header .signOutButton,
+.light-theme .header .signOutButton {
+    -fx-background-color: #f5f5f5;
     -fx-text-fill: #212529;
-    -fx-border-color: transparent;
+    -fx-border-color: #e0e0e0;
     -fx-font-weight: bold;
 }
 
@@ -151,13 +155,17 @@
 .light-theme .logout-button:hover,
 #signOutButton:hover,
 .light-theme #signOutButton:hover,
+.signOutButton:hover,
+.light-theme .signOutButton:hover,
 .dangerButton:hover,
 .light-theme .dangerButton:hover,
 .footer .dangerButton:hover,
 .footer #signOutButton:hover,
 .light-theme .footer .dangerButton:hover,
-.light-theme .footer #signOutButton:hover {
-    -fx-background-color: #d0d0d0;
+.light-theme .footer #signOutButton:hover,
+.header .signOutButton:hover,
+.light-theme .header .signOutButton:hover {
+    -fx-background-color: #e8e8e8;
     -fx-text-fill: #212529;
 }
 
@@ -252,7 +260,29 @@
 
 /* Settings specific styles for light theme */
 .sidebar {
-    -fx-border-color: #dee2e6;
+    -fx-background-color: #f5f5f5;
+    -fx-background-insets: 0;
+    -fx-padding: 20;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #e0e0e0;
+}
+
+/* Light theme sidebar treatment - make everything consistent */
+.light-theme .sidebar,
+.light-theme .sidebar > *,
+.light-theme .sidebar VBox,
+.light-theme .sidebar HBox,
+.light-theme .sidebar Pane,
+.light-theme .sidebar Label,
+.light-theme .sidebar Button:not(#changePhotoButton) {
+    -fx-background-color: #f5f5f5;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+/* Apply light theme background to BorderPane */
+BorderPane {
+    -fx-background-color: #ffffff;
 }
 
 .footer {
@@ -355,14 +385,14 @@
     -fx-text-fill: #212529 !important;
 }
 
-/* Universal sidebar styling */
+/* Universal sidebar styling - removing overlapping selectors */
 .light-theme .profile-sidebar,
 .light-theme .sidebar,
 .light-theme BorderPane > .left,
 .light-theme .sidebar-container {
-    -fx-background-color: #f0f0f0 !important;
+    -fx-background-color: #f5f5f5 !important;
     -fx-text-fill: #212529 !important;
-    -fx-border-color: #e0e0e0 !important;
+    -fx-border-color: transparent !important;
 }
 
 /* Universal section titles */
@@ -430,19 +460,103 @@
 
 /* Profile picture container and stats for light theme */
 .light-theme .profile-sidebar StackPane {
-    -fx-background-color: #f0f0f0 !important;
+    -fx-background-color: #f5f5f5 !important;
 }
 
 .light-theme .profile-sidebar HBox {
-    -fx-background-color: #f0f0f0 !important;
+    -fx-background-color: #f5f5f5 !important;
 }
 
 /* Target individual follower/following containers */
 .light-theme .profile-sidebar HBox VBox {
-    -fx-background-color: #f0f0f0 !important;
+    -fx-background-color: #f5f5f5 !important;
 }
 
 /* Make sure profile image has a border in light mode */
 .light-theme .profile-sidebar ImageView {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+    -fx-background-color: #f5f5f5;
+}
+
+/* Ensure profile image and change photo button have proper background */
+ImageView, Button.changePhotoButton {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Ensure all elements in the left sidebar have consistent background */
+.light-theme BorderPane > .left,
+.light-theme BorderPane > .left *,
+.light-theme .sidebar,
+.light-theme .sidebar VBox,
+.light-theme .sidebar HBox,
+.light-theme .sidebar Button,
+.light-theme .sidebar Label,
+.light-theme .sidebar Pane {
+    -fx-background-color: #f5f5f5 !important;
+    -fx-border-color: transparent !important;
+}
+
+/* Exclude specific elements that need different styling */
+.light-theme .sidebar ImageView {
+    /* Keep existing ImageView styling */
+}
+
+/* Make Sign Out button in the sidebar match the sidebar color */
+.light-theme VBox.sidebar .signOutButton,
+.light-theme VBox.sidebar #signOutButton,
+.light-theme .sidebar .signOutButton,
+.light-theme .sidebar #signOutButton {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #212529;
+    -fx-border-color: transparent;
+}
+
+.light-theme VBox.sidebar .signOutButton:hover,
+.light-theme VBox.sidebar #signOutButton:hover,
+.light-theme .sidebar .signOutButton:hover,
+.light-theme .sidebar #signOutButton:hover {
+    -fx-background-color: #e8e8e8;
+}
+
+/* Make sure we have generic styling for the Change Photo button */
+#changePhotoButton {
+    -fx-border-color: transparent;
+    -fx-background-color: #f5f5f5;
+}
+
+#changePhotoButton:hover {
+    -fx-background-color: #e8e8e8;
+}
+
+/* Light theme version of the button */
+.light-theme #changePhotoButton {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #212529;
+    -fx-border-color: transparent;
+}
+
+.light-theme #changePhotoButton:hover {
+    -fx-background-color: #e8e8e8;
+}
+
+/* Genre toggle buttons styling for light theme */
+.light-theme .genre-toggle {
+    -fx-background-color: transparent;
+    -fx-border-color: #cccccc;
+    -fx-text-fill: #212529;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px 8px;
+}
+
+.light-theme .genre-toggle:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-border-color: #b0b0b0;
+}
+
+.light-theme .genre-toggle:selected {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #b0b0b0;
+    -fx-text-fill: #212529;
+    -fx-font-weight: bold;
 } 

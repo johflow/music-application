@@ -10,14 +10,17 @@
   fx:controller="com.frontend.gui.SongController">
 
     <!--  STATIC HUD AT TOP  -->
-    <top>
+    <bottom>
+      <Pane prefWidth="100">
         <HBox fx:id="hudBar"
           spacing="10"
-          style="-fx-background-color: #f0f0f0; -fx-padding: 8;">
-            <Button fx:id="exitSongBtn" text="Exit"/>
-            <Button fx:id="playSongBtn" text=" play"/>
+          style="-fx-padding: 8"
+          maxWidth="400">
+            <Button fx:id="playSongBtn" text="Play"/>
+            <Button fx:id="importMusicXMLBtn" text="Import MusicXML"/>
         </HBox>
-    </top>
+      </Pane>
+    </bottom>
 
     <!--  SCROLLABLE CONTENT IN CENTER  -->
     <center>

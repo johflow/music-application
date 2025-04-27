@@ -30,12 +30,11 @@ public class ViewConstants {
     public static final String[] COMPONENT_CSS_FILES = {
         DISCOVER_CSS,
         PROFILE_CSS,
-        CREATE_SONG_CSS,
         SETTINGS_CSS
     };
     
     // Profile Pictures
     public static final String PROFILE_IMAGES_PATH = "/images/profiles/";
     public static final String DEFAULT_PROFILE_IMAGE = "/images/profiles/default_profile.png";
-    public static final String USER_PROFILE_IMAGES_DIR = System.getProperty("user.home") + "/NoteStack/profiles/";
+    public static final String USER_PROFILE_IMAGES_DIR = "src/main/resources/images/profiles/";
 } 
