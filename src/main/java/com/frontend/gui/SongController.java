@@ -133,6 +133,7 @@ public class SongController {
         }
 
         y = 100 + measureHeight*2;
+        x = width/10;
         for (Measure measure : currentSong.getSheetMusic().get(0).getStaves().get(3).getMeasures()) {
             drawMeasure(x, y, measure);
             x += measureLength + 1;
