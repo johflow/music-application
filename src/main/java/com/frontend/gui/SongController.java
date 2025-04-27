@@ -117,19 +117,7 @@ public class SongController {
 
             // 3) Wire up HUD buttons
             playSongBtn.setOnAction(e -> {
-                try {
-                    MusicAppFacade.getInstance().playViewedSong();
-                } catch (Exception ex) {
-                    System.err.println("Error playing song: " + ex.getMessage());
-                    ex.printStackTrace();
-                    
-                    // Show error alert
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Playback Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("There was an error playing the song. Please try again.");
-                    alert.showAndWait();
-                }
+                handlePlay();
             });
             importMusicXMLBtn.setOnAction(e -> handleImportMusicXML());
 
