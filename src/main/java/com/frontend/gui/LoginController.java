@@ -113,14 +113,14 @@ public class LoginController extends BaseController {
             visiblePasswordField.setManaged(false);
             passwordField.setVisible(true);
             passwordField.setManaged(true);
-            eyeIcon.setImage(new Image(getClass().getResource("/images/eye-show.png").toExternalForm()));
+            eyeIcon.setImage(new Image(getClass().getResource("/images/eye-unshow.png").toExternalForm()));
         } else {
             visiblePasswordField.setText(passwordField.getText());
             visiblePasswordField.setVisible(true);
             visiblePasswordField.setManaged(true);
             passwordField.setVisible(false);
             passwordField.setManaged(false);
-            eyeIcon.setImage(new Image(getClass().getResource("/images/eye-unshow.png").toExternalForm()));
+            eyeIcon.setImage(new Image(getClass().getResource("/images/eye-show.png").toExternalForm()));
         }
     }
 
