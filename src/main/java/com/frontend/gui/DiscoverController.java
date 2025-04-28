@@ -1,29 +1,29 @@
 package com.frontend.gui;
 
-import javafx.fxml.FXML;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ListView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.model.MusicAppFacade;
 import com.model.Song;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 public class DiscoverController extends BaseController {
     @FXML private Button       toggleGenreBtn;
@@ -149,8 +149,12 @@ public class DiscoverController extends BaseController {
 
             setOnMouseClicked(evt -> {
                 if (evt.getClickCount() == 2 && !isEmpty()) {
-                    facade.setViewedSong(getItem());
-                    navigateTo(ViewConstants.CREATE_SONG_VIEW);
+                    Song song = getItem();
+                    facade.setViewedSong(song);
+                    Platform.runLater(() -> {
+                        navigateTo(ViewConstants.SONG_VIEW);
+                        Platform.runLater(SongController::redrawActiveView);
+                    });
                 }
             });
         }

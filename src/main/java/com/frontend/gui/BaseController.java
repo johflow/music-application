@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.model.MusicAppFacade;
+import com.model.Song;
 import com.model.ThemeColor;
 import com.model.User;
-import com.model.Song;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,7 +30,8 @@ public class BaseController {
     
     protected MusicAppFacade facade;
     protected BaseStyleManager styleManager;
-    
+    protected SongController songController;
+
     public BorderPane getContentArea() {
         if (contentArea == null) {
             BaseController baseController = MusicApp.getBaseController();
@@ -165,6 +167,9 @@ public class BaseController {
             try {
                 Node view = loader.load();
                 
+                // Store the loader in the view's properties for later retrieval
+                view.getProperties().put("fxmlLoader", loader);
+                
                 BorderPane targetContentArea = getContentArea();
                 if (targetContentArea == null) {
                     logger.severe("Target content area is null, cannot navigate");
@@ -187,6 +192,12 @@ public class BaseController {
                     updateNavigationVisibility();
                 }
                 
+                // If navigating to song view, trigger a redraw
+                if (fxmlPath.equals(ViewConstants.SONG_VIEW)) {
+                    // Small delay to ensure everything is initialized
+                    Platform.runLater(SongController::redrawActiveView);
+                }
+                
             } catch (IOException e) {
                 logger.severe("Error loading FXML file " + fxmlPath + ": " + e.getMessage());
                 e.printStackTrace();
@@ -199,49 +210,56 @@ public class BaseController {
     
     @FXML
     protected void handleDiscover() {
+        SongController.handleStop();
         navigateTo(ViewConstants.DISCOVER_VIEW);
     }
     
     @FXML
     protected void handleProfile() {
+        SongController.handleStop();
         navigateTo(ViewConstants.PROFILE_VIEW);
     }
     
     @FXML
-    protected void handleCreateSong() {
+    protected void handleSong() {
         try {
-            // Create a new song with the current user as composer
-            String title = "New Song";
-            String composer = "Unknown";
+            // Stop any currently playing song
+            SongController.handleStop();
             
-            User currentUser = facade.getUser();
-            if (currentUser != null) {
-                composer = currentUser.getUsername();
+            // Check if there's already a viewed song
+            MusicAppFacade facade = MusicAppFacade.getInstance();
+            if (facade.getViewedSong() == null) {
+                // No viewed song, create a new one
+                String title = "New Song";
+                String composer = "Unknown";
+                
+                User currentUser = facade.getUser();
+                if (currentUser != null) {
+                    composer = currentUser.getUsername();
+                }
+                
+                // Create a new song
+                Song newSong = new Song(title, composer);
+                
+                // Set the publisher to the current user
+                if (currentUser != null) {
+                    newSong.setPublisher(currentUser);
+                }
+                
+                // Set as viewed song
+                facade.setViewedSong(newSong);
             }
             
-            // Create a new song
-            Song newSong = new Song(title, composer);
-            
-            // Set the publisher to the current user
-            if (currentUser != null) {
-                newSong.setPublisher(currentUser);
-            }
-            
-            // Set as viewed song
-            facade.setViewedSong(newSong);
-            
-            // Navigate to create song view
-            navigateTo(ViewConstants.CREATE_SONG_VIEW);
+            // Navigate to song view
+            navigateTo(ViewConstants.SONG_VIEW);
         } catch (Exception e) {
-            logger.severe("Error creating new song: " + e.getMessage());
-            
-            // Still navigate to the view even if there was an error
-            navigateTo(ViewConstants.CREATE_SONG_VIEW);
+            logger.severe("Error handling song view: " + e.getMessage());
         }
     }
     
     @FXML
     protected void handleSettings() {
+        SongController.handleStop();
         navigateTo(ViewConstants.SETTINGS_VIEW);
     }
     

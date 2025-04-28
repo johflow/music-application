@@ -78,7 +78,7 @@ public class MusicApp extends Application {
     
     private void howLoginView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.CREATE_SONG_VIEW));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewConstants.SONG_VIEW));
             Parent songView = loader.load();
 
             if (baseController != null && baseController.getContentArea() != null) {

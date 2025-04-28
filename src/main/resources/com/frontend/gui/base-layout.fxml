@@ -22,7 +22,7 @@
             </padding>
             <Button fx:id="discoverBtn" text="Discover" onAction="#handleDiscover" styleClass="nav-button"/>
             <Button fx:id="profileBtn" text="Profile" onAction="#handleProfile" styleClass="nav-button"/>
-            <Button fx:id="createBtn" text="Create Song" onAction="#handleCreateSong" styleClass="nav-button"/>
+            <Button fx:id="createBtn" text="Song" onAction="#handleSong" styleClass="nav-button"/>
             <Button fx:id="settingsBtn" text="Settings" onAction="#handleSettings" styleClass="nav-button"/>
         </HBox>
     </bottom>

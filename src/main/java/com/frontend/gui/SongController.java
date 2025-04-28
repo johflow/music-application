@@ -1,26 +1,25 @@
 package com.frontend.gui;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import java.util.ArrayList;
 
 import com.model.Chord;
 import com.model.DurationElement;
+import com.model.Instrument;
 import com.model.Measure;
 import com.model.MusicAppFacade;
 import com.model.MusicElement;
 import com.model.Note;
+import com.model.SheetMusic;
 import com.model.Song;
+import com.model.Staff;
 import com.model.Tuplet;
+import com.model.User;
 import com.service.MusicXMLToSongJsonConverter;
 import com.service.PlaybackTask;
 import com.service.SongPlayer;
-import com.model.Staff;
-import com.model.User;
-import com.model.SheetMusic;
-import com.model.Instrument;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
-public class SongController {
+public class SongController extends BaseController {
     BaseStyleManager styles = BaseStyleManager.getInstance();
     @FXML private HBox        hudBar;
     @FXML private Button      exitSongBtn;
@@ -52,7 +51,8 @@ public class SongController {
     private double measureLength;
     private double measureHeight;
 
-    private PlaybackTask currentTask;
+    private static PlaybackTask currentTask;
+    private static SongController activeInstance;
 
     @FXML private void handlePlay() {
         SongPlayer songPlayer = new SongPlayer();
@@ -64,7 +64,7 @@ public class SongController {
         }
     }
 
-    @FXML private void handleStop() {       // Pause is similar: call player.pause()
+    @FXML public static void handleStop() {       // Pause is similar: call player.pause()
         if (currentTask != null){
             currentTask.stopPlayback();
             System.out.println("Attempted stop");
@@ -74,6 +74,11 @@ public class SongController {
     @FXML
     public void initialize() {
         try {
+            super.initialize();
+            
+            // Store this instance as the active one
+            activeInstance = this;
+            
             // 1) Prepare the canvas & put it in the scrollPane
             canvas = new Canvas();
             contentPane.getChildren().add(canvas);
@@ -120,6 +125,9 @@ public class SongController {
                 handlePlay();
             });
             importMusicXMLBtn.setOnAction(e -> handleImportMusicXML());
+            if (exitSongBtn != null) {
+                exitSongBtn.setOnAction(e -> handleDiscover());
+            }
 
             // 4) When the ScrollPane viewport appears, size & draw
             scrollPane.viewportBoundsProperty().addListener((obs,oldB,newB) -> {
@@ -160,6 +168,30 @@ public class SongController {
 
     private void redraw() {
         try {
+            // Additional guard clauses to prevent rendering errors
+            if (canvas == null || gc == null) {
+                System.err.println("Cannot redraw: Canvas or GraphicsContext is null");
+                return;
+            }
+
+            if (canvas.getWidth() <= 0 || canvas.getHeight() <= 0) {
+                System.err.println("Cannot redraw: Invalid canvas dimensions: " + canvas.getWidth() + "x" + canvas.getHeight());
+                
+                // Try to set reasonable default dimensions
+                if (scrollPane != null && scrollPane.getViewportBounds() != null) {
+                    canvas.setWidth(Math.max(800, scrollPane.getViewportBounds().getWidth()));
+                    canvas.setHeight(Math.max(600, scrollPane.getViewportBounds().getHeight()));
+                } else {
+                    canvas.setWidth(800);
+                    canvas.setHeight(600);
+                }
+                
+                // If still invalid, abort
+                if (canvas.getWidth() <= 0 || canvas.getHeight() <= 0) {
+                    return;
+                }
+            }
+
             // Check if all necessary data is available
             if (currentSong == null || currentSong.getSheetMusic() == null || currentSong.getSheetMusic().isEmpty() ||
                 currentSong.getSheetMusic().get(0).getStaves() == null || currentSong.getSheetMusic().get(0).getStaves().isEmpty() ||
@@ -196,15 +228,36 @@ public class SongController {
 
             double neededH = measureHeight * 4 * lines + 2 * (height / 10);
 
-            canvas.setHeight(neededH);
+            // Make sure we're not setting an invalid height
+            neededH = Math.max(neededH, 100);
+            
+            try {
+                canvas.setHeight(neededH);
+            } catch (Exception e) {
+                System.err.println("Error setting canvas height: " + e.getMessage());
+                // Try with a more reasonable height if the calculated one fails
+                canvas.setHeight(600);
+            }
+            
             width = canvas.getWidth();
             height = canvas.getHeight();
 
             System.out.println("Redrawing canvas. Width: " + width + ", Height: " + height);
-            gc.clearRect(0, 0, width, height);
+            
+            try {
+                gc.clearRect(0, 0, width, height);
+            } catch (Exception e) {
+                System.err.println("Error clearing canvas: " + e.getMessage());
+                return; // Abort if we can't even clear the canvas
+            }
 
-            // Draw the song
-            drawSong(currentSong, gc, width, neededH);
+            // Draw the song with additional error handling
+            try {
+                drawSong(currentSong, gc, width, neededH);
+            } catch (Exception e) {
+                System.err.println("Error in drawSong: " + e.getMessage());
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             System.err.println("Error in redraw: " + e.getMessage());
             e.printStackTrace();
@@ -401,6 +454,20 @@ public class SongController {
     );
 
     /**
+     * Static method to force a redraw of the active SongController if one exists
+     */
+    public static void redrawActiveView() {
+        if (activeInstance != null) {
+            try {
+                activeInstance.redraw();
+            } catch (Exception e) {
+                System.err.println("Error in redrawActiveView: " + e.getMessage());
+                // Suppress error to prevent UI disruption
+            }
+        }
+    }
+
+    /**
      * Handles the import MusicXML button click.
      * Opens a file chooser to select a MusicXML file and converts it to a Song.
      */
@@ -441,17 +508,40 @@ public class SongController {
                         }
                         
                         if (importedSong != null) {
-                            // Set it as the current song and redraw
+                            // Set it as the current song
                             currentSong = importedSong;
                             facade.setViewedSong(importedSong);
-                            redraw();
                             
                             // Show success alert
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Import Successful");
                             alert.setHeaderText(null);
-                            alert.setContentText("MusicXML file \"" + result.get("title") + "\" was successfully imported and is now displayed.");
+                            alert.setContentText("MusicXML file \"" + result.get("title") + "\" was successfully imported.");
                             alert.showAndWait();
+                            
+                            // Make sure canvas has proper dimensions before redrawing
+                            if (canvas != null && scrollPane != null) {
+                                Bounds vp = scrollPane.getViewportBounds();
+                                if (vp != null) {
+                                    canvas.setWidth(vp.getWidth());
+                                    canvas.setHeight(Math.max(vp.getHeight(), 600));
+                                } else {
+                                    // Use default values if viewport bounds not available
+                                    canvas.setWidth(800);
+                                    canvas.setHeight(600);
+                                }
+                            }
+                            
+                            // Use Platform.runLater to ensure the UI has time to update
+                            Platform.runLater(() -> {
+                                try {
+                                    // Redraw to show the imported song
+                                    redraw();
+                                } catch (Exception ex) {
+                                    System.err.println("Error redrawing after import: " + ex.getMessage());
+                                    // Suppress exception to prevent UI disruption
+                                }
+                            });
                         }
                     }
                 } catch (Exception e) {
