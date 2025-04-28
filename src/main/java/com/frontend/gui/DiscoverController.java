@@ -3,6 +3,7 @@ package com.frontend.gui;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.collections.FXCollections;
@@ -25,8 +26,9 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class DiscoverController extends BaseController {
-    @FXML private FlowPane      genrePane;
-    @FXML private TextField     searchField;
+    @FXML private Button       toggleGenreBtn;
+    @FXML private FlowPane     genrePane;
+    @FXML private TextField    searchField;
     @FXML private ListView<Song> songListView;
 
     private MusicAppFacade facade;
@@ -34,7 +36,7 @@ public class DiscoverController extends BaseController {
 
     // hard-coded genres
     private static final List<String> GENRES = Arrays.asList(
-        "Rock", "Pop", "Jazz", "Hip-Hop", "Classical", "Anime"
+        "Rock", "Pop", "Electronic", "Hip-Hop", "R&B", "Indie", "Jazz", "Classical"
     );
 
     @FXML @Override
@@ -42,13 +44,13 @@ public class DiscoverController extends BaseController {
         super.initialize();
         facade = MusicAppFacade.getInstance();
 
-        // 1) load all songs once
+        // 1) master list
         masterList = FXCollections.observableArrayList(
             facade.getSongList().getSongs()
         );
         songListView.setCellFactory(lv -> new SongCell());
 
-        // 2) build a ToggleButton for each genre—no ToggleGroup, so each can stay pressed independently
+        // 2) build genre toggle-buttons
         for (String genre : GENRES) {
             ToggleButton btn = new ToggleButton(genre);
             btn.getStyleClass().add("genre-toggle");
@@ -56,59 +58,62 @@ public class DiscoverController extends BaseController {
             genrePane.getChildren().add(btn);
         }
 
-        // 3) respond to search changes
-        searchField.textProperty().addListener((obs, oldV, newV) -> refreshList());
+        // 3) wire up search field
+        searchField.textProperty().addListener((obs, o, n) -> refreshList());
 
-        // 4) initial populate
+        // 4) genre-pane toggle button
+        toggleGenreBtn.setOnAction(e -> {
+            boolean showing = genrePane.isVisible();
+            genrePane.setVisible(!showing);
+            genrePane.setManaged(!showing);
+            toggleGenreBtn.setText(showing ? "Show Genre Filters" : "Hide Genre Filters");
+        });
+
+        // 5) initial state: genres shown
+        genrePane.setVisible(true);
+        genrePane.setManaged(true);
+        toggleGenreBtn.setText("Hide Genres");
+
+        // 6) first fill
         refreshList();
     }
 
-    /**
-     * Rebuilds the list by:
-     *   a) collecting all genres whose toggle-button is {@code isSelected()}
-     *   b) unioning facade.filterByGenre(...) for each
-     *   c) applying the text search
-     */
     private void refreshList() {
-        // which genres are selected?
-        List<String> selGenres = genrePane.getChildren().stream()
-            .map(node -> (ToggleButton)node)
+        // collect selected genres
+        List<String> sel = genrePane.getChildren().stream()
+            .map(n -> (ToggleButton)n)
             .filter(ToggleButton::isSelected)
             .map(ToggleButton::getText)
             .collect(Collectors.toList());
 
-        // a) filter by genres (union if multiple; all if none)
+        // union‐filter by genre
         List<Song> byGenre;
-        if (selGenres.isEmpty()) {
+        if (sel.isEmpty()) {
             byGenre = new ArrayList<>(masterList);
         } else {
-            Set<Song> union = new LinkedHashSet<>();
-            for (String g : selGenres) {
-                union.addAll(facade.filterByGenre(g));
+            Set<Song> set = new LinkedHashSet<>();
+            for (String g : sel) {
+                set.addAll(facade.filterByGenre(g));
             }
-            byGenre = new ArrayList<>(union);
+            byGenre = new ArrayList<>(set);
         }
 
-        // b) apply search query on that subset
+        // apply search on top
         String q = searchField.getText();
-        List<Song> finalList;
-        if (q == null || q.isBlank()) {
-            finalList = byGenre;
-        } else {
-            String query = q.trim().toLowerCase();
-            finalList = byGenre.stream()
-                                .filter(s -> s.matchesQuery(query))
-                                .collect(Collectors.toList());
-        }
+        List<Song> finalList = (q == null || q.isBlank())
+            ? byGenre
+            : byGenre.stream()
+                     .filter(s -> s.matchesQuery(q.trim()))
+                     .collect(Collectors.toList());
 
         songListView.setItems(FXCollections.observableArrayList(finalList));
     }
 
-    /** Cell with double-click to set facade.viewedSong and navigate */
     private class SongCell extends ListCell<Song> {
         private final HBox content;
         private final Label titleLabel, composerLabel, publisherLabel;
         private final Region spacer;
+        private final ToggleButton favBtn;
 
         SongCell() {
             titleLabel     = new Label();
@@ -117,18 +122,34 @@ public class DiscoverController extends BaseController {
             spacer         = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            content = new HBox(15,
+            // favorite toggle
+            favBtn = new ToggleButton("♡");
+            favBtn.getStyleClass().add("favorite-button");
+            favBtn.selectedProperty().addListener((obs, was, now) -> {
+                Song s = getItem();
+                if (s != null) {
+                    if (now) {
+                        facade.addFavoriteSong(s);
+                        favBtn.setText("♥");
+                    } else {
+                        facade.removeFavoriteSong(s);
+                        favBtn.setText("♡");
+                    }
+                }
+            });
+
+            content = new HBox(10,
                 titleLabel,
                 spacer,
                 composerLabel,
-                publisherLabel
+                publisherLabel,
+                favBtn
             );
             content.getStyleClass().add("song-cell");
 
             setOnMouseClicked(evt -> {
                 if (evt.getClickCount() == 2 && !isEmpty()) {
-                    Song song = getItem();
-                    facade.setViewedSong(song);
+                    facade.setViewedSong(getItem());
                     navigateTo(ViewConstants.CREATE_SONG_VIEW);
                 }
             });
@@ -147,6 +168,12 @@ public class DiscoverController extends BaseController {
                       ? "(" + song.getPublisher().getUsername() + ")"
                       : ""
                 );
+
+                boolean isFav = facade.getUser() != null
+                             && facade.getUser().getFavoriteSongs().contains(song);
+                favBtn.setSelected(isFav);
+                favBtn.setText(isFav ? "♥" : "♡");
+
                 setGraphic(content);
             }
         }

@@ -1,26 +1,9 @@
-/* Basic styles for the discover view 
-   Add your custom styles as needed */
-
-   .root {
-    /* Base application styling */
-}
-
+/* Basic styles for the discover view */
+.root { }
 .title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
-
-.logout-button {
-    -fx-background-color: #f44336;
-    -fx-text-fill: white;
-    -fx-padding: 5px 15px;
-    -fx-background-radius: 5px;
-}
-
-.logout-button:hover {
-    -fx-background-color: #d32f2f;
-}
-
 .content-area {
     -fx-padding: 20px;
     -fx-spacing: 10px;
@@ -30,12 +13,10 @@
 .song-cell {
     -fx-padding: 8px;
 }
-
 .song-cell > .label:first-child {
     -fx-font-weight: bold;
     -fx-font-size: 14px;
 }
-
 .song-cell > .label:nth-child(3),
 .song-cell > .label:nth-child(4) {
     -fx-text-fill: #666;
@@ -46,21 +27,13 @@
 .favorite-button {
     -fx-font-size: 16px;
     -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-.favorite-button:selected {
-    /* optional selected styling */
-}
-
-/* Genre toggle styling - base styling only, colors in theme CSS */
-.genre-toggle {
-    -fx-background-color: transparent;
-    -fx-border-width: 1px;
+    -fx-border-color: #f44336;
     -fx-border-radius: 4px;
     -fx-background-radius: 4px;
-    -fx-padding: 4px 8px;
+    -fx-text-fill: #f44336;
+    -fx-padding: 0 5px;
 }
-
-.genre-toggle:selected {
-    -fx-font-weight: bold;
+.favorite-button:selected {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
 }

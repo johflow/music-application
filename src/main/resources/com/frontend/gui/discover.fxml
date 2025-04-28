@@ -1,40 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<?import javafx.scene.layout.BorderPane?> 
-<?import javafx.scene.layout.VBox?> 
-<?import javafx.scene.layout.HBox?> 
-<?import javafx.scene.layout.FlowPane?> 
-<?import javafx.scene.layout.Region?> 
-<?import javafx.scene.control.ListView?> 
-<?import javafx.scene.control.TextField?> 
-<?import javafx.scene.control.Label?> 
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"  
-            xmlns:fx="http://javafx.com/fxml/1"  
-            fx:controller="com.frontend.gui.DiscoverController"  
-            stylesheets="@discover.css"> 
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.frontend.gui.DiscoverController"
+            stylesheets="@discover.css">
 
-  <top> 
-    <VBox spacing="10" styleClass="content-area"> 
-      <HBox spacing="10"> 
-        <!-- now a FlowPane for toggles instead of ListView --> 
-        <FlowPane fx:id="genrePane" hgap="8" vgap="8" prefHeight="60"/> 
+  <top>
+    <VBox spacing="10" styleClass="content-area">
+      <!-- Toggle + Search row -->
+      <HBox spacing="10">
+        <Button fx:id="toggleGenreBtn"
+                text="Hide Genres"/>
+        <TextField fx:id="searchField"
+                   HBox.hgrow="ALWAYS"
+                   promptText="Search songs..."/>
+      </HBox>
 
-        <!-- Search field stays the same --> 
-        <TextField fx:id="searchField"  
-                   HBox.hgrow="ALWAYS"  
-                   promptText="Search songs..."/> 
-      </HBox> 
-      <HBox spacing="10" alignment="CENTER_LEFT"> 
-        <Label text="Discover" styleClass="title"/> 
-        <Region HBox.hgrow="ALWAYS"/> 
-      </HBox> 
-    </VBox> 
-  </top> 
+      <!-- Genre buttons, initially visible -->
+      <FlowPane fx:id="genrePane"
+                hgap="8" vgap="8"
+                prefHeight="60"
+                styleClass="genre-list"/>
 
-  <center> 
-    <ListView fx:id="songListView"  
-              prefWidth="600"  
-              prefHeight="400"  
-              styleClass="content-area"/> 
-  </center> 
-</BorderPane> 
+      <!-- Title row -->
+      <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Discover" styleClass="title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+      </HBox>
+    </VBox>
+  </top>
+
+  <center>
+    <ListView fx:id="songListView"
+              prefWidth="600"
+              prefHeight="400"
+              styleClass="content-area"/>
+  </center>
+</BorderPane>
