@@ -70,9 +70,9 @@ public class DiscoverController extends BaseController {
         });
 
         // 5) initial state: genres shown
-        genrePane.setVisible(true);
-        genrePane.setManaged(true);
-        toggleGenreBtn.setText("Hide Genres");
+        genrePane.setVisible(false);
+        genrePane.setManaged(false);
+        toggleGenreBtn.setText("Hide Genre Filters");
 
         // 6) first fill
         refreshList();
