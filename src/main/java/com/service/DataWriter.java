@@ -20,14 +20,14 @@ import com.model.Tuplet;
 import com.model.User;
 /**
  * Class that writes data to JSON.
- * 
+ *
  * @author Joshua Gould
  */
 @SuppressWarnings("unchecked")
 public class DataWriter extends DataConstants {
     /**
      * Writes user data to JSON.
-     * 
+     *
      * @param users The users to save
      * @param filePath The file path to save to (REMOVE WHEN DONE TESTING)
      * @return True or false depending on success of write.
@@ -37,12 +37,12 @@ public class DataWriter extends DataConstants {
             // Create the root JSON object with "users" key
             JSONObject root = new JSONObject();
             JSONArray jsonUsers = new JSONArray();
-            
+
             // Add each user to the JSON array
             for (User user : users) {
                 jsonUsers.add(getUserJSON(user));
             }
-            
+
             // Add the users array to the root object
             root.put("users", jsonUsers);
             
@@ -161,7 +161,15 @@ public class DataWriter extends DataConstants {
         songDetails.put(SONG_TITLE, song.getTitle());
         songDetails.put(SONG_COMPOSER, song.getComposer());
         songDetails.put(SONG_GENRE, song.getGenres());
-        songDetails.put(SONG_PUBLISHER, song.getPublisher().getId().toString());
+
+        // Handle publisher: save ID if available, else save null
+        if (song.getPublisher() != null) {
+            songDetails.put(SONG_PUBLISHER, song.getPublisher().getId().toString());
+        } else {
+            System.err.println("[Warning] Song \"" + song.getTitle() + "\" has no publisher! Saving publisher as null.");
+            songDetails.put(SONG_PUBLISHER, null);
+        }
+
         songDetails.put(SONG_PICK_UP, song.getPickUp());
 
         // Create sheet music array

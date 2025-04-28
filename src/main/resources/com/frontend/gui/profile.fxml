@@ -44,8 +44,8 @@
 
             <Label text="Friends List" styleClass="section-title" />
             <ListView fx:id="friendsList" prefHeight="150" />
+            <Button fx:id="addFriendButton" text="Add Friend" onAction="#handleAddFriend" />
 
-            <Button text="Add Friend" fx:id="addFriendBtn" />
         </VBox>
     </left>
 

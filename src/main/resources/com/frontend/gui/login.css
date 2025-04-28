@@ -34,13 +34,15 @@
 }
 
 .text-field, .password-field {
-    -fx-pref-width: 200px;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 35px;
     -fx-padding: 8px;
     -fx-background-radius: 4px;
     -fx-border-color: #ccc;
     -fx-border-radius: 4px;
+    -fx-font-size: 14px;
 }
 
 .text-field:focused, .password-field:focused {
     -fx-border-color: #2196F3;
-} 
+}
