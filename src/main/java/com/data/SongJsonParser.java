@@ -54,7 +54,14 @@ public class SongJsonParser extends DataConstants {
     UUID id = UUID.fromString(getValue(songJSON, SONG_ID, String.class));
     String title = getValue(songJSON, SONG_TITLE, String.class);
     String composer = getValue(songJSON, SONG_COMPOSER, String.class);
-    UUID publisherID = UUID.fromString(getValue(songJSON, SONG_PUBLISHER, String.class));
+    UUID publisherID;
+    Object publisherObj = songJSON.get(SONG_PUBLISHER);
+    if (publisherObj != null) {
+        publisherID = UUID.fromString(publisherObj.toString());
+    } else {
+        System.err.println("[Warning] Missing publisher for song: " + title);
+        publisherID = null;
+    }
     int pickUp = getValue(songJSON, SONG_PICK_UP, Number.class).intValue();
 
     List<String> genre = new ArrayList<>();
